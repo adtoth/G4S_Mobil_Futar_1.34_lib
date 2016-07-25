@@ -1,6 +1,10 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller"
-], function(Controller) {
+	"sap/ui/core/mvc/Controller",
+	"sap/ui/model/json/JSONModel",
+	"com/g4s/controller/BaseController"
+
+
+], function(Controller, BaseController, JSONModel) {
 	"use strict";
 
 	return Controller.extend("com.g4s.controller.leadasDetail", {
@@ -11,8 +15,16 @@ sap.ui.define([
 		 * @memberOf com.g4s.view.leadasDetail
 		 */
 		onInit: function() {
-			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-			oRouter.getRoute("leadasDetail").attachPatternMatched(this._onObjectMatched, this);
+			var oViewModel = new JSONModel({
+				busy: false,
+				delay: 0
+			});
+
+			sap.ui.core.UIComponent.getRouterFor(this).getRoute("leadasDetail").attachPatternMatched(this._onObjectMatched, this);
+			this.getView().setModel(oViewModel, "leadasDetailView");
+			this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
+			//var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+			//oRouter.getRoute("leadasDetail").attachPatternMatched(this._onObjectMatched, this);
 		},
 
 		/**
@@ -42,10 +54,34 @@ sap.ui.define([
 		//	}
 
 		_onObjectMatched: function(oEvent) {
-			this.getView().bindElement({
+			/*this.getView().bindElement({
 				path: "/" + oEvent.getParameter("arguments").invoicePath,
 				model: "Address"
-			});
+			});*/
+			
+			var addressPath = oEvent.getParameter("arguments").addressPath;
+			this.getView().getModel().metadataLoaded().then(function() {
+				var sObjectPath = this.getView().getModel().createKey("Address", {
+					Id: addressPath
+				});
+				this._bindView("/" + sObjectPath);
+			}.bind(this));
+			
+		},
+		
+		_onMetadataLoaded: function() {
+			// Store original busy indicator delay for the detail view
+			var iOriginalViewBusyDelay = this.getView().getBusyIndicatorDelay(),
+				oViewModel = this.getView().getModel("leadasDetailView");
+
+			// Make sure busy indicator is displayed immediately when
+			// detail view is displayed for the first time
+			oViewModel.setProperty("/delay", 0);
+
+			// Binding the view will set it to not busy - so the view is always busy if it is not bound
+			oViewModel.setProperty("/busy", true);
+			// Restore original busy indicator delay for the detail view
+			oViewModel.setProperty("/delay", iOriginalViewBusyDelay);
 		},
 
 		/*onBeforeRendering: function(){ // binding model synchronisation

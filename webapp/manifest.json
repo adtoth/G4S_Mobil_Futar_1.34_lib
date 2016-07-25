@@ -102,19 +102,19 @@
 				"target": ["worklist"]
 			}, {
 				"name": "bevetMaster",
-				"pattern": "bevetMaster",
+				"pattern": "Item",
 				"greedy": false,
 				"target": ["bevetMaster"]
 			}, {
+				"name": "felvetelMaster",
+				"pattern": "Item",
+				"greedy": false,
+				"target": ["felvetelMaster"]
+			}, {
 				"name": "leadasMaster",
-				"pattern": "leadasMaster",
+				"pattern": "Address",
 				"greedy": false,
 				"target": ["leadasMaster"]
-			}, {
-				"name": "leadasDetail",
-				"pattern": "leadasDetail/{addressPath}",
-				"greedy": false,
-				"target": ["leadasDetail"]
 			}],
 			"targets": {
 				"worklist": {
@@ -147,12 +147,12 @@
 					"viewName": "leadasMaster",
 					"viewId": "leadasMaster"
 				},
-				"leadasDetail": {
+				"felvetelMaster": {
 					"viewType": "XML",
 					"transition": "slide",
 					"clearAggregation": true,
-					"viewName": "leadasDetail",
-					"viewId": "leadasDetail"
+					"viewName": "felvetelMaster",
+					"viewId": "felvetelMaster"
 				}
 			}
 		}

@@ -1,0 +1,66 @@
+<core:View controllerName="com.g4s.controller.leadasMaster"
+	xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Page showNavButton="true" navButtonPress="handleNavButtonPress"
+		title="Felvét lista">
+		<List id="list" select="handleListSelect" items="{/Address?$filter=PicType eq 'U' and Today eq '1' and (DelStatus eq '111' or DelStatus eq '999' or DelStatus eq '555')}" growing="true" growingTriggerText="Több" noDataText="Nincs kapcsolat a szerverrel">
+			<ObjectListItem type="Active" press="handleListItemPress"
+			
+				title="{Company}" icon="sap-icon://toaster-{IconPic}" number="{path: 'PicType',
+							formatter: 'util.Formatter.statusText'}">
+				
+				<attributes>
+					<!-- <ObjectAttribute text="Feladó: " />
+					<ObjectAttribute text="{FPostalCode}, {FCity}, {FPostalCode}, {FStreet}" /> -->
+					<ObjectAttribute text="Szállítási cím: " />
+					<ObjectAttribute text="{TPostalCode}, {TCity}, {TStreet}" />
+					<ObjectAttribute text="{path: 'HasCOD', formatter: 'util.Formatter.HasCODText'}" />
+					<ObjectAttribute text="Telefon: {Phone}"/>
+				</attributes>
+				
+				<firstStatus>
+					<ObjectStatus
+						text="{
+							path: 'DelStatus',
+							formatter: 'util.Formatter.statusText'
+						}"
+						state="{
+							path: 'DelStatus',
+							formatter: 'util.Formatter.statusState'
+						}"
+					
+						/>
+
+				</firstStatus>
+				
+					<secondStatus>
+					<ObjectStatus
+						text="{
+							path: 'SzallitasStatus',
+							formatter: 'util.Formatter.statusText'
+						}"
+						state="{
+							path: 'SzallitasStatus',
+							formatter: 'util.Formatter.statusState'
+						}"
+					
+						/>
+
+				</secondStatus>
+
+			</ObjectListItem>
+		</List>
+		<footer>
+			<Bar>
+				<contentRight>
+					<Select id="groupSelect" name="Csoportosít" change="handleGroup" icon="sap-icon://group-2"
+						type="Default" selectedKey="None" autoAdjustWidth="true">
+						<core:Item key="None" text="Nincs csoportosítás" />
+						<core:Item key="TPostalCode" text="Irányítószám" />
+						<core:Item key="To" text="Címzett neve szerint" />
+						<core:Item key="TStreet" text="Címzett utcanév szerint" />
+					</Select>
+				</contentRight>
+			</Bar>
+		</footer>
+	</Page>
+</core:View>

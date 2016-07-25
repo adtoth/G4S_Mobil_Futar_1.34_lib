@@ -1,0 +1,52 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="com.g4s.controller.bevetMaster"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+			<Page showNavButton="true" navButtonPress="handleNavButtonPress"
+		title="Bevételezés">
+		<List id="list" select="handleListSelect" items="{/Item?$filter=PickupStatus eq 'M' and Today eq '1'}" growing="true" growingThreshold="10">
+			<ObjectListItem type="Active" press="handleListItemPress"
+				title="{From}"
+				icon="sap-icon://shipping-status">
+				
+		 		<firstStatus>
+					<ObjectStatus
+						text="{
+							path: 'PickupStatus',
+							formatter: 'util.Formatter.statusText'
+						}"
+						state="{
+							path: 'PickupStatus',
+							formatter: 'util.Formatter.statusState'
+						}"
+						  />
+				</firstStatus>
+				 <secondStatus>
+					<ObjectStatus
+						text="{
+							path: 'PicType',
+							formatter: 'util.Formatter.statusText'}"
+							/>
+				</secondStatus>
+				<attributes>
+					<ObjectAttribute text="Csomagnév: {ProductName}" />
+					<ObjectAttribute text="Csomag ID: {ProductId}"/>
+				</attributes>
+			</ObjectListItem>
+		</List>
+		
+ 		<List id="listItems" visible="false" items="{/Address}">
+			<ObjectListItem type="Active" press="handleListItemPress"
+				title="{From}"
+				icon="sap-icon://customer">
+			</ObjectListItem>
+		</List>
+		<footer>
+			<Bar>
+				<contentRight>
+					<Button type="Emphasized" text="Start Scan" press="scan"
+					 width="150px" icon="sap-icon://camera" />
+				</contentRight> 				
+			</Bar>
+		</footer>
+	</Page>
+
+</mvc:View>

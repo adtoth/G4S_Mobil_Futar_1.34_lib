@@ -1,0 +1,46 @@
+<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic" controllerName="com.g4s.controller.Worklist">
+
+	<Page title="Futár">
+		<customHeader>
+	      <Toolbar>
+	        <ToolbarSpacer/>
+	        <Label text="Futár"/>
+	        <ToolbarSpacer/>
+	        <Button icon="sap-icon://log" press="logoff"/>
+	      </Toolbar>
+	    </customHeader>
+	    
+	    <GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Cumulative Totals" subheader="Expenses" frameType="OneByOne" press="press">
+		<tileContent>
+			<TileContent unit="Unit" footer="Footer Text">
+				<content>
+					<NumericContent value="{path: 'Items', formatter: '.getNumberOfItems'}" icon="sap-icon://line-charts"/>
+				</content>
+			</TileContent>
+		</tileContent>
+	</GenericTile>
+	    
+	    
+		<StandardTile icon="sap-icon://database" id="bevetTile" number="0" title="Bevételezés" press="handleBevetelezesPress"/>
+			
+		<StandardTile id="aktualisTile" icon="sap-icon://sys-enter-2" title="Aktuális szállítás" number="0" press="handleAktualisPress"/>
+			
+		<StandardTile id="leadTile" icon="sap-icon://toaster-down" title="Leadás" number="{path: 'Item'}" press="handleLeadasPress"/>
+			
+		<StandardTile id="leadLezartTile" icon="sap-icon://locked" title="Lezárt Leadások" number="0" press="handleLezartLeadasPress"/>
+			
+		<StandardTile id="felvetTile" icon="sap-icon://toaster-up" title="Felvét" press="handleFelvetelPress" number="0"/>
+			
+		<StandardTile id="felvetLezartTile" icon="sap-icon://locked" title="Lezárt Felvétek" number="0" press="handleLezartFelvetelPress"/>
+			
+		<StandardTile icon="sap-icon://payment-approval" title="Utánvét" press="handleUtanvetPress"/>
+			
+		<StandardTile icon="sap-icon://home" title="Depo" press="handleDepoPress" number="0" id="depoTile"/>
+		
+
+	<content/>
+		
+
+	</Page>
+
+</mvc:View>

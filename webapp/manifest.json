@@ -102,14 +102,19 @@
 				"target": ["worklist"]
 			}, {
 				"name": "bevetMaster",
-				"pattern": "Item",
+				"pattern": "bevetMaster",
 				"greedy": false,
 				"target": ["bevetMaster"]
 			}, {
 				"name": "leadasMaster",
-				"pattern": "Address",
+				"pattern": "leadasMaster",
 				"greedy": false,
 				"target": ["leadasMaster"]
+			}, {
+				"name": "leadasDetail",
+				"pattern": "leadasDetail/{addressPath}",
+				"greedy": false,
+				"target": ["leadasDetail"]
 			}],
 			"targets": {
 				"worklist": {
@@ -141,6 +146,13 @@
 					"clearAggregation": true,
 					"viewName": "leadasMaster",
 					"viewId": "leadasMaster"
+				},
+				"leadasDetail": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "leadasDetail",
+					"viewId": "leadasDetail"
 				}
 			}
 		}

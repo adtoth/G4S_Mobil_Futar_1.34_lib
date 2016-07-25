@@ -115,6 +115,11 @@
 				"pattern": "Address",
 				"greedy": false,
 				"target": ["leadasMaster"]
+			}, {
+				"name": "leadasDetail",
+				"pattern": "Address/{addressPath}",
+				"greedy": false,
+				"target": ["leadasDetail"]
 			}],
 			"targets": {
 				"worklist": {
@@ -153,6 +158,13 @@
 					"clearAggregation": true,
 					"viewName": "felvetelMaster",
 					"viewId": "felvetelMaster"
+				},
+				"leadasDetail": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "leadasDetail",
+					"viewId": "leadasDetail"
 				}
 			}
 		}

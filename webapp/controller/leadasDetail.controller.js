@@ -64,7 +64,7 @@ sap.ui.define([
 				var sObjectPath = this.getView().getModel().createKey("Address", {
 					Id: addressPath
 				});
-				this._bindView("/" + sObjectPath);
+				this.getView()._bindView("/" + sObjectPath);
 			}.bind(this));
 			
 		},

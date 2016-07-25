@@ -3,7 +3,6 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"com/g4s/controller/BaseController"
 
-
 ], function(Controller, BaseController, JSONModel) {
 	"use strict";
 
@@ -58,17 +57,60 @@ sap.ui.define([
 				path: "/" + oEvent.getParameter("arguments").invoicePath,
 				model: "Address"
 			});*/
-			
+
 			var addressPath = oEvent.getParameter("arguments").addressPath;
 			this.getView().getModel().metadataLoaded().then(function() {
 				var sObjectPath = this.getView().getModel().createKey("Address", {
 					Id: addressPath
 				});
-				this.getView()._bindView("/" + sObjectPath);
+				this._bindView("/" + sObjectPath);
 			}.bind(this));
-			
+
 		},
-		
+
+		_bindView: function(sObjectPath) {
+			// Set busy indicator during view binding
+			var oViewModel = this.getView().getModel();
+
+			// If the view was not bound yet its not busy, only if the binding requests data it is set to busy again
+			oViewModel.setProperty("/busy", false);
+
+			this.getView().bindElement({
+				path: sObjectPath,
+				events: {
+					change: this._onBindingChange.bind(this),
+					dataRequested: function() {
+						oViewModel.setProperty("/busy", true);
+					},
+					dataReceived: function() {
+						oViewModel.setProperty("/busy", false);
+					}
+				}
+			});
+		},
+
+		_onBindingChange: function() {
+			var oView = this.getView(),
+				oElementBinding = oView.getElementBinding();
+
+			// No data for the binding
+			if (!oElementBinding.getBoundContext()) {
+				this.getRouter().getTargets().display("detailObjectNotFound");
+				// if object could not be found, the selection in the master list
+				// does not make sense anymore.
+				this.getOwnerComponent().oListSelector.clearMasterListSelection();
+				return;
+			}
+			var sPath = oElementBinding.getPath(),
+				//oResourceBundle = this.getView().getResourceBundle(),
+				oObject = oView.getModel().getObject(sPath),
+				Id = oObject.Id,
+				oViewModel = this.getView().getModel();
+
+			this.getOwnerComponent().oListSelector.selectAListItem(sPath);
+
+		},
+
 		_onMetadataLoaded: function() {
 			// Store original busy indicator delay for the detail view
 			var iOriginalViewBusyDelay = this.getView().getBusyIndicatorDelay(),
@@ -84,246 +126,229 @@ sap.ui.define([
 			oViewModel.setProperty("/delay", iOriginalViewBusyDelay);
 		},
 
-		/*onBeforeRendering: function(){ // binding model synchronisation
-		//this.onBeforeShow();
-		window.globalleadasDetail = this;
-		 this.getView().addDelegate({onAfterShow: function(evt) {
-			 globalleadasDetail.getView().byId("idIconTabBarMulti").setSelectedKey("addr");
-			 globalleadasDetail.getView().byId("idIconTabBarMulti").setExpanded(true);
-			 var a = globalleadasDetail.getView().getBindingContext();
-			 window.signeeCounter = 0;
-		     var total = 0;
-		     var myView = globalleadasDetail.getView();
-		     var model = sap.ui.getCore().getModel();
-		     //folytat/aktivál gombok beállítása 
-	   	if(sap.ui.getCore().getModel().getProperty(a.sPath + "/DelStatus") == "111"){
-	   		myView.byId("setActive").setVisible(true);
-	   		myView.byId("setContinue").setVisible(false);
-			}
-			else if (sap.ui.getCore().getModel().getProperty(a.sPath + "/DelStatus") == "999"){
-				myView.byId("setContinue").setVisible(true);
-				myView.byId("setActive").setVisible(false);
-			}
-			else if (sap.ui.getCore().getModel().getProperty(a.sPath + "/DelStatus") == "555"){
-				myView.byId("setActive").setVisible(false);
-	   			myView.byId("setContinue").setVisible(true);
-			}
-			else{ 
-				myView.byId("setActive").setVisible(false);
-	   			myView.byId("setContinue").setVisible(false);
-			}
-	   			
-		if(model.getProperty(a.sPath + "/DelStatus") == '222'){
-			myView.byId("grpA01").setSelected(true);
-			myView.byId("grpB").setVisible(false);
-		}
-		else if(model.getProperty(a.sPath + "/COD_Collected") == '1'){
-			myView.byId("grpA01").setSelected(true);
-		}
-		
-		else if(model.getProperty(a.sPath + "/DelStatus") == '1'){
-			myView.byId("grpA01").setSelected(false);
-			myView.byId("grpA02").setSelected(true);
-			myView.byId("grpB").setVisible(true);
-			myView.byId("grpB01").setSelected(true);
-			myView.byId("grpB01").setVisible(true);
-			myView.byId("grpB02").setVisible(false);
-			myView.byId("grpB03").setVisible(false);
-			myView.byId("grpB04").setVisible(false);
-			myView.byId("grpB05").setVisible(false);
-			myView.byId("grpB06").setVisible(false);
-			myView.byId("grpB07").setVisible(false);
-			myView.byId("grpB08").setVisible(false);
-			myView.byId("grpB09").setVisible(false);
-			myView.byId("grpB10").setVisible(false);
-			
-		}
-		
-		else if(model.getProperty(a.sPath + "/DelStatus") == '2'){
-			myView.byId("grpA01").setSelected(false);
-			myView.byId("grpA02").setSelected(true);
-			myView.byId("grpB").setVisible(true);
-			myView.byId("grpB01").setVisible(false);
-			myView.byId("grpB02").setSelected(true);
-			myView.byId("grpB02").setVisible(true);
-			myView.byId("grpB03").setVisible(false);
-			myView.byId("grpB04").setVisible(false);
-			myView.byId("grpB05").setVisible(false);
-			myView.byId("grpB06").setVisible(false);
-			myView.byId("grpB07").setVisible(false);
-			myView.byId("grpB08").setVisible(false);
-			myView.byId("grpB09").setVisible(false);
-			myView.byId("grpB10").setVisible(false);
-			
-		}
-		
-		else if(model.getProperty(a.sPath + "/DelStatus") == '3'){
-			myView.byId("grpA01").setSelected(false);
-			myView.byId("grpA02").setSelected(true);
-			myView.byId("grpB").setVisible(true);
-			myView.byId("grpB01").setVisible(false);
-			myView.byId("grpB02").setVisible(false);
-			myView.byId("grpB03").setSelected(true);
-			myView.byId("grpB03").setVisible(true);
-			myView.byId("grpB04").setVisible(false);
-			myView.byId("grpB05").setVisible(false);
-			myView.byId("grpB06").setVisible(false);
-			myView.byId("grpB07").setVisible(false);
-			myView.byId("grpB08").setVisible(false);
-			myView.byId("grpB09").setVisible(false);
-			myView.byId("grpB10").setVisible(false);
-			
-		}
-		
-		else if(model.getProperty(a.sPath + "/DelStatus") == '4'){
-			myView.byId("grpA01").setSelected(false);
-			myView.byId("grpA02").setSelected(true);
-			myView.byId("grpB").setVisible(true);
-			myView.byId("grpB01").setVisible(false);
-			myView.byId("grpB02").setVisible(false);
-			myView.byId("grpB03").setVisible(false);
-			myView.byId("grpB04").setSelected(true);
-			myView.byId("grpB04").setVisible(true);
-			myView.byId("grpB05").setVisible(false);
-			myView.byId("grpB06").setVisible(false);
-			myView.byId("grpB07").setVisible(false);
-			myView.byId("grpB08").setVisible(false);
-			myView.byId("grpB09").setVisible(false);
-			myView.byId("grpB10").setVisible(false);
-			
-		}
-		
-		else if(model.getProperty(a.sPath + "/DelStatus") == '5'){
-			myView.byId("grpA01").setSelected(false);
-			myView.byId("grpA02").setSelected(true);
-			myView.byId("grpB").setVisible(true);
-			myView.byId("grpB01").setVisible(false);
-			myView.byId("grpB02").setVisible(false);
-			myView.byId("grpB03").setVisible(false);
-			myView.byId("grpB04").setVisible(false);
-			myView.byId("grpB05").setSelected(true);
-			myView.byId("grpB05").setVisible(true);
-			myView.byId("grpB06").setVisible(false);
-			myView.byId("grpB07").setVisible(false);
-			myView.byId("grpB08").setVisible(false);
-			myView.byId("grpB09").setVisible(false);
-			myView.byId("grpB10").setVisible(false);
-			
-		}
-		
-		else if(model.getProperty(a.sPath + "/DelStatus") == '6'){
-			myView.byId("grpA01").setSelected(false);
-			myView.byId("grpA02").setSelected(true);
-			myView.byId("grpB").setVisible(true);
-			myView.byId("grpB01").setVisible(false);
-			myView.byId("grpB02").setVisible(false);
-			myView.byId("grpB03").setVisible(false);
-			myView.byId("grpB04").setVisible(false);
-			myView.byId("grpB05").setVisible(false);
-			myView.byId("grpB06").setSelected(true);
-			myView.byId("grpB06").setVisible(true);
-			myView.byId("grpB07").setVisible(false);
-			myView.byId("grpB08").setVisible(false);
-			myView.byId("grpB09").setVisible(false);
-			myView.byId("grpB10").setVisible(false);
-			
-		}
-		
-		else if(model.getProperty(a.sPath + "/DelStatus") == '7'){
-			myView.byId("grpA01").setSelected(false);
-			myView.byId("grpA02").setSelected(true);
-			myView.byId("grpB").setVisible(true);
-			myView.byId("grpB01").setVisible(false);
-			myView.byId("grpB02").setVisible(false);
-			myView.byId("grpB03").setVisible(false);
-			myView.byId("grpB04").setVisible(false);
-			myView.byId("grpB05").setVisible(false);
-			myView.byId("grpB06").setVisible(false);
-			myView.byId("grpB07").setSelected(true);
-			myView.byId("grpB07").setVisible(true);
-			myView.byId("grpB08").setVisible(false);
-			myView.byId("grpB09").setVisible(false);
-			myView.byId("grpB10").setVisible(false);
-			
-		}
-		
-		else if(model.getProperty(a.sPath + "/DelStatus") == '8'){
-			myView.byId("grpA01").setSelected(false);
-			myView.byId("grpA02").setSelected(true);
-			myView.byId("grpB").setVisible(true);
-			myView.byId("grpB01").setVisible(false);
-			myView.byId("grpB02").setVisible(false);
-			myView.byId("grpB03").setVisible(false);
-			myView.byId("grpB04").setVisible(false);
-			myView.byId("grpB05").setVisible(false);
-			myView.byId("grpB06").setVisible(false);
-			myView.byId("grpB07").setVisible(false);
-			myView.byId("grpB08").setVisible(true);
-			myView.byId("grpB08").setSelected(true);
-			myView.byId("grpB09").setVisible(false);
-			myView.byId("grpB10").setVisible(false);
-			
-		}
-		
-		else if(model.getProperty(a.sPath + "/DelStatus") == '9'){
-			myView.byId("grpA01").setSelected(false);
-			myView.byId("grpA02").setSelected(true);
-			myView.byId("grpB").setVisible(true);
-			myView.byId("grpB01").setVisible(false);
-			myView.byId("grpB02").setVisible(false);
-			myView.byId("grpB03").setVisible(false);
-			myView.byId("grpB04").setVisible(false);
-			myView.byId("grpB05").setVisible(false);
-			myView.byId("grpB06").setVisible(false);
-			myView.byId("grpB07").setVisible(false);
-			myView.byId("grpB08").setVisible(false);
-			myView.byId("grpB09").setSelected(true);
-			myView.byId("grpB09").setVisible(true);
-			myView.byId("grpB10").setVisible(false);
-			myView.byId("otherText").setVisible(false);
-			
-		}
-		
-		else if(model.getProperty(a.sPath + "/DelStatus") == '10'){
-			myView.byId("grpA01").setSelected(false);
-			myView.byId("grpA02").setSelected(true);
-			myView.byId("grpB").setVisible(true);
-			myView.byId("grpB01").setVisible(false);
-			myView.byId("grpB02").setVisible(false);
-			myView.byId("grpB03").setVisible(false);
-			myView.byId("grpB04").setVisible(false);
-			myView.byId("grpB05").setVisible(false);
-			myView.byId("grpB06").setVisible(false);
-			myView.byId("grpB07").setVisible(false);
-			myView.byId("grpB08").setVisible(false);
-			myView.byId("grpB09").setVisible(false);
-			myView.byId("grpB10").setSelected(true);
-			myView.byId("grpB10").setVisible(true);
-			myView.byId("otherText").setVisible(true);
-			myView.byId("otherText").setValue(model.getProperty(a.sPath + "/Comment"));
-		}
-		
-		else{
-			myView.byId("grpB").setVisible(false);
-			myView.byId("otherText").setVisible(false);
-			myView.byId("grpA01").setSelected(false);
-			myView.byId("grpA02").setSelected(false);
-//				if(model.getProperty(a.sPath + "/DelStatus") == '999'){
-//					myView.byId("setActive").setText("Folytat");
-//				}
-//			myView.byId("setActive").setText("Aktivál");
-		}
-	   	
-		 }});
-	},
-	*/
+		onBeforeRendering: function() { // binding model synchronisation
+			//this.onBeforeShow();
+
+			window.globalleadasDetail = this;
+			this.getView().addDelegate({
+				onAfterShow: function(evt) {
+					globalleadasDetail.getView().byId("idIconTabBarMulti").setSelectedKey("addr");
+					globalleadasDetail.getView().byId("idIconTabBarMulti").setExpanded(true);
+					var a = globalleadasDetail.getView().getBindingContext();
+					window.signeeCounter = 0;
+					var total = 0;
+
+					var myView = window.globalleadasDetail.getView();
+					var oElementBinding = myView.getElementBinding();
+					var path = oElementBinding.getBoundContext().getPath();
+					var object = myView.getModel().getObject(path);
+					var model = myView.getModel();
+
+					//var myView = globalleadasDetail.getView();
+					//var model = sap.ui.getCore().getModel();
+					//folytat/aktivál gombok beállítása 
+					if (object.DelStatus === 111) {
+						myView.byId("setActive").setVisible(true);
+						myView.byId("setContinue").setVisible(false);
+					} else if (object.DelStatus === 999) {
+						myView.byId("setContinue").setVisible(true);
+						myView.byId("setActive").setVisible(false);
+					} else if (object.DelStatus === 555) {
+						myView.byId("setActive").setVisible(false);
+						myView.byId("setContinue").setVisible(true);
+					} else {
+						myView.byId("setActive").setVisible(false);
+						myView.byId("setContinue").setVisible(false);
+					}
+
+					if (object.DelStatus === 222) {
+						myView.byId("grpA01").setSelected(true);
+						myView.byId("grpB").setVisible(false);
+					} else if (object.COD_Collected === 1) {
+						myView.byId("grpA01").setSelected(true);
+					} else if (object.DelStatus === 1) {
+						myView.byId("grpA01").setSelected(false);
+						myView.byId("grpA02").setSelected(true);
+						myView.byId("grpB").setVisible(true);
+						myView.byId("grpB01").setSelected(true);
+						myView.byId("grpB01").setVisible(true);
+						myView.byId("grpB02").setVisible(false);
+						myView.byId("grpB03").setVisible(false);
+						myView.byId("grpB04").setVisible(false);
+						myView.byId("grpB05").setVisible(false);
+						myView.byId("grpB06").setVisible(false);
+						myView.byId("grpB07").setVisible(false);
+						myView.byId("grpB08").setVisible(false);
+						myView.byId("grpB09").setVisible(false);
+						myView.byId("grpB10").setVisible(false);
+
+					} else if (object.DelStatus === 2) {
+						myView.byId("grpA01").setSelected(false);
+						myView.byId("grpA02").setSelected(true);
+						myView.byId("grpB").setVisible(true);
+						myView.byId("grpB01").setVisible(false);
+						myView.byId("grpB02").setSelected(true);
+						myView.byId("grpB02").setVisible(true);
+						myView.byId("grpB03").setVisible(false);
+						myView.byId("grpB04").setVisible(false);
+						myView.byId("grpB05").setVisible(false);
+						myView.byId("grpB06").setVisible(false);
+						myView.byId("grpB07").setVisible(false);
+						myView.byId("grpB08").setVisible(false);
+						myView.byId("grpB09").setVisible(false);
+						myView.byId("grpB10").setVisible(false);
+
+					} else if (object.DelStatus === 3) {
+						myView.byId("grpA01").setSelected(false);
+						myView.byId("grpA02").setSelected(true);
+						myView.byId("grpB").setVisible(true);
+						myView.byId("grpB01").setVisible(false);
+						myView.byId("grpB02").setVisible(false);
+						myView.byId("grpB03").setSelected(true);
+						myView.byId("grpB03").setVisible(true);
+						myView.byId("grpB04").setVisible(false);
+						myView.byId("grpB05").setVisible(false);
+						myView.byId("grpB06").setVisible(false);
+						myView.byId("grpB07").setVisible(false);
+						myView.byId("grpB08").setVisible(false);
+						myView.byId("grpB09").setVisible(false);
+						myView.byId("grpB10").setVisible(false);
+
+					} else if (object.DelStatus=== 4) {
+						myView.byId("grpA01").setSelected(false);
+						myView.byId("grpA02").setSelected(true);
+						myView.byId("grpB").setVisible(true);
+						myView.byId("grpB01").setVisible(false);
+						myView.byId("grpB02").setVisible(false);
+						myView.byId("grpB03").setVisible(false);
+						myView.byId("grpB04").setSelected(true);
+						myView.byId("grpB04").setVisible(true);
+						myView.byId("grpB05").setVisible(false);
+						myView.byId("grpB06").setVisible(false);
+						myView.byId("grpB07").setVisible(false);
+						myView.byId("grpB08").setVisible(false);
+						myView.byId("grpB09").setVisible(false);
+						myView.byId("grpB10").setVisible(false);
+
+					} else if (object.DelStatus=== 5) {
+						myView.byId("grpA01").setSelected(false);
+						myView.byId("grpA02").setSelected(true);
+						myView.byId("grpB").setVisible(true);
+						myView.byId("grpB01").setVisible(false);
+						myView.byId("grpB02").setVisible(false);
+						myView.byId("grpB03").setVisible(false);
+						myView.byId("grpB04").setVisible(false);
+						myView.byId("grpB05").setSelected(true);
+						myView.byId("grpB05").setVisible(true);
+						myView.byId("grpB06").setVisible(false);
+						myView.byId("grpB07").setVisible(false);
+						myView.byId("grpB08").setVisible(false);
+						myView.byId("grpB09").setVisible(false);
+						myView.byId("grpB10").setVisible(false);
+
+					} else if (object.DelStatus=== 6) {
+						myView.byId("grpA01").setSelected(false);
+						myView.byId("grpA02").setSelected(true);
+						myView.byId("grpB").setVisible(true);
+						myView.byId("grpB01").setVisible(false);
+						myView.byId("grpB02").setVisible(false);
+						myView.byId("grpB03").setVisible(false);
+						myView.byId("grpB04").setVisible(false);
+						myView.byId("grpB05").setVisible(false);
+						myView.byId("grpB06").setSelected(true);
+						myView.byId("grpB06").setVisible(true);
+						myView.byId("grpB07").setVisible(false);
+						myView.byId("grpB08").setVisible(false);
+						myView.byId("grpB09").setVisible(false);
+						myView.byId("grpB10").setVisible(false);
+
+					} else if (object.DelStatus=== 7) {
+						myView.byId("grpA01").setSelected(false);
+						myView.byId("grpA02").setSelected(true);
+						myView.byId("grpB").setVisible(true);
+						myView.byId("grpB01").setVisible(false);
+						myView.byId("grpB02").setVisible(false);
+						myView.byId("grpB03").setVisible(false);
+						myView.byId("grpB04").setVisible(false);
+						myView.byId("grpB05").setVisible(false);
+						myView.byId("grpB06").setVisible(false);
+						myView.byId("grpB07").setSelected(true);
+						myView.byId("grpB07").setVisible(true);
+						myView.byId("grpB08").setVisible(false);
+						myView.byId("grpB09").setVisible(false);
+						myView.byId("grpB10").setVisible(false);
+
+					} else if (object.DelStatus=== 8) {
+						myView.byId("grpA01").setSelected(false);
+						myView.byId("grpA02").setSelected(true);
+						myView.byId("grpB").setVisible(true);
+						myView.byId("grpB01").setVisible(false);
+						myView.byId("grpB02").setVisible(false);
+						myView.byId("grpB03").setVisible(false);
+						myView.byId("grpB04").setVisible(false);
+						myView.byId("grpB05").setVisible(false);
+						myView.byId("grpB06").setVisible(false);
+						myView.byId("grpB07").setVisible(false);
+						myView.byId("grpB08").setVisible(true);
+						myView.byId("grpB08").setSelected(true);
+						myView.byId("grpB09").setVisible(false);
+						myView.byId("grpB10").setVisible(false);
+
+					} else if (object.DelStatus=== 9) {
+						myView.byId("grpA01").setSelected(false);
+						myView.byId("grpA02").setSelected(true);
+						myView.byId("grpB").setVisible(true);
+						myView.byId("grpB01").setVisible(false);
+						myView.byId("grpB02").setVisible(false);
+						myView.byId("grpB03").setVisible(false);
+						myView.byId("grpB04").setVisible(false);
+						myView.byId("grpB05").setVisible(false);
+						myView.byId("grpB06").setVisible(false);
+						myView.byId("grpB07").setVisible(false);
+						myView.byId("grpB08").setVisible(false);
+						myView.byId("grpB09").setSelected(true);
+						myView.byId("grpB09").setVisible(true);
+						myView.byId("grpB10").setVisible(false);
+						myView.byId("otherText").setVisible(false);
+
+					} else if (object.DelStatus=== 10) {
+						myView.byId("grpA01").setSelected(false);
+						myView.byId("grpA02").setSelected(true);
+						myView.byId("grpB").setVisible(true);
+						myView.byId("grpB01").setVisible(false);
+						myView.byId("grpB02").setVisible(false);
+						myView.byId("grpB03").setVisible(false);
+						myView.byId("grpB04").setVisible(false);
+						myView.byId("grpB05").setVisible(false);
+						myView.byId("grpB06").setVisible(false);
+						myView.byId("grpB07").setVisible(false);
+						myView.byId("grpB08").setVisible(false);
+						myView.byId("grpB09").setVisible(false);
+						myView.byId("grpB10").setSelected(true);
+						myView.byId("grpB10").setVisible(true);
+						myView.byId("otherText").setVisible(true);
+						myView.byId("otherText").setValue(model.getProperty(a.sPath + "/Comment"));
+					} else {
+						myView.byId("grpB").setVisible(false);
+						myView.byId("otherText").setVisible(false);
+						myView.byId("grpA01").setSelected(false);
+						myView.byId("grpA02").setSelected(false);
+						//				if(model.getProperty(a.sPath + "/DelStatus") == '999'){
+						//					myView.byId("setActive").setText("Folytat");
+						//				}
+						//			myView.byId("setActive").setText("Aktivál");
+					}
+
+				}
+			});
+		},
 
 		onBeforeShow: function(evt) {
 			alert("onHow");
 		},
 
 		handleNavButtonPress: function(evt) {
-			this.nav.back("leadasMaster");
+			history.go(-1);
 		},
 
 		onSelect: function(evt) {
@@ -353,18 +378,20 @@ sap.ui.define([
 			var myself = this;
 			var isActive = 0;
 			var amIActive = false;
-			if (sap.ui.getCore().getModel().getProperty(a.sPath + "/DelStatus") == "999") {
+		
+			var object = this.getView.getModel().getObject(this.getView().getElementBinding().getBoundContext()).getPath();
+			
+			if (object.DelStatus === "999") {
 				amIActive = true;
 			}
-			for (i = 0; i < 1000; i++) {
+			for (var i = 0; i < 1000; i++) {
 				if (sap.ui.getCore().getModel().getProperty("/Address(" + i + ")/DelStatus") == "999") {
 					isActive++;
 				}
 			}
-			if (isActive == 0 && amIActive == false) {
-				if (sap.ui.getCore().getModel().getProperty(a.sPath + "/DelStatus") == '111' || sap.ui.getCore().getModel().getProperty(a.sPath +
-						"/DelStatus") == '555') {
-					if (sap.ui.getCore().getModel().getProperty(a.sPath + "/DelStatus") == '555') { //ha fel van függesztve akkor továbbemgyünk
+			if (isActive === 0 && amIActive === false) {
+				if (object.DelStatus === '111' || object.DelStatus === '555') {
+					if (object.DelStatus === '555') { //ha fel van függesztve akkor továbbemgyünk
 						sap.ui.getCore().getModel().setProperty(a.sPath + "/DelStatus", '999');
 						sap.ui.getCore().getModel().submitChanges();
 						sap.ui.getCore().getModel().updateBindings(true);
@@ -435,7 +462,7 @@ sap.ui.define([
 				}
 			});
 
-			/*   	if(sap.ui.getCore().getModel().getProperty(a.sPath + "/DelStatus") == "111"){
+			/*   	if(object.DelStatus) == "111"){
 			   		myView.byId("setActive").setText("Folytat");
 					}
 					else{

@@ -46,7 +46,7 @@ sap.ui.define([
 		handleListItemPress: function(evt) {
 			var context = evt.getSource().getBindingContext();
 			var _oRouter = sap.ui.core.UIComponent.getRouterFor(this);  
-			_oRouter.navTo("leadasDetail",  {addressPath: context.getPath().substr(1)});
+			_oRouter.navTo("leadasDetail",  {addressPath: context.getPath().substr(9, (context.getPath().length - 10))});
 		},
 
 		handleNavButtonPress: function(evt) {

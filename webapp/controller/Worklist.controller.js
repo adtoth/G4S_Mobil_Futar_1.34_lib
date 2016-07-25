@@ -180,16 +180,16 @@ sap.ui.define([
 	
 	handleFelvetelPress : function (evt) {
 		var context = evt.getSource().getBindingContext();
-		if(globalMaster.getView().byId("felvetTile").getNumber() >= 1){
-			this.nav.to("felvetelMaster", context);
-		}
+	//	if(globalMaster.getView().byId("felvetTile").getNumber() >= 1){
+			this.getRouter().navTo("felvetelMaster");
+	//	}
 	},
 	
 	handleAktualisPress : function (evt) {
 		var context = evt.getSource().getBindingContext();
-		if(globalMaster.getView().byId("aktualisTile").getNumber() >= 1){
+		 if(globalMaster.getView().byId("aktualisTile").getNumber() >= 1){
 			this.nav.to("aktualisMaster", context);
-		}
+		 }
 	},
 	
 	handleLeadasPress : function (evt) {

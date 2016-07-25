@@ -50,11 +50,10 @@ util.Formatter = {
 				}	
 			
 		});*/
-		
-		//var Items = a.getProperty(a.sPath.Items);
+
 		for(var i = 0; i < a.getProperty(a.sPath).Items.__list.length; i++){
 			var path = a.getProperty(a.sPath).Items.__list[i];
-			COD = a.getModel();
+			COD += a.getModel().getProperty("/" + path).Price;
 		}
 		
 		if(COD === 0){

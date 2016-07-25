@@ -19,7 +19,7 @@ sap.ui.controller("com.g4s.controller.leadasMaster", {
 	},
 
 	handleNavButtonPress : function(evt) {
-		this.nav.back("Master");
+		history.go(-1);
 	},
 
 	handleListSelect : function(evt) {

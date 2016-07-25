@@ -3,7 +3,37 @@
 	<Page showNavButton="true" navButtonPress="handleNavButtonPress"
 		title="Leadások listája">
 		<!--<List id="list" select="handleListSelect" items="{/Address?$filter=PicType eq 'D' and (DelStatus eq '111' or DelStatus eq '999' or DelStatus eq '555') and Today eq '1' }" growing="true" growingTriggerText="Több" noDataText="Nincs kapcsolat a szerverrel">-->
-		<List id="list" select="handleListSelect" items="{path: '/Address', parameters:{expand: 'Items'}}" growing="true" growingTriggerText="Több" noDataText="Nincs kapcsolat a szerverrel">
+		<List id="list" select="handleListSelect" items="{path: '/Address', parameters:{expand: 'Items'}, 
+		filters: [{
+        	path: 'PicType', 
+        	operator: 'EQ',
+        	value1: 'D',
+        	and: 'true'
+        },
+        {
+        	path: 'Today',
+        	operator: 'EQ',
+        	value1: '1',
+        	and: 'true'
+        }
+        ,
+        	{
+        	path: 'DelStatus',
+        	operator: 'EQ',
+        	value1: '111'
+        	},
+        	{
+        	path: 'DelStatus',
+        	operator: 'EQ',
+        	value1: '555'
+        	},
+        	{
+        	path: 'DelStatus',
+        	operator: 'EQ',
+        	value1: '999'
+        	}
+        
+        ]}" growing="true" growingTriggerText="Több" noDataText="Nincs kapcsolat a szerverrel">
 			<ObjectListItem type="Active" press="handleListItemPress"
 			
 				title="{Company}" icon="sap-icon://toaster-{IconPic}" number="{path: 'PicType',

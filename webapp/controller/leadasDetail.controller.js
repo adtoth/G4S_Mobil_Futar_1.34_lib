@@ -107,7 +107,7 @@ sap.ui.define([
 				Id = oObject.Id,
 				oViewModel = this.getView().getModel();
 
-			this.getOwnerComponent().oListSelector.selectAListItem(sPath);
+			//	this.getOwnerComponent().oListSelector.selectAListItem(sPath);
 
 		},
 
@@ -118,12 +118,12 @@ sap.ui.define([
 
 			// Make sure busy indicator is displayed immediately when
 			// detail view is displayed for the first time
-			oViewModel.setProperty("/delay", 0);
+			//oViewModel.setProperty("/delay", 0);
 
 			// Binding the view will set it to not busy - so the view is always busy if it is not bound
-			oViewModel.setProperty("/busy", true);
+			//oViewModel.setProperty("/busy", true);
 			// Restore original busy indicator delay for the detail view
-			oViewModel.setProperty("/delay", iOriginalViewBusyDelay);
+			//oViewModel.setProperty("/delay", iOriginalViewBusyDelay);
 		},
 
 		onBeforeRendering: function() { // binding model synchronisation
@@ -214,7 +214,7 @@ sap.ui.define([
 						myView.byId("grpB09").setVisible(false);
 						myView.byId("grpB10").setVisible(false);
 
-					} else if (object.DelStatus=== 4) {
+					} else if (object.DelStatus === 4) {
 						myView.byId("grpA01").setSelected(false);
 						myView.byId("grpA02").setSelected(true);
 						myView.byId("grpB").setVisible(true);
@@ -230,7 +230,7 @@ sap.ui.define([
 						myView.byId("grpB09").setVisible(false);
 						myView.byId("grpB10").setVisible(false);
 
-					} else if (object.DelStatus=== 5) {
+					} else if (object.DelStatus === 5) {
 						myView.byId("grpA01").setSelected(false);
 						myView.byId("grpA02").setSelected(true);
 						myView.byId("grpB").setVisible(true);
@@ -246,7 +246,7 @@ sap.ui.define([
 						myView.byId("grpB09").setVisible(false);
 						myView.byId("grpB10").setVisible(false);
 
-					} else if (object.DelStatus=== 6) {
+					} else if (object.DelStatus === 6) {
 						myView.byId("grpA01").setSelected(false);
 						myView.byId("grpA02").setSelected(true);
 						myView.byId("grpB").setVisible(true);
@@ -262,7 +262,7 @@ sap.ui.define([
 						myView.byId("grpB09").setVisible(false);
 						myView.byId("grpB10").setVisible(false);
 
-					} else if (object.DelStatus=== 7) {
+					} else if (object.DelStatus === 7) {
 						myView.byId("grpA01").setSelected(false);
 						myView.byId("grpA02").setSelected(true);
 						myView.byId("grpB").setVisible(true);
@@ -278,7 +278,7 @@ sap.ui.define([
 						myView.byId("grpB09").setVisible(false);
 						myView.byId("grpB10").setVisible(false);
 
-					} else if (object.DelStatus=== 8) {
+					} else if (object.DelStatus === 8) {
 						myView.byId("grpA01").setSelected(false);
 						myView.byId("grpA02").setSelected(true);
 						myView.byId("grpB").setVisible(true);
@@ -294,7 +294,7 @@ sap.ui.define([
 						myView.byId("grpB09").setVisible(false);
 						myView.byId("grpB10").setVisible(false);
 
-					} else if (object.DelStatus=== 9) {
+					} else if (object.DelStatus === 9) {
 						myView.byId("grpA01").setSelected(false);
 						myView.byId("grpA02").setSelected(true);
 						myView.byId("grpB").setVisible(true);
@@ -311,7 +311,7 @@ sap.ui.define([
 						myView.byId("grpB10").setVisible(false);
 						myView.byId("otherText").setVisible(false);
 
-					} else if (object.DelStatus=== 10) {
+					} else if (object.DelStatus === 10) {
 						myView.byId("grpA01").setSelected(false);
 						myView.byId("grpA02").setSelected(true);
 						myView.byId("grpB").setVisible(true);
@@ -378,19 +378,20 @@ sap.ui.define([
 			var myself = this;
 			var isActive = 0;
 			var amIActive = false;
-		
-			var object = this.getView.getModel().getObject(this.getView().getElementBinding().getBoundContext()).getPath();
-			
-			if (object.DelStatus === "999") {
+
+			var object = this.getView().getModel().getObject(this.getView().getElementBinding().getBoundContext().getPath());
+
+			if (object.DelStatus === 999) {
 				amIActive = true;
 			}
+			// ezt meg kell szerelni
 			for (var i = 0; i < 1000; i++) {
-				if (sap.ui.getCore().getModel().getProperty("/Address(" + i + ")/DelStatus") == "999") {
+				if (this.getView().getModel().getProperty("/Address(" + i + ")/DelStatus") === 999) {
 					isActive++;
 				}
 			}
 			if (isActive === 0 && amIActive === false) {
-				if (object.DelStatus === '111' || object.DelStatus === '555') {
+				if (object.DelStatus === 111 || object.DelStatus === 555) {
 					if (object.DelStatus === '555') { //ha fel van függesztve akkor továbbemgyünk
 						sap.ui.getCore().getModel().setProperty(a.sPath + "/DelStatus", '999');
 						sap.ui.getCore().getModel().submitChanges();
@@ -401,11 +402,15 @@ sap.ui.define([
 						sap.m.MessageBox.confirm(bundle.getText("ActivateDialogMsg"), function( // ha nincs, akkor megkérdezzük, h aktiváljuk-e
 								oAction) {
 								if (sap.m.MessageBox.Action.OK === oAction) {
-									sap.ui.getCore().getModel().setProperty(a.sPath + "/DelStatus", '999');
-									sap.ui.getCore().getModel().submitChanges();
+									myself.getView().getModel().update(a.sPath + "/DelStatus", '999');
+									/*sap.ui.getCore().getModel().submitChanges();
 									sap.ui.getCore().getModel().updateBindings(true);
-									sap.ui.getCore().getModel().forceNoCache(true);
-									myself.nav.to("aktualis", context);
+									sap.ui.getCore().getModel().forceNoCache(true);*/
+									var _oRouter = sap.ui.core.UIComponent.getRouterFor(myself);
+									_oRouter.navTo("aktualis", {
+										addressPath: context.getPath().substr(9, (context.getPath().length - 10))
+									});
+									//myself.nav.to("aktualis", context);
 								}
 							},
 

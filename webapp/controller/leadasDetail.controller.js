@@ -454,21 +454,26 @@ sap.ui.define([
 			//       }
 
 			// totál utánvét összeg számítás
-			var oNumberFormat = sap.ui.core.format.NumberFormat.getIntegerInstance({
-				maxFractionDigits: 1,
-				minFractionDigits: 0,
-				groupingEnabled: true,
-				groupingSeparator: " ",
-				decimalSeparator: "."
-			});
-			sap.ui.getCore().getModel().read(a.sPath, null, {
-				"$expand": "Items"
-			}, true, function(response) {
-				for (var i = 0; i < response.Items.results.length; i++) {
-					total += sap.ui.getCore().getModel().getProperty("/Item(" + response.Items.results[i].Id + ")/Price");
-					myView.byId("total_id").setNumber(oNumberFormat.format(total));
-				}
-			});
+			function fSuccess(response){ 
+        	var oNumberFormat = sap.ui.core.format.NumberFormat.getIntegerInstance({maxFractionDigits: 1, minFractionDigits: 0, groupingEnabled: true, groupingSeparator: " ",
+			  decimalSeparator: "."});
+            for(var i = 0; i < response.results.length; i++){
+            	total += response.results[i].Price;
+				myView.byId("total_id").setNumber(oNumberFormat.format(total));
+            }
+
+            }  
+            function fError(oEvent){  
+             console.log("oModel: An error occured while reading Employees!");  
+            } 
+        
+        // totál utánvét összeg számítás
+        
+			  
+			   this.getView().getModel().read(a.sPath + "/Items", {  
+					success: jQuery.proxy(fSuccess, this),  
+                	error: jQuery.proxy(fError, this)  
+				});  
 
 			/*   	if(object.DelStatus) == "111"){
 			   		myView.byId("setActive").setText("Folytat");

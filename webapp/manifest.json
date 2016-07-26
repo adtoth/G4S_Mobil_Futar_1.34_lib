@@ -102,12 +102,12 @@
 				"target": ["worklist"]
 			}, {
 				"name": "bevetMaster",
-				"pattern": "Item",
+				"pattern": "BevetItems",
 				"greedy": false,
 				"target": ["bevetMaster"]
 			}, {
 				"name": "felvetelMaster",
-				"pattern": "Item",
+				"pattern": "Felvet",
 				"greedy": false,
 				"target": ["felvetelMaster"]
 			}, {
@@ -125,6 +125,21 @@
 				"pattern": "AktualisAddress/{aktualisPath}",
 				"greedy": false,
 				"target": ["aktualis"]
+			}, {
+				"name": "lezartLeadasMaster",
+				"pattern": "lezartLeadasMaster",
+				"greedy": false,
+				"target": ["lezartLeadasMaster"]
+			}, {
+				"name": "lezartLeadasDetail",
+				"pattern": "lezartLeadasDetail/{lezartLeadasDetailPath}",
+				"greedy": false,
+				"target": ["lezartLeadasDetail"]
+			}, {
+				"name": "depo",
+				"pattern": "depo",
+				"greedy": false,
+				"target": ["depo"]
 			}],
 			"targets": {
 				"worklist": {
@@ -177,6 +192,27 @@
 					"clearAggregation": true,
 					"viewName": "aktualis",
 					"viewId": "aktualisDetail"
+				},
+				"lezartLeadasMaster": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "lezartLeadasMaster",
+					"viewId": "lezartLeadasMaster"
+				},
+				"lezartLeadasDetail": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "lezartLeadasDetail",
+					"viewId": "lezartLeadasDetail"
+				},
+				"depo": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "depo",
+					"viewId": "depo"
 				}
 			}
 		}

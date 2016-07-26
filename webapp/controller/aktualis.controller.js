@@ -433,9 +433,9 @@ sap.ui.define([
         
 			  
 			   this.getView().getModel().read(a.sPath + "/Items", {  
-				success: jQuery.proxy(fSuccess, this),  
-                error: jQuery.proxy(fError, this)  
-  });  
+					success: jQuery.proxy(fSuccess, this),  
+                	error: jQuery.proxy(fError, this)  
+				});  
             
         /*this.getView().getModel().read(a.sPath, null, {
 			"$expand" : "Items"

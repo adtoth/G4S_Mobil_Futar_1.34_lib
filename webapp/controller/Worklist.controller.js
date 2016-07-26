@@ -99,7 +99,7 @@ sap.ui.define([
 		this.getView().byId("aktualisTile").setNumber(0);
 
 		// Get the number of unpicked items from the server and set it for the tile 
-		this.getView().getModel().read("/Item?$filter=Today eq '1' and PickupStatus eq 'M'", null, "$inlinecount=allpages", true, function(response){
+		this.getView().getModel().read("/Item?$filter=Today eq '1' and PickupStatus eq 'M'", "$inlinecount=allpages", function(response){
 			this.getView().byId("bevetTile").setNumber(response.__count);
 		});
 		//globalMaster.getView().byId("bevetTile").setNumber(bevet);
@@ -171,7 +171,6 @@ sap.ui.define([
 	},
 	
 	handleBevetelezesPress : function (evt) {
-		var context = evt.getSource().getBindingContext();
 	//	if(globalMaster.getView().byId("bevetTile").getNumber() >= 1){
 			//this.nav.to("bevetMaster", context);
 			this.getRouter().navTo("bevetMaster");
@@ -213,17 +212,13 @@ sap.ui.define([
  },
 	
 	handleLezartLeadasPress: function(evt){
-		var context = evt.getSource().getBindingContext();
-		if(globalMaster.getView().byId("leadLezartTile").getNumber() >= 1){
-			this.nav.to("lezartLeadasMaster", context);
-		}
+		this.getRouter().navTo("lezartLeadasMaster");
+
 	},
 	
 	handleDepoPress: function(evt){
-		var context = evt.getSource().getBindingContext();
-		if(globalMaster.getView().byId("depoTile").getNumber() >= 1){
-			this.nav.to("depoMaster", context);
-		}
+		this.getRouter().navTo("depo");
+
 	},	 
 
 	handlePosPress: function(){

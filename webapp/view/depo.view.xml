@@ -1,0 +1,68 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="com.g4s.controller.depo"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page showNavButton="true" navButtonPress="handleNavButtonPress"
+		title="Depo">
+		<!-- items="{/Item}" -->
+<!--		<List id="list" items="{/Item?$filter=Address/DelStatus eq 222 and Address/PicType eq 'U' or (Address/DelStatus ne 222 and PicType eq 'D') and Today eq '1'}" growing="true" growingTriggerText="Több" noDataText="Nincs kapcsolat a szerverrel, vagy üres a lista">
+-->		<List id="list" items="{path: '/Item', parameters:{expand: 'Address'}, 
+		filters: [{
+        	path: 'Address/DelStatus', 
+        	operator: 'EQ',
+        	value1: '222',
+        	and: 'true'
+        },
+        {
+        	path: 'Address/PicType',
+        	operator: 'EQ',
+        	value1: 'U',
+        	and: 'true'
+        },
+        
+        	{
+        	path: 'Address/DelStatus',
+        	operator: 'NE',
+        	value1: '222'
+        	},
+        	{
+        	path: 'Address/PicType',
+        	operator: 'EQ',
+        	value1: 'D'
+        	},
+        	{
+        	path: 'Address/Today',
+        	operator: 'EQ',
+        	value1: '1',
+        	and: 'true'
+        	}
+        
+        	
+        
+        ]}" growing="true" growingTriggerText="Több" noDataText="Nincs kapcsolat a szerverrel, vagy üres a lista">
+			<ObjectListItem type="Active" 
+				title="{Id}"
+				icon="sap-icon://shipping-status">
+		 		<firstStatus>
+					<ObjectStatus text="{ path: 'PickupStatus',
+										  formatter: 'util.Formatter.statusText' }"
+								  state="{ path: 'PickupStatus',
+										   formatter: 'util.Formatter.statusState' }"/>
+				</firstStatus>
+				<secondStatus>
+					<ObjectStatus	text="{ path: 'PicType',
+											formatter: 'util.Formatter.statusText'}"/>
+				</secondStatus>
+				<attributes>
+					<ObjectAttribute text="Csomagnév: {ProductName}" />
+					<ObjectAttribute text="Csomag ID: {ProductId}"/>	
+				</attributes>
+			</ObjectListItem> 
+		</List>
+	
+		<footer>
+			<Bar>
+				<contentRight>
+				</contentRight> 				
+			</Bar>
+		</footer>
+	</Page>
+</mvc:View>

@@ -92,7 +92,7 @@ sap.ui.define([
 	doMagic: function(rsp){
 		//this.getView().getModel().updateBindings(true);
 		//sap.getModel().forceNoCache(true);
-		this.getView().byId("leadTile").setNumber(0);
+		/*this.getView().byId("leadTile").setNumber(0);
 		this.getView().byId("leadLezartTile").setNumber(0);
 		this.getView().byId("felvetTile").setNumber(0);
 		this.getView().byId("felvetLezartTile").setNumber(0);
@@ -133,6 +133,7 @@ sap.ui.define([
 			var depo = response.__count;
 		});
 		//globalMaster.getView().byId("depoTile").setNumber(depo);
+		*/
 	},
 	
 	getAddress: function(response) {

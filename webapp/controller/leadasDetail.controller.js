@@ -392,23 +392,23 @@ sap.ui.define([
 			}
 			if (isActive === 0 && amIActive === false) {
 				if (object.DelStatus === 111 || object.DelStatus === 555) {
-					if (object.DelStatus === '555') { //ha fel van függesztve akkor továbbemgyünk
-						sap.ui.getCore().getModel().setProperty(a.sPath + "/DelStatus", '999');
-						sap.ui.getCore().getModel().submitChanges();
-						sap.ui.getCore().getModel().updateBindings(true);
-						sap.ui.getCore().getModel().forceNoCache(true);
+					if (object.DelStatus === 555) { //ha fel van függesztve akkor továbbemgyünk
+						myself.getView().getModel().setProperty(a.sPath + "/DelStatus", '999');
+						myself.getView().getModel().submitChanges();
+						//sap.ui.getCore().getModel().updateBindings(true);
+						//sap.ui.getCore().getModel().forceNoCache(true);
 						myself.nav.to("aktualis", context);
 					} else {
 						sap.m.MessageBox.confirm(bundle.getText("ActivateDialogMsg"), function( // ha nincs, akkor megkérdezzük, h aktiváljuk-e
 								oAction) {
 								if (sap.m.MessageBox.Action.OK === oAction) {
-									myself.getView().getModel().update(a.sPath + "/DelStatus", '999');
-									/*sap.ui.getCore().getModel().submitChanges();
-									sap.ui.getCore().getModel().updateBindings(true);
+									myself.getView().getModel().setProperty(a.sPath + "/DelStatus", '999');
+									myself.getView().getModel().submitChanges();
+									/*sap.ui.getCore().getModel().updateBindings(true);
 									sap.ui.getCore().getModel().forceNoCache(true);*/
 									var _oRouter = sap.ui.core.UIComponent.getRouterFor(myself);
 									_oRouter.navTo("aktualis", {
-										addressPath: context.getPath().substr(9, (context.getPath().length - 10))
+										aktualisPath: context.getPath().substr(9, (context.getPath().length - 10))
 									});
 									//myself.nav.to("aktualis", context);
 								}
@@ -425,7 +425,10 @@ sap.ui.define([
 			}
 
 			if (amIActive == true) {
-				myself.nav.to("aktualis", context);
+				var _oRouter = sap.ui.core.UIComponent.getRouterFor(myself);
+									_oRouter.navTo("aktualis", {
+										aktualisPath: context.getPath().substr(9, (context.getPath().length - 10))
+									});
 			}
 
 		},

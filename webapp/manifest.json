@@ -120,6 +120,11 @@
 				"pattern": "Address/{addressPath}",
 				"greedy": false,
 				"target": ["leadasDetail"]
+			}, {
+				"name": "aktualis",
+				"pattern": "AktualisAddress/{aktualisPath}",
+				"greedy": false,
+				"target": ["aktualis"]
 			}],
 			"targets": {
 				"worklist": {
@@ -165,6 +170,13 @@
 					"clearAggregation": true,
 					"viewName": "leadasDetail",
 					"viewId": "leadasDetail"
+				},
+				"aktualis": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "aktualis",
+					"viewId": "aktualisDetail"
 				}
 			}
 		}

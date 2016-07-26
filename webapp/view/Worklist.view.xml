@@ -37,6 +37,26 @@
 			
 		<StandardTile icon="sap-icon://home" title="Depo" press="handleDepoPress" number="0" id="depoTile"/>
 		
+		<List id= "aktualisList" items="{path: '/Address', 
+		filters: [{
+        	path: 'Today',
+        	operator: 'EQ',
+        	value1: '1',
+        	and: 'true'
+        },
+        {
+        	path: 'DelStatus',
+        	operator: 'EQ',
+        	value1: '999'
+        }
+        ]}" visible="false">
+			<ObjectListItem type="Active" press="handleListItemPress"
+			
+				title="{Company}" icon="sap-icon://toaster-{IconPic}" number="{path: 'PicType',
+							formatter: 'util.Formatter.statusText'}">
+
+			</ObjectListItem>
+		</List>
 
 	<content/>
 		

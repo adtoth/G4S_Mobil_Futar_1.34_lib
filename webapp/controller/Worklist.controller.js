@@ -186,12 +186,13 @@ sap.ui.define([
 	},
 	
 	handleAktualisPress : function (evt) {
-		var context = evt.getSource().getBindingContext();
-		 if(globalMaster.getView().byId("aktualisTile").getNumber() >= 1){
-			this.nav.to("aktualisMaster", context);
-		 }
+		var item = this.getView().byId("aktualisList").getItems();
+		if(item.length !== 0){
+			var context = item[0].getBindingContext();
+			this.getRouter().navTo("aktualis",  {aktualisPath: context.getPath().substr(9, (context.getPath().length - 10))});
+		}
 	},
-	
+
 	handleLeadasPress : function (evt) {
 		var context = evt.getSource().getBindingContext();
 		//if(globalMaster.getView().byId("leadTile").getNumber() >= 1){
@@ -209,7 +210,7 @@ sap.ui.define([
 		if(globalMaster.getView().byId("felvetLezartTile").getNumber() >= 1){
 			this.nav.to("lezartFelvetelMaster", context);
 		}
-	},
+ },
 	
 	handleLezartLeadasPress: function(evt){
 		var context = evt.getSource().getBindingContext();

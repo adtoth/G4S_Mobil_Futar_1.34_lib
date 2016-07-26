@@ -107,7 +107,7 @@
 				"target": ["bevetMaster"]
 			}, {
 				"name": "felvetelMaster",
-				"pattern": "Item",
+				"pattern": "a",
 				"greedy": false,
 				"target": ["felvetelMaster"]
 			}, {

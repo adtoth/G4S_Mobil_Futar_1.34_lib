@@ -44,7 +44,7 @@
     }
   ],
   "codeCheckingTriggers": {
-    "notifyBeforePush": true,
+    "notifyBeforePush": false,
     "notifyBeforePushLevel": "Error",
     "blockPush": false,
     "blockPushLevel": "Error"
@@ -57,8 +57,8 @@
     "resourceModelName": "i18n"
   },
   "mockpreview": {
-    "mockUri": "",
-    "metadataFilePath": "",
+    "mockUri": "https://cors-anywhere.herokuapp.com/http://office.netlife.hu:8181/futarfioriodataprovider/courierdata.svc/",
+    "metadataFilePath": "localService/metadata.xml",
     "loadJSONFiles": false,
     "loadCustomRequests": false,
     "mockRequestsFilePath": ""

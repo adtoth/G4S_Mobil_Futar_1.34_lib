@@ -21,7 +21,7 @@ sap.ui.define([
 
 			sap.ui.core.UIComponent.getRouterFor(this).getRoute("leadasDetail").attachPatternMatched(this._onObjectMatched, this);
 			this.getView().setModel(oViewModel, "leadasDetailView");
-			this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
+			//this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
 			//var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 			//oRouter.getRoute("leadasDetail").attachPatternMatched(this._onObjectMatched, this);
 		},
@@ -70,14 +70,14 @@ sap.ui.define([
 
 		_bindView: function(sObjectPath) {
 			// Set busy indicator during view binding
-			var oViewModel = this.getView().getModel();
+			//var oViewModel = this.getView().getModel();
 
 			// If the view was not bound yet its not busy, only if the binding requests data it is set to busy again
-			oViewModel.setProperty("/busy", false);
+			//oViewModel.setProperty("/busy", false);
 
 			this.getView().bindElement({
-				path: sObjectPath,
-				events: {
+				path: sObjectPath
+				/*events: {
 					change: this._onBindingChange.bind(this),
 					dataRequested: function() {
 						oViewModel.setProperty("/busy", true);
@@ -85,12 +85,12 @@ sap.ui.define([
 					dataReceived: function() {
 						oViewModel.setProperty("/busy", false);
 					}
-				}
+				}*/
 			});
 		},
 
 		_onBindingChange: function() {
-			var oView = this.getView(),
+			/*var oView = this.getView(),
 				oElementBinding = oView.getElementBinding();
 
 			// No data for the binding
@@ -105,7 +105,7 @@ sap.ui.define([
 				//oResourceBundle = this.getView().getResourceBundle(),
 				oObject = oView.getModel().getObject(sPath),
 				Id = oObject.Id,
-				oViewModel = this.getView().getModel();
+				oViewModel = this.getView().getModel();*/
 
 			//	this.getOwnerComponent().oListSelector.selectAListItem(sPath);
 
@@ -113,8 +113,8 @@ sap.ui.define([
 
 		_onMetadataLoaded: function() {
 			// Store original busy indicator delay for the detail view
-			var iOriginalViewBusyDelay = this.getView().getBusyIndicatorDelay(),
-				oViewModel = this.getView().getModel("leadasDetailView");
+			//var iOriginalViewBusyDelay = this.getView().getBusyIndicatorDelay(),
+			//	oViewModel = this.getView().getModel("leadasDetailView");
 
 			// Make sure busy indicator is displayed immediately when
 			// detail view is displayed for the first time
@@ -342,13 +342,9 @@ sap.ui.define([
 				}
 			});
 		},
-
-		onBeforeShow: function(evt) {
-			alert("onHow");
-		},
-
+		
 		handleNavButtonPress: function(evt) {
-			history.go(-1);
+			sap.ui.core.UIComponent.getRouterFor(this).navTo("leadasMaster"); 
 		},
 
 		onSelect: function(evt) {

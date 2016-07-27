@@ -99,7 +99,8 @@
 			"routes": [{
 				"pattern": "",
 				"name": "worklist",
-				"target": ["worklist"]
+				"target": ["worklist"],
+				"greedy": false
 			}, {
 				"name": "bevetMaster",
 				"pattern": "BevetItems",
@@ -154,7 +155,8 @@
 			"targets": {
 				"worklist": {
 					"viewName": "Worklist",
-					"viewId": "worklist"
+					"viewId": "worklist",
+					"clearAggregation": true
 				},
 				"object": {
 					"viewName": "Object",

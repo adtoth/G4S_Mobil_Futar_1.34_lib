@@ -1,9 +1,10 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
+	"sap/ui/core/routing/History",
 	"com/g4s/util/Formatter",
 	"com/g4s/util/Grouper"
 
-], function(Controller) {
+], function(Controller, History) {
 	"use strict";
 
 	return Controller.extend("com.g4s.controller.leadasMaster", {
@@ -13,9 +14,8 @@ sap.ui.define([
 		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
 		 * @memberOf com.g4s.view.leadasMaster
 		 */
-		//	onInit: function() {
-		//
-		//	},
+			onInit: function() {
+			},
 
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
@@ -50,13 +50,15 @@ sap.ui.define([
 		},
 
 		handleNavButtonPress: function(evt) {
-			history.go(-1);
+			var sPreviousHash = History.getInstance().getPreviousHash();
+
+				if (sPreviousHash !== undefined) {
+					history.go(-2);
+				} else {
+					this.getRouter().navTo("worklist", {}, true);
+				}
 		},
 
-		handleListSelect: function(evt) {
-			var context = evt.getParameter("listItem").getBindingContext();
-			this.nav.to("leadasDetail", context);
-		},
 
 		handleGroup: function(evt) {
 

@@ -350,14 +350,8 @@ sap.ui.define([
 		 }});
 	},
 	
-	
-
-	onBeforeShow: function(evt) { 
-		alert("onHow");
-	},
-	
 	handleNavButtonPress : function(evt) {
-		history.go(-1);
+		sap.ui.core.UIComponent.getRouterFor(this).navTo("lezartLeadasMaster"); 
 	},
 	
 	onSelect: function(evt){

@@ -19,7 +19,10 @@ sap.ui.define([
 	 
 	handleListItemPress : function(evt) {
 		var context = evt.getSource().getBindingContext();
-		this.nav.to("felvetelDetail", context);
+		var _oRouter = sap.ui.core.UIComponent.getRouterFor(this);  		
+//		this.nav.to("felvetelDetail", context);
+		_oRouter.navTo("felvetelDetail",  {addressPath: context.getPath().substr(9, (context.getPath().length - 10))});
+
 	},
 
 	handleNavButtonPress : function(evt) {
@@ -38,7 +41,7 @@ sap.ui.define([
 		var item = evt.getParameter("selectedItem");
 		var key = (item) ? item.getKey() : null;
 		if ("TPostalCode" === key || "To" === key || "TStreet" === key) {
-			sap.ui.netlife.G4S.util.Grouper.bundle = this.getView().getModel("i18n").getResourceBundle();
+			// sap.ui.netlife.G4S.util.Grouper.bundle = this.getView().getModel("i18n").getResourceBundle();
 			var grouper = sap.ui.netlife.G4S.util.Grouper[key];
 			sorters.push(new sap.ui.model.Sorter(key, false, grouper));
 		}

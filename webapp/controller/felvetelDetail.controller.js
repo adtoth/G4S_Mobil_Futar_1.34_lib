@@ -1,9 +1,24 @@
-jQuery.sap.require("sap.m.MessageBox");
-jQuery.sap.require("sap.m.MessageToast");
-jQuery.sap.require("sap.ui.core.format.NumberFormat");
-jQuery.sap.require("sap.ui.netlife.G4S.util.Formatter");
-jQuery.sap.require("jSignature");
-sap.ui.controller("sap.ui.netlife.G4S.view.felvetelDetail", {
+// jQuery.sap.require("sap.m.MessageBox");
+// jQuery.sap.require("sap.m.MessageToast");
+// jQuery.sap.require("sap.ui.core.format.NumberFormat");
+// jQuery.sap.require("sap.ui.netlife.G4S.util.Formatter");
+// jQuery.sap.require("jSignature");
+// sap.ui.controller("sap.ui.netlife.G4S.view.felvetelDetail", {
+
+sap.ui.define([
+	"sap/m/MessageBox",
+	"sap/m/MessageToast",
+	"sap/ui/core/mvc/Controller",
+	"sap/ui/model/json/JSONModel",
+	"com/g4s/controller/BaseController",
+	"sap/ui/core/format/NumberFormat",
+	"com/g4s/util/jSignature",
+	"com/g4s/util/Formatter"
+
+], function(Controller, BaseController, JSONModel, jSignature) {
+	"use strict";
+
+	return Controller.extend("com.g4s.controller.felvetelDetail", {
 	
 	onBeforeRendering: function(){ // binding model synchronisation
 		//this.onBeforeShow();
@@ -370,5 +385,6 @@ sap.ui.controller("sap.ui.netlife.G4S.view.felvetelDetail", {
 	},
     
 	
-	
+	});
+
 });

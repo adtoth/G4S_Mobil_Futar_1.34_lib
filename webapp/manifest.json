@@ -111,6 +111,11 @@
 				"greedy": false,
 				"target": ["felvetelMaster"]
 			}, {
+				"name": "felvetelDetail",
+				"pattern": "Felvet/{addressPath}",
+				"greedy": false,
+				"target": ["felvetelDetail"]
+			}, {
 				"name": "leadasMaster",
 				"pattern": "Address",
 				"greedy": false,
@@ -225,6 +230,13 @@
 					"clearAggregation": true,
 					"viewName": "utanvet",
 					"viewId": "utanvet"
+				},
+				"felvetelDetail": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "felvetelDetail",
+					"viewId": "felvetelDetail"
 				}
 			}
 		}

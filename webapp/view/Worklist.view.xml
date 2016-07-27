@@ -50,7 +50,7 @@
 		</tileContent>
 	</GenericTile>
 	
-	<GenericTile id="felvetTile" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Felvétek" press="handleFelvetPress">
+	<GenericTile id="felvetTile" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Felvétek" press="handleFelvetelPress">
 		<tileContent>
 			<TileContent >
 				<content>

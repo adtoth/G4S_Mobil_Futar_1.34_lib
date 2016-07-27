@@ -8,14 +8,14 @@ sap.ui.define([
 
 	return Controller.extend("com.g4s.controller.felvetelMaster", {
 	 
-	onBeforeRendering: function(){ // binding model synchronisation
+	// onBeforeRendering: function(){ // binding model synchronisation
 			
-	        this.getView().addDelegate({ onAfterRendering: function(evt) {
-	        	 sap.ui.getCore().getModel().refresh(true);
-	        	 sap.ui.getCore().getModel().updateBindings(true);
-	 			 sap.ui.getCore().getModel().forceNoCache(true);
-	        }});
-		},
+	//         this.getView().addDelegate({ onAfterRendering: function(evt) {
+	//         	 sap.ui.getCore().getModel().refresh(true);
+	//         	 sap.ui.getCore().getModel().updateBindings(true);
+	//  			 sap.ui.getCore().getModel().forceNoCache(true);
+	//         }});
+	// 	},
 	 
 	handleListItemPress : function(evt) {
 		var context = evt.getSource().getBindingContext();

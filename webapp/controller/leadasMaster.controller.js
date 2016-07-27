@@ -50,13 +50,8 @@ sap.ui.define([
 		},
 
 		handleNavButtonPress: function(evt) {
-			var sPreviousHash = History.getInstance().getPreviousHash();
+			sap.ui.core.UIComponent.getRouterFor(this).navTo("launchPage");
 
-				if (sPreviousHash !== undefined) {
-					history.go(-2);
-				} else {
-					this.getRouter().navTo("worklist", {}, true);
-				}
 		},
 
 

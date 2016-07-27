@@ -161,6 +161,11 @@
 				"pattern": "utanvet",
 				"greedy": false,
 				"target": ["utanvet"]
+			}, {
+				"name": "launchPage",
+				"pattern": "launchPage",
+				"greedy": false,
+				"target": ["launchPage"]
 			}],
 			"targets": {
 				"worklist": {
@@ -263,6 +268,13 @@
 					"clearAggregation": true,
 					"viewName": "lezartFelvetelDetail",
 					"viewId": "lezartFelvetelDetail"
+				},
+				"launchPage": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "launchPage",
+					"viewId": "launchPage"
 				}
 			}
 		}

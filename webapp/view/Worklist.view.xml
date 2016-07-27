@@ -14,7 +14,7 @@
 		<tileContent>
 			<TileContent footer="bevételezetlen csomag">
 				<content>
-					<NumericContent value="{path: 'Items', formatter: '.getNumberOfItems'}" icon="sap-icon://database"/>
+					<NumericContent id="bevetTileNum" value="{path: 'Items', formatter: '.getBevetItems'}" icon="sap-icon://database"/>
 				</content>
 			</TileContent>
 		</tileContent>
@@ -24,7 +24,7 @@
 		<tileContent>
 			<TileContent >
 				<content>
-					<NumericContent value="{path: 'Items', formatter: '.getNumberOfItems'}" icon="sap-icon://sys-enter-2"/>
+					<NumericContent id="aktualisTileNum" value="{path: 'Address', formatter: '.getAktualisNum'}" icon="sap-icon://sys-enter-2"/>
 				</content>
 			</TileContent>
 		</tileContent>
@@ -34,7 +34,7 @@
 		<tileContent>
 			<TileContent >
 				<content>
-					<NumericContent value="{path: 'Items', formatter: '.getNumberOfItems'}" icon="sap-icon://toaster-down"/>
+					<NumericContent id="leadasTileNum" value="{path: 'Items', formatter: '.getLeadasNum'}" icon="sap-icon://toaster-down"/>
 				</content>
 			</TileContent>
 		</tileContent>
@@ -44,7 +44,7 @@
 		<tileContent>
 			<TileContent >
 				<content>
-					<NumericContent value="{path: 'Items', formatter: '.getNumberOfItems'}" icon="sap-icon://locked"/>
+					<NumericContent id="leadLezartTileNum" value="{path: 'Items', formatter: '.getLezartLeadNum'}" icon="sap-icon://locked"/>
 				</content>
 			</TileContent>
 		</tileContent>
@@ -54,7 +54,7 @@
 		<tileContent>
 			<TileContent >
 				<content>
-					<NumericContent value="{path: 'Items', formatter: '.getNumberOfItems'}" icon="sap-icon://toaster-up"/>
+					<NumericContent id="felvetTileNum" value="{path: 'Items', formatter: '.getFelvetNum'}" icon="sap-icon://toaster-up"/>
 				</content>
 			</TileContent>
 		</tileContent>
@@ -64,17 +64,17 @@
 		<tileContent>
 			<TileContent >
 				<content>
-					<NumericContent value="{path: 'Items', formatter: '.getNumberOfItems'}" icon="sap-icon://locked"/>
+					<NumericContent id="felvetLezartTileNum" value="{path: 'Items', formatter: '.getLezartFelvetNum'}" icon="sap-icon://locked"/>
 				</content>
 			</TileContent>
 		</tileContent>
 	</GenericTile>
 	
-	<GenericTile  class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Utánvét" press="handleUtanvetPress">
+	<GenericTile  class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" icon="sap-icon://payment" header="Utánvét" press="handleUtanvetPress">
 		<tileContent>
 			<TileContent >
 				<content>
-					<NumericContent value="{path: 'Items', formatter: '.getNumberOfItems'}" icon="sap-icon://payment-approval"/>
+					<NumericContent value=" " icon="sap-icon://payment-approval"/>
 				</content>
 			</TileContent>
 		</tileContent>
@@ -84,7 +84,7 @@
 		<tileContent>
 			<TileContent >
 				<content>
-					<NumericContent value="{path: 'Items', formatter: '.getNumberOfItems'}" icon="sap-icon://home"/>
+					<NumericContent id="depoTileNum" value="{path: 'Items', formatter: '.getDepoNum'}" icon="sap-icon://home"/>
 				</content>
 			</TileContent>
 		</tileContent>

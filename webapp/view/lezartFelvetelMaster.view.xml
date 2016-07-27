@@ -3,7 +3,7 @@
 	<Page showNavButton="true" navButtonPress="handleNavButtonPress"
 		title="Lezárt Felvétek">
 		<List id="list"	items="{path: '/Address', parameters:{expand: 'Items'},
-		filters: [{ path: 'PicType', operator: 'EQ', value1: 'D', and: 'true' },
+		filters: [{ path: 'PicType', operator: 'EQ', value1: 'U', and: 'true' },
 		{ path: 'Today', operator: 'EQ', value1: '1', and: 'true' } ,
 		{ path: 'DelStatus', operator: 'NE', value1: '111' },
 		{ path: 'DelStatus', operator: 'NE', value1: '555' },

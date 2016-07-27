@@ -20,11 +20,12 @@ sap.ui.define([
 
 		handleListItemPress: function(evt) {
 			var context = evt.getSource().getBindingContext();
-			this.nav.to("lezartFelvetelDetail", context);
+			var _oRouter = sap.ui.core.UIComponent.getRouterFor(this);  
+			_oRouter.navTo("lezartFelvetelDetail",  {lezartFelvetelDetailPath: context.getPath().substr(9, (context.getPath().length - 10))});
 		},
 
 		handleNavButtonPress: function(evt) {
-			history.go(-1);
+			sap.ui.core.UIComponent.getRouterFor(this).navTo("launchPage");
 		},
 
 		/*	handleListSelect : function(evt) {

@@ -111,8 +111,8 @@ sap.ui.define([
 					globalleadasDetail.getView().byId("idIconTabBarMulti").setSelectedKey("addr");
 					globalleadasDetail.getView().byId("idIconTabBarMulti").setExpanded(true);
 					var a = globalleadasDetail.getView().getBindingContext();
-					var myView = globalleadasDetail.getView();
-					var model = sap.ui.getCore().getModel();
+					var myView = window.globalleadasDetail.getView();
+					var model = window.globalleadasDetail.getView().getModel();
 					window.signeeCounter = 0;
 					myView.byId("setActive").setVisible(false);
 					myView.byId("setContinue").setVisible(false);
@@ -306,12 +306,9 @@ sap.ui.define([
 			});
 		},
 
-		onBeforeShow: function(evt) {
-			alert("onHow");
-		},
 
 		handleNavButtonPress: function(evt) {
-			history.go(-1);
+			sap.ui.core.UIComponent.getRouterFor(this).navTo("lezartFelvetelMaster");
 		},
 
 		onSelect: function(evt) {
@@ -387,37 +384,48 @@ sap.ui.define([
 		},
 
 		signee: function(evt) {
+			//		if(signeeCounter === 0){ // ha most jöttünk ide, töröljük az előző aláírást, egyébként megtartjuk, counter az onBeforeRenderingben
+			//			$("#signature").jSignature();
+			//			$("#signature").jSignature("reset");
+			//			signeeCounter++;
+			//		}
 			var a = evt.getSource().getBindingContext();
 			var total = 0;
 			var myView = this.getView();
 
-			if (signeeCounter === 0) { // ha most jöttünk ide, töröljük az előző aláírást, egyébként megtartjuk, counter az onBeforeRenderingben
-				$("#signature_cls").jSignature();
-				$("#signature_cls").jSignature("reset");
-				$("#signature_cls").jSignature("disable");
-				var sigData = sap.ui.getCore().getModel().getProperty(a.sPath + "/Signature");
-				$("#signature_cls").jSignature("setData", sigData);
-				signeeCounter++;
-			}
+			//$("#signature").jSignature();
+			//$("#signature").jSignature("reset");
+			//       if(this.getView().byId("idIconTabBarMulti").getSelectedKey() == "sig"){
+			//       	this.getView().byId("cls").setVisible(false);
+			//       	
+			//       }
+			//       else{
+			//       	this.getView().byId("cls").setVisible(true);
+			//       }
 
 			// totál utánvét összeg számítás
-			var oNumberFormat = sap.ui.core.format.NumberFormat.getIntegerInstance({
-				maxFractionDigits: 1,
-				minFractionDigits: 0,
-				groupingEnabled: true,
-				groupingSeparator: " ",
-				decimalSeparator: "."
-			});
-			sap.ui.getCore().getModel().read(a.sPath, null, {
-				"$expand": "Items"
-			}, true, function(response) {
-				for (var i = 0; i < response.Items.results.length; i++) {
-					total += sap.ui.getCore().getModel().getProperty("/Item(" + response.Items.results[i].Id + ")/Price");
-					myView.byId("total_id").setNumber(oNumberFormat.format(total));
-				}
-			});
+			function fSuccess(response){ 
+        	var oNumberFormat = sap.ui.core.format.NumberFormat.getIntegerInstance({maxFractionDigits: 1, minFractionDigits: 0, groupingEnabled: true, groupingSeparator: " ",
+			  decimalSeparator: "."});
+            for(var i = 0; i < response.results.length; i++){
+            	total += response.results[i].Price;
+				myView.byId("total_id").setNumber(oNumberFormat.format(total));
+            }
 
-			/*   	if(sap.ui.getCore().getModel().getProperty(a.sPath + "/DelStatus") == "111"){
+            }  
+            function fError(oEvent){  
+             console.log("oModel: An error occured while reading Employees!");  
+            } 
+        
+        // totál utánvét összeg számítás
+        
+			  
+			   this.getView().getModel().read(a.sPath + "/Items", {  
+					success: jQuery.proxy(fSuccess, this),  
+                	error: jQuery.proxy(fError, this)  
+				});  
+
+			/*   	if(object.DelStatus) == "111"){
 			   		myView.byId("setActive").setText("Folytat");
 					}
 					else{
@@ -434,7 +442,7 @@ sap.ui.define([
 		handlePhonePress: function() {
 			var b = this.getView().byId("phoneLink").getHref();
 			window.open(this.getView().byId("phoneLink").getHref(), "_blank");
-		},
+		}
 
 	});
 

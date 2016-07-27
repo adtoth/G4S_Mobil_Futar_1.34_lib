@@ -138,7 +138,7 @@
 				"target": ["lezartFelvetelMaster"]
 			}, {
 				"name": "lezartFelvetelDetail",
-				"pattern": "lezartFelvetelDetail/{lezartLeadasDetailPath}",
+				"pattern": "lezartFelvetelDetail/{lezartFelvetelDetailPath}",
 				"greedy": false,
 				"target": ["lezartFelvetelDetail"]
 			}, {
@@ -271,7 +271,7 @@
 				},
 				"launchPage": {
 					"viewType": "XML",
-					"transition": "slide",
+					"transition": "fade",
 					"clearAggregation": true,
 					"viewName": "launchPage",
 					"viewId": "launchPage"

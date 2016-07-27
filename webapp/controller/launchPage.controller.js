@@ -426,7 +426,7 @@ sap.ui.define([
 		handleFelvetelPress: function(evt) {
 			var context = evt.getSource().getBindingContext();
 			//	if(globalMaster.getView().byId("felvetTile").getNumber() >= 1){
-							sap.ui.core.UIComponent.getRouterFor(this).navTo("launchPage");
+							sap.ui.core.UIComponent.getRouterFor(this).navTo("felvetelMaster");
 			//	}
 		},
 
@@ -453,9 +453,8 @@ sap.ui.define([
 
 		handleLezartFelvetelPress: function(evt) {
 			var context = evt.getSource().getBindingContext();
-			if (globalMaster.getView().byId("felvetLezartTile").getNumber() >= 1) {
-				this.nav.to("lezartFelvetelMaster", context);
-			}
+			sap.ui.core.UIComponent.getRouterFor(this).navTo("lezartFelvetelMaster");
+			
 		},
 
 		handleLezartLeadasPress: function(evt) {

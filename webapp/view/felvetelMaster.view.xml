@@ -6,7 +6,7 @@
 		filters: [{
         	path: 'PicType', 
         	operator: 'EQ',
-        	value1: 'D',
+        	value1: 'U',
         	and: 'true'
         },
         {

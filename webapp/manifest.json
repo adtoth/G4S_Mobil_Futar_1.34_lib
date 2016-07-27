@@ -138,7 +138,7 @@
 				"target": ["lezartFelvetelMaster"]
 			}, {
 				"name": "lezartFelvetelDetail",
-				"pattern": "lezartFelvetelDetail/{lezartLeadasDetailPath}",
+				"pattern": "lezartFelvetelDetail/{lezartFelvetelDetailPath}",
 				"greedy": false,
 				"target": ["lezartFelvetelDetail"]
 			}, {

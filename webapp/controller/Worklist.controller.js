@@ -138,6 +138,7 @@ sap.ui.define([
 
 		getBevetItems: function(evt) {
 			var that = this;
+
 			function fSuccess(response) {
 				that.getView().byId("bevetTileNum").setValue(response);
 			}

@@ -9,8 +9,15 @@ sap.ui.define([
 
 		handleListItemPress: function(evt) {
 			var context = evt.getSource().getBindingContext();
+<<<<<<< HEAD
 			var _oRouter = sap.ui.core.UIComponent.getRouterFor(this);  
 			_oRouter.navTo("lezartFelvetelDetail",  {lezartFelvetelDetailPath: context.getPath().substr(9, (context.getPath().length - 10))});
+=======
+			var _oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+			_oRouter.navTo("lezartFelvetelDetail", {
+				lezartFelvetelDetailPath: context.getPath().substr(9, (context.getPath().length - 10))
+			});
+>>>>>>> branch 'master' of https://github.com/adtoth/G4S_Mobil_Futar_1.34_lib
 		},
 
 		handleNavButtonPress: function(evt) {

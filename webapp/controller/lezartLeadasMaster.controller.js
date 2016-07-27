@@ -14,9 +14,15 @@ sap.ui.define([
 			});
 		},
 
+<<<<<<< HEAD
 	handleNavButtonPress : function(evt) {
 		sap.ui.core.UIComponent.getRouterFor(this).navTo("launchPage");
 	},
+=======
+		handleNavButtonPress: function(evt) {
+			history.go(-1);
+		},
+>>>>>>> branch 'master' of https://github.com/adtoth/G4S_Mobil_Futar_1.34_lib
 
 		/*handleListSelect : function(evt) {
 			var context = evt.getParameter("listItem").getBindingContext();

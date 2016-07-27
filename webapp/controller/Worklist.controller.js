@@ -541,8 +541,7 @@ sap.ui.define([
 		},
 
 		handleUtanvetPress: function(evt) {
-			var context = evt.getSource().getBindingContext();
-			this.nav.to("utanvet", context);
+			this.getRouter().navTo("utanvet");
 		},
 
 		handleLezartFelvetelPress: function(evt) {

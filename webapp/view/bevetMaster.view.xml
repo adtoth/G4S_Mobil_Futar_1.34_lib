@@ -2,7 +2,21 @@
 	xmlns:html="http://www.w3.org/1999/xhtml">
 			<Page showNavButton="true" navButtonPress="handleNavButtonPress"
 		title="Bevételezés">
-		<List id="list" select="handleListSelect" items="{/Item?$filter=PickupStatus eq 'M' and Today eq '1'}" growing="true" growingThreshold="10">
+		<!--<List id="list" select="handleListSelect" items="{/Item?$filter=PickupStatus eq 'M' and Today eq '1'}" growing="true" growingThreshold="10">-->
+		<List id="list" select="handleListSelect" items="{path: '/Item', 
+		filters: [{
+        	path: 'PickupStatus', 
+        	operator: 'EQ',
+        	value1: 'M',
+        	and: 'true'
+        },
+        {
+        	path: 'Today',
+        	operator: 'EQ',
+        	value1: '1',
+        	and: 'true'
+        }
+        ]}" growing="true" growingThreshold="10">
 			<ObjectListItem type="Active" press="handleListItemPress"
 				title="{From}"
 				icon="sap-icon://shipping-status">

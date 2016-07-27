@@ -140,6 +140,11 @@
 				"pattern": "depo",
 				"greedy": false,
 				"target": ["depo"]
+			}, {
+				"name": "utanvet",
+				"pattern": "utanvet",
+				"greedy": false,
+				"target": ["utanvet"]
 			}],
 			"targets": {
 				"worklist": {
@@ -213,6 +218,13 @@
 					"clearAggregation": true,
 					"viewName": "depo",
 					"viewId": "depo"
+				},
+				"utanvet": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "utanvet",
+					"viewId": "utanvet"
 				}
 			}
 		}

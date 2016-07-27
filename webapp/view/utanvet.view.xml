@@ -1,0 +1,32 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="com.g4s.controller.utanvet"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page title="Utánvét" class="sapUiFioriObjectPage"
+		showNavButton="true" navButtonPress="handleNavButtonPress">
+		<ObjectHeader id="total_id"  title="Totál: "  number="0" numberUnit="Huf">
+		</ObjectHeader>	
+			
+		<ObjectHeader id="yesterday"  title="Totál előző nap: "  number="0" numberUnit="Huf">
+			<attributes>
+					<ObjectAttribute text="Bankszámlaszám:  1234-456678-899{Bankszamla}" />
+					<ObjectAttribute text="Azonosító: 0011222230102014{Azonosito}"/>
+			</attributes>
+		</ObjectHeader>
+		
+	<List id="listItems" select="" visible="false" items="{/Item}">
+			<ObjectListItem type="Active" press="handleListItemPress"
+				title="{From}"
+				icon="sap-icon://customer">
+
+			</ObjectListItem>
+		</List> 
+		
+<!-- 		<footer>
+			<Bar>
+			<contentRight>
+			 <Button type="Emphasized" text="Validál" id="cls" visible="true" press="close" width="150px"
+						icon="sap-icon://accept" />
+				</contentRight>
+			</Bar>
+		</footer> -->
+	</Page>
+</mvc:View>

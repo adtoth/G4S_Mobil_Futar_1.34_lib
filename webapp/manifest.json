@@ -99,7 +99,8 @@
 			"routes": [{
 				"pattern": "",
 				"name": "worklist",
-				"target": ["worklist"]
+				"target": ["worklist"],
+				"greedy": true
 			}, {
 				"name": "bevetMaster",
 				"pattern": "BevetItems",

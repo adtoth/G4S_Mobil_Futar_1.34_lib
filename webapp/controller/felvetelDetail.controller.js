@@ -260,7 +260,7 @@ sap.ui.define([
 
 	
 	handleNavButtonPress : function(evt) {
-		this.nav.back("felvetelMaster");
+		sap.ui.core.UIComponent.getRouterFor(this).navTo("felvetMaster");
 	},
 	
 	onSelect: function(evt){

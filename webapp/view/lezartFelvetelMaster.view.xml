@@ -1,0 +1,51 @@
+<core:View controllerName="sap.ui.netlife.G4S.view.lezartFelvetelMaster"
+	xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Page showNavButton="true" navButtonPress="handleNavButtonPress"
+		title="Lezárt Felvétek">
+		<List id="list" items="{/Address?$filter=PicType eq 'U' and (DelStatus ne '111' and DelStatus ne '999' and DelStatus ne '555') and Today eq '1'}" growing="true" growingTriggerText="Több" noDataText="Nincs kapcsolat a szerverrel">
+			<ObjectListItem type="Active" press="handleListItemPress"
+			
+				title="{Company}" icon="sap-icon://toaster-{IconPic}" number="{path: 'PicType',
+							formatter: 'sap.ui.netlife.G4S.util.Formatter.statusText'}">
+				
+				<attributes>
+					<!-- <ObjectAttribute text="Feladó: " />
+					<ObjectAttribute text="{FPostalCode}, {FCity}, {FPostalCode}, {FStreet}" /> -->
+					<ObjectAttribute text="Szállítási cím: " />
+					<ObjectAttribute text="{TPostalCode}, {TCity}, {TStreet}" />
+					<ObjectAttribute text="{path: 'HasCOD', formatter: 'sap.ui.netlife.G4S.util.Formatter.HasCODText'}" />
+					<ObjectAttribute text="Telefon: {Phone}"/>
+				</attributes>
+				
+				<firstStatus>
+					<ObjectStatus
+						text="{
+							path: 'DelStatus',
+							formatter: 'sap.ui.netlife.G4S.util.Formatter.statusText'
+						}"
+						state="{
+							path: 'DelStatus',
+							formatter: 'sap.ui.netlife.G4S.util.Formatter.statusState'
+						}"
+					
+						/>
+
+				</firstStatus>
+
+			</ObjectListItem>
+		</List>
+		<footer>
+			<Bar>
+				<contentRight>
+					<Select id="groupSelect" name="Csoportosít" change="handleGroup" icon="sap-icon://group-2"
+						type="Default" selectedKey="None" autoAdjustWidth="true">
+						<core:Item key="None" text="Nincs csoportosítás" />
+						<core:Item key="TPostalCode" text="Irányítószám" />
+						<core:Item key="To" text="Címzett neve szerint" />
+						<core:Item key="TStreet" text="Címzett utcanév szerint" />
+					</Select>
+				</contentRight>
+			</Bar>
+		</footer>
+	</Page>
+</core:View>

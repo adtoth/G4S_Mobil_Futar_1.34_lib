@@ -31,7 +31,7 @@ sap.ui.define([
 
 			var addressPath = oEvent.getParameter("arguments").addressPath;
 			this.getView().getModel().metadataLoaded().then(function() {
-				var sObjectPath = this.getView().getModel().createKey("Felvet", {
+				var sObjectPath = this.getView().getModel().createKey("Address", {
 					Id: addressPath
 				});
 				this._bindView("/" + sObjectPath);
@@ -317,7 +317,7 @@ sap.ui.define([
 		},
 
 		handleNavButtonPress: function(evt) {
-			this.nav.back("felvetelMaster");
+			history.go(-1);
 		},
 
 		onSelect: function(evt) {

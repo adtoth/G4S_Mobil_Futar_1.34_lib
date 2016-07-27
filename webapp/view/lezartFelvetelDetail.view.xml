@@ -1,0 +1,156 @@
+﻿<core:View controllerName="sap.ui.netlife.G4S.view.lezartFelvetelDetail"
+	xmlns="sap.m"
+	xmlns:m="sap.m"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:core="sap.ui.core"
+	xmlns:l="sap.ui.layout">
+	<Page title="Lezárt Felvét Részletek" class="sapUiFioriObjectPage"
+		showNavButton="true" navButtonPress="handleNavButtonPress">
+				<IconTabBar select="signee"  class="iconTabBarPaddingTop" id="idIconTabBarMulti"
+			expanded="true">
+			<items>
+				<IconTabFilter icon="sap-icon://home" text="Cím" key="addr">
+					<form:SimpleForm						
+						minWidth="400" title="Feladó">
+      					<Label text="Név"/>
+     					<Text text="{From}" />
+     					<Label text="Irányítószám, Város"/>
+     					<Text text="{FPostalCode}, {FCity}" />
+     					<Label text="Utca, házszám" />
+     					<Text text="{FStreet}"/>									
+					</form:SimpleForm>
+						
+					<form:SimpleForm
+						minWidth="400" >
+						<core:Title text="Címzett" />
+						<Label text="Cég"/>
+     					<Text text="{Company}" />
+      					<Label text="Átvevő"/>
+     					<Text text="{To}" />
+     					<Label text="Irányítószám, Város"/>
+     					<Text text="{TPostalCode}, {TCity}" />
+     					<Label text="Utca, házszám" />
+     					<Text text="{TStreet}"/>	
+     					<Label text="Telefonszám" />
+     					<m:Link text="{Phone}" href="tel:{Phone}" press="handlePhonePress" id="phoneLink"/>									
+						</form:SimpleForm>
+						<VBox >
+						<RadioButton groupName="GroupA" enabled="false" id="grpA01" select="onSelect"  text="Sikeres" />
+<!-- 							 <CheckBox text="Utánvét összeg átvéve" enabled="false" selected="false" id="uv01" />	 -->
+						<RadioButton groupName="GroupA" id="grpA02" enabled="false" select="onSelect" text="Sikertelen" />
+					</VBox>
+					<VBox visible="false" id="grpB">
+						<RadioButton groupName="GroupB" id="grpB01" enabled="false" select="onSelectOther" text="Címzett nem található"/>
+						<RadioButton groupName="GroupB" id="grpB02" enabled="false" select="onSelectOther" text="Címzett nem elérhető" />
+						<RadioButton groupName="GroupB" id="grpB03" enabled="false" select="onSelectOther" text="Már megvásárolta" />
+						<RadioButton groupName="GroupB" id="grpB04" enabled="false" select="onSelectOther" text="Nem kéri" />
+						<RadioButton groupName="GroupB" id="grpB05" enabled="false" select="onSelectOther" text="Hibás Áru" />
+						<RadioButton groupName="GroupB" id="grpB06" enabled="false" select="onSelectOther" text="Nem megfelelő áru" />
+						<RadioButton groupName="GroupB" id="grpB07" enabled="false" select="onSelectOther" text="Hibás szerződés adatok" />
+						<RadioButton groupName="GroupB" id="grpB08" enabled="false" select="onSelectOther" text="Nem tudja igazolni magát" />
+						<RadioButton groupName="GroupB" id="grpB09" enabled="false" select="onSelectOther" text="Nem beazonosítható" />
+						<RadioButton groupName="GroupB" id="grpB10" enabled="false" select="onSelectOther" text="Egyéb" />				
+					</VBox>
+					<TextArea placeholder="Egyéb szöveges ok" id ="otherText" visible = "true" editable="false"  rows="8" width="100%"  />
+				</IconTabFilter>
+				<IconTabFilter icon="sap-icon://database" text="Csomag">
+					<Table headerText="Tételek" items="{Items}">
+			<columns>
+				<Column>
+					<header>
+						<Label text="Tétel ID" demandPopin="true" />
+					</header>
+				</Column>
+
+				<Column hAlign="Right">
+					<header>
+						<Label text="Státusz" />
+					</header>
+				</Column>
+			</columns>
+			<ColumnListItem>
+				<cells>
+					<ObjectIdentifier title="{ProductId}" />
+					<ObjectNumber
+						number="{path: 'PickupStatus', formatter:'sap.ui.netlife.G4S.util.Formatter.statusText' }"
+						state="{path: 'PickupStatus', formatter:'sap.ui.netlife.G4S.util.Formatter.statusState' }" />
+				</cells>
+			</ColumnListItem>
+		</Table>
+				</IconTabFilter>
+				<IconTabFilter icon="sap-icon://signature" visible="false" id="signee" key="sig" text="Aláírás">
+					
+		<l:VerticalLayout
+		    class="marginVerticalContent"
+		    width="90%">
+		    <l:content>
+ 				<core:HTML content='&lt;div style=&quot;width: 600px; height: 200px; -ms-touch-action: none;&quot; id=&quot;signature_cls&quot;&gt;&lt;/div&gt;'>
+		      	</core:HTML>
+		    </l:content>
+			<VBox visible="true">
+				<Label text="Átvevő neve" design="Bold"/>
+				<Input id="recipient" type="Text" fieldWidht="50%" editable="false" placeholder="Átvevő neve"  />
+			</VBox>
+		  </l:VerticalLayout>
+
+				</IconTabFilter>
+				<IconTabFilter icon="sap-icon://payment-approval" text="Utánvét">
+					<Table headerText="Tételek" items="{Items}">
+						<columns>
+							<Column>
+								<header>
+									<Label text="Tétel ID" demandPopin="true" />
+								</header>
+							</Column>
+							
+								<Column hAlign="Right">
+								<header>
+									<Label text="Utánvét?" />
+								</header>
+							</Column>
+
+							<Column hAlign="Right">
+								<header>
+									<Label text="Utánvét összeg" />
+								</header>
+							</Column>
+						</columns>
+						<ColumnListItem>
+							<cells>
+								<ObjectIdentifier title="{ProductId}" />
+									<ObjectNumber
+										number="{path: 'COD', formatter:'sap.ui.netlife.G4S.util.Formatter.CODText' }"
+										state="{path: 'COD', formatter:'sap.ui.netlife.G4S.util.Formatter.CODState' }"/>
+							</cells>
+							
+							<ObjectIdentifier title="{Price}" />
+						</ColumnListItem>
+						
+					</Table>
+					<ObjectListItem  id="total_id"  title="Totál: "  number="" />
+					
+				</IconTabFilter>
+			</items>
+		</IconTabBar>
+
+
+		<footer>
+			<Bar>
+				<contentRight>
+				 <Button type="Emphasized" text="Lezár" id="cls" visible="false" press="close" width="150px"
+						icon="sap-icon://sys-cancel" />
+					<!-- <Button type="Emphasized" text="Töröl" id="clr" visible="false" press="clear" width="150px"
+						icon="sap-icon://sys-cancel" /> -->
+				</contentRight>
+				
+				<contentLeft>
+					<Button type="Emphasized" text="Aktivál" id="setActive" press="activate" width="150px"
+						icon="sap-icon://target-group" />
+					<Button type="Emphasized" text="Folytat" id="setContinue" press="activate" width="150px"
+						icon="sap-icon://target-group" />
+
+				</contentLeft>
+			</Bar>
+		</footer>
+	</Page>
+</core:View>

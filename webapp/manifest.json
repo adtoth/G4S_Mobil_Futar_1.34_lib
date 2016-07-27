@@ -132,6 +132,16 @@
 				"greedy": false,
 				"target": ["aktualis"]
 			}, {
+				"name": "lezartFelvetelMaster",
+				"pattern": "lezartFelvetelMaster",
+				"greedy": false,
+				"target": ["lezartFelvetelMaster"]
+			}, {
+				"name": "lezartFelvetelDetail",
+				"pattern": "lezartFelvetelDetail/{lezartLeadasDetailPath}",
+				"greedy": false,
+				"target": ["lezartFelvetelDetail"]
+			}, {
 				"name": "lezartLeadasMaster",
 				"pattern": "lezartLeadasMaster",
 				"greedy": false,
@@ -239,6 +249,20 @@
 					"clearAggregation": true,
 					"viewName": "felvetelDetail",
 					"viewId": "felvetelDetail"
+				},
+				"lezartFelvetelMaster": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "lezartFelvetelMaster",
+					"viewId": "lezartFelvetelMaster"
+				},
+				"lezartFelvetelDetail": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "lezartFelvetelDetail",
+					"viewId": "lezartFelvetelDetail"
 				}
 			}
 		}

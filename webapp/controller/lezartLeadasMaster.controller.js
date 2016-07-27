@@ -48,7 +48,7 @@ sap.ui.define([
 		},
 
 	handleNavButtonPress : function(evt) {
-		history.go(-1)
+		history.go(-1);
 	},
 
 	/*handleListSelect : function(evt) {

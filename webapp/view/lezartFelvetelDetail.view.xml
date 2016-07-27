@@ -1,4 +1,4 @@
-﻿<core:View controllerName="sap.ui.netlife.G4S.view.lezartFelvetelDetail"
+<core:View controllerName="com.g4s.controller.lezartFelvetelDetail"
 	xmlns="sap.m"
 	xmlns:m="sap.m"
 	xmlns:form="sap.ui.layout.form"
@@ -58,7 +58,7 @@
 			<columns>
 				<Column>
 					<header>
-						<Label text="Tétel ID" demandPopin="true" />
+						<Label text="Tétel ID" />
 					</header>
 				</Column>
 
@@ -72,8 +72,8 @@
 				<cells>
 					<ObjectIdentifier title="{ProductId}" />
 					<ObjectNumber
-						number="{path: 'PickupStatus', formatter:'sap.ui.netlife.G4S.util.Formatter.statusText' }"
-						state="{path: 'PickupStatus', formatter:'sap.ui.netlife.G4S.util.Formatter.statusState' }" />
+						number="{path: 'PickupStatus', formatter:'util.Formatter.statusText' }"
+						state="{path: 'PickupStatus', formatter:'util.Formatter.statusState' }" />
 				</cells>
 			</ColumnListItem>
 		</Table>
@@ -89,7 +89,7 @@
 		    </l:content>
 			<VBox visible="true">
 				<Label text="Átvevő neve" design="Bold"/>
-				<Input id="recipient" type="Text" fieldWidht="50%" editable="false" placeholder="Átvevő neve"  />
+				<Input id="recipient" type="Text" fieldWidth="50%" editable="false" placeholder="Átvevő neve"  />
 			</VBox>
 		  </l:VerticalLayout>
 
@@ -99,7 +99,7 @@
 						<columns>
 							<Column>
 								<header>
-									<Label text="Tétel ID" demandPopin="true" />
+									<Label text="Tétel ID" />
 								</header>
 							</Column>
 							
@@ -119,8 +119,8 @@
 							<cells>
 								<ObjectIdentifier title="{ProductId}" />
 									<ObjectNumber
-										number="{path: 'COD', formatter:'sap.ui.netlife.G4S.util.Formatter.CODText' }"
-										state="{path: 'COD', formatter:'sap.ui.netlife.G4S.util.Formatter.CODState' }"/>
+										number="{path: 'COD', formatter:'util.Formatter.CODText' }"
+										state="{path: 'COD', formatter:'util.Formatter.CODState' }"/>
 							</cells>
 							
 							<ObjectIdentifier title="{Price}" />

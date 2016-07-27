@@ -135,6 +135,7 @@ sap.ui.define([
 
 		getBevetItems: function(evt) {
 			var that = this;
+
 			function fSuccess(response) {
 				that.getView().byId("bevetTileNum").setValue(response);
 			}
@@ -143,22 +144,22 @@ sap.ui.define([
 				console.log("oModel: An error occured while reading Employees!");
 			}
 			var filters = [];
-			var filter1 = new sap.ui.model.Filter({  
-                     path: "Today",  
-                     operator: sap.ui.model.FilterOperator.EQ,  
-                     value1: '1',
-                     and: true
-              }); 
-            var filter2 = new sap.ui.model.Filter({  
-                     path: "PickupStatus",  
-                     operator: sap.ui.model.FilterOperator.EQ,  
-                     value1: 'M',
-                     and: true
-              });
-              
-            filters.push(filter1); 
-            filters.push(filter2); 
-            
+			var filter1 = new sap.ui.model.Filter({
+				path: "Today",
+				operator: sap.ui.model.FilterOperator.EQ,
+				value1: '1',
+				and: true
+			});
+			var filter2 = new sap.ui.model.Filter({
+				path: "PickupStatus",
+				operator: sap.ui.model.FilterOperator.EQ,
+				value1: 'M',
+				and: true
+			});
+
+			filters.push(filter1);
+			filters.push(filter2);
+
 			this.getView().getModel().read("/Item/$count", {
 				async: false,
 				success: jQuery.proxy(fSuccess, this),
@@ -166,9 +167,10 @@ sap.ui.define([
 				filters: filters
 			});
 		},
-		
+
 		getAktualisNum: function(evt) {
 			var that = this;
+
 			function fSuccess(response) {
 				that.getView().byId("aktualisTileNum").setValue(response);
 			}
@@ -177,22 +179,22 @@ sap.ui.define([
 				console.log("oModel: An error occured while reading Employees!");
 			}
 			var filters = [];
-			var filter1 = new sap.ui.model.Filter({  
-                     path: "Today",  
-                     operator: sap.ui.model.FilterOperator.EQ,  
-                     value1: '1',
-                     and: true
-              }); 
-            var filter2 = new sap.ui.model.Filter({  
-                     path: "DelStatus",  
-                     operator: sap.ui.model.FilterOperator.EQ,  
-                     value1: '999',
-                     and: true
-              });
-              
-            filters.push(filter1); 
-            filters.push(filter2); 
-            
+			var filter1 = new sap.ui.model.Filter({
+				path: "Today",
+				operator: sap.ui.model.FilterOperator.EQ,
+				value1: '1',
+				and: true
+			});
+			var filter2 = new sap.ui.model.Filter({
+				path: "DelStatus",
+				operator: sap.ui.model.FilterOperator.EQ,
+				value1: '999',
+				and: true
+			});
+
+			filters.push(filter1);
+			filters.push(filter2);
+
 			this.getView().getModel().read("/Address/$count", {
 				async: false,
 				success: jQuery.proxy(fSuccess, this),
@@ -200,9 +202,10 @@ sap.ui.define([
 				filters: filters
 			});
 		},
-		
+
 		getLeadasNum: function(evt) {
 			var that = this;
+
 			function fSuccess(response) {
 				that.getView().byId("leadasTileNum").setValue(response);
 			}
@@ -211,40 +214,40 @@ sap.ui.define([
 				console.log("oModel: An error occured while reading Employees!");
 			}
 			var filters = [];
-			var filter1 = new sap.ui.model.Filter({  
-                     path: "Today",  
-                     operator: sap.ui.model.FilterOperator.EQ,  
-                     value1: '1',
-                     and: true
-              }); 
-            var filter2 = new sap.ui.model.Filter({  
-                     path: "PicType",  
-                     operator: sap.ui.model.FilterOperator.EQ,  
-                     value1: 'D',
-                     and: true
-              });
-              var filter3 = new sap.ui.model.Filter({  
-                     path: "DelStatus",  
-                     operator: sap.ui.model.FilterOperator.EQ,  
-                     value1: '111'
-              });
-              var filter4 = new sap.ui.model.Filter({  
-                     path: "DelStatus",  
-                     operator: sap.ui.model.FilterOperator.EQ,  
-                     value1: '555'
-              });
-              var filter5 = new sap.ui.model.Filter({  
-                     path: "DelStatus",  
-                     operator: sap.ui.model.FilterOperator.EQ,  
-                     value1: '999'
-              });
+			var filter1 = new sap.ui.model.Filter({
+				path: "Today",
+				operator: sap.ui.model.FilterOperator.EQ,
+				value1: '1',
+				and: true
+			});
+			var filter2 = new sap.ui.model.Filter({
+				path: "PicType",
+				operator: sap.ui.model.FilterOperator.EQ,
+				value1: 'D',
+				and: true
+			});
+			var filter3 = new sap.ui.model.Filter({
+				path: "DelStatus",
+				operator: sap.ui.model.FilterOperator.EQ,
+				value1: '111'
+			});
+			var filter4 = new sap.ui.model.Filter({
+				path: "DelStatus",
+				operator: sap.ui.model.FilterOperator.EQ,
+				value1: '555'
+			});
+			var filter5 = new sap.ui.model.Filter({
+				path: "DelStatus",
+				operator: sap.ui.model.FilterOperator.EQ,
+				value1: '999'
+			});
 
-            filters.push(filter1); 
-            filters.push(filter2); 
-            filters.push(filter3); 
-            filters.push(filter4); 
-            filters.push(filter5); 
-            
+			filters.push(filter1);
+			filters.push(filter2);
+			filters.push(filter3);
+			filters.push(filter4);
+			filters.push(filter5);
+
 			this.getView().getModel().read("/Address/$count", {
 				async: false,
 				success: jQuery.proxy(fSuccess, this),
@@ -252,9 +255,10 @@ sap.ui.define([
 				filters: filters
 			});
 		},
-		
+
 		getFelvetNum: function(evt) {
 			var that = this;
+
 			function fSuccess(response) {
 				that.getView().byId("felvetTileNum").setValue(response);
 			}
@@ -263,40 +267,40 @@ sap.ui.define([
 				console.log("oModel: An error occured while reading Employees!");
 			}
 			var filters = [];
-			var filter1 = new sap.ui.model.Filter({  
-                     path: "Today",  
-                     operator: sap.ui.model.FilterOperator.EQ,  
-                     value1: '1',
-                     and: true
-              }); 
-            var filter2 = new sap.ui.model.Filter({  
-                     path: "PicType",  
-                     operator: sap.ui.model.FilterOperator.EQ,  
-                     value1: 'U',
-                     and: true
-              });
-              var filter3 = new sap.ui.model.Filter({  
-                     path: "DelStatus",  
-                     operator: sap.ui.model.FilterOperator.EQ,  
-                     value1: '111'
-              });
-              var filter4 = new sap.ui.model.Filter({  
-                     path: "DelStatus",  
-                     operator: sap.ui.model.FilterOperator.EQ,  
-                     value1: '555'
-              });
-              var filter5 = new sap.ui.model.Filter({  
-                     path: "DelStatus",  
-                     operator: sap.ui.model.FilterOperator.EQ,  
-                     value1: '999'
-              });
+			var filter1 = new sap.ui.model.Filter({
+				path: "Today",
+				operator: sap.ui.model.FilterOperator.EQ,
+				value1: '1',
+				and: true
+			});
+			var filter2 = new sap.ui.model.Filter({
+				path: "PicType",
+				operator: sap.ui.model.FilterOperator.EQ,
+				value1: 'U',
+				and: true
+			});
+			var filter3 = new sap.ui.model.Filter({
+				path: "DelStatus",
+				operator: sap.ui.model.FilterOperator.EQ,
+				value1: '111'
+			});
+			var filter4 = new sap.ui.model.Filter({
+				path: "DelStatus",
+				operator: sap.ui.model.FilterOperator.EQ,
+				value1: '555'
+			});
+			var filter5 = new sap.ui.model.Filter({
+				path: "DelStatus",
+				operator: sap.ui.model.FilterOperator.EQ,
+				value1: '999'
+			});
 
-            filters.push(filter1); 
-            filters.push(filter2); 
-            filters.push(filter3); 
-            filters.push(filter4); 
-            filters.push(filter5); 
-            
+			filters.push(filter1);
+			filters.push(filter2);
+			filters.push(filter3);
+			filters.push(filter4);
+			filters.push(filter5);
+
 			this.getView().getModel().read("/Address/$count", {
 				async: false,
 				success: jQuery.proxy(fSuccess, this),
@@ -304,9 +308,10 @@ sap.ui.define([
 				filters: filters
 			});
 		},
-		
+
 		getLezartFelvetNum: function(evt) {
 			var that = this;
+
 			function fSuccess(response) {
 				that.getView().byId("felvetLezartTileNum").setValue(response);
 			}
@@ -315,43 +320,43 @@ sap.ui.define([
 				console.log("oModel: An error occured while reading Employees!");
 			}
 			var filters = [];
-			var filter1 = new sap.ui.model.Filter({  
-                     path: "Today",  
-                     operator: sap.ui.model.FilterOperator.EQ,  
-                     value1: '1',
-                     and: true
-              }); 
-            var filter2 = new sap.ui.model.Filter({  
-                     path: "PicType",  
-                     operator: sap.ui.model.FilterOperator.EQ,  
-                     value1: 'U',
-                     and: true
-              });
-              var filter3 = new sap.ui.model.Filter({  
-                     path: "DelStatus",  
-                     operator: sap.ui.model.FilterOperator.NE,  
-                     value1: '111',
-                     and: false
-              });
-              var filter4 = new sap.ui.model.Filter({  
-                     path: "DelStatus",  
-                     operator: sap.ui.model.FilterOperator.NE,  
-                     value1: '555',
-                     and: false
-              });
-              var filter5 = new sap.ui.model.Filter({  
-                     path: "DelStatus",  
-                     operator: sap.ui.model.FilterOperator.NE,  
-                     value1: '999',
-                     and: false
-              });
+			var filter1 = new sap.ui.model.Filter({
+				path: "Today",
+				operator: sap.ui.model.FilterOperator.EQ,
+				value1: '1',
+				and: true
+			});
+			var filter2 = new sap.ui.model.Filter({
+				path: "PicType",
+				operator: sap.ui.model.FilterOperator.EQ,
+				value1: 'U',
+				and: true
+			});
+			var filter3 = new sap.ui.model.Filter({
+				path: "DelStatus",
+				operator: sap.ui.model.FilterOperator.NE,
+				value1: '111',
+				and: false
+			});
+			var filter4 = new sap.ui.model.Filter({
+				path: "DelStatus",
+				operator: sap.ui.model.FilterOperator.NE,
+				value1: '555',
+				and: false
+			});
+			var filter5 = new sap.ui.model.Filter({
+				path: "DelStatus",
+				operator: sap.ui.model.FilterOperator.NE,
+				value1: '999',
+				and: false
+			});
 
-            filters.push(filter1); 
-            filters.push(filter2); 
-            filters.push(filter3); 
-            filters.push(filter4); 
-            filters.push(filter5); 
-            
+			filters.push(filter1);
+			filters.push(filter2);
+			filters.push(filter3);
+			filters.push(filter4);
+			filters.push(filter5);
+
 			this.getView().getModel().read("/Address/$count", {
 				async: false,
 				success: jQuery.proxy(fSuccess, this),
@@ -359,9 +364,10 @@ sap.ui.define([
 				filters: filters
 			});
 		},
-		
+
 		getLezartLeadNum: function(evt) {
 			var that = this;
+
 			function fSuccess(response) {
 				that.getView().byId("leadLezartTileNum").setValue(response);
 			}
@@ -370,43 +376,43 @@ sap.ui.define([
 				console.log("oModel: An error occured while reading Employees!");
 			}
 			var filters = [];
-			var filter1 = new sap.ui.model.Filter({  
-                     path: "Today",  
-                     operator: sap.ui.model.FilterOperator.EQ,  
-                     value1: '1',
-                     and: true
-              }); 
-            var filter2 = new sap.ui.model.Filter({  
-                     path: "PicType",  
-                     operator: sap.ui.model.FilterOperator.EQ,  
-                     value1: 'D',
-                     and: true
-              });
-              var filter3 = new sap.ui.model.Filter({  
-                     path: "DelStatus",  
-                     operator: sap.ui.model.FilterOperator.NE,  
-                     value1: '111',
-                     and: false
-              });
-              var filter4 = new sap.ui.model.Filter({  
-                     path: "DelStatus",  
-                     operator: sap.ui.model.FilterOperator.NE,  
-                     value1: '555',
-                     and: false
-              });
-              var filter5 = new sap.ui.model.Filter({  
-                     path: "DelStatus",  
-                     operator: sap.ui.model.FilterOperator.NE,  
-                     value1: '999',
-                     and: false
-              });
+			var filter1 = new sap.ui.model.Filter({
+				path: "Today",
+				operator: sap.ui.model.FilterOperator.EQ,
+				value1: '1',
+				and: true
+			});
+			var filter2 = new sap.ui.model.Filter({
+				path: "PicType",
+				operator: sap.ui.model.FilterOperator.EQ,
+				value1: 'D',
+				and: true
+			});
+			var filter3 = new sap.ui.model.Filter({
+				path: "DelStatus",
+				operator: sap.ui.model.FilterOperator.NE,
+				value1: '111',
+				and: false
+			});
+			var filter4 = new sap.ui.model.Filter({
+				path: "DelStatus",
+				operator: sap.ui.model.FilterOperator.NE,
+				value1: '555',
+				and: false
+			});
+			var filter5 = new sap.ui.model.Filter({
+				path: "DelStatus",
+				operator: sap.ui.model.FilterOperator.NE,
+				value1: '999',
+				and: false
+			});
 
-            filters.push(filter1); 
-            filters.push(filter2); 
-            filters.push(filter3); 
-            filters.push(filter4); 
-            filters.push(filter5); 
-            
+			filters.push(filter1);
+			filters.push(filter2);
+			filters.push(filter3);
+			filters.push(filter4);
+			filters.push(filter5);
+
 			this.getView().getModel().read("/Address/$count", {
 				async: false,
 				success: jQuery.proxy(fSuccess, this),
@@ -414,9 +420,10 @@ sap.ui.define([
 				filters: filters
 			});
 		},
-		
+
 		getDepoNum: function(evt) {
 			var that = this;
+
 			function fSuccess(response) {
 				that.getView().byId("depoTileNum").setValue(response);
 			}
@@ -425,42 +432,42 @@ sap.ui.define([
 				console.log("oModel: An error occured while reading Employees!");
 			}
 			var filters = [];
-			var filter1 = new sap.ui.model.Filter({  
-                     path: "Today",  
-                     operator: sap.ui.model.FilterOperator.EQ,  
-                     value1: '1',
-                     and: true
-              }); 
-            var filter2 = new sap.ui.model.Filter({  
-                     path: "PicType",  
-                     operator: sap.ui.model.FilterOperator.EQ,  
-                     value1: 'D',
-                     and: true
-              });
-              var filter3 = new sap.ui.model.Filter({  
-                     path: "PickupStatus",  
-                     operator: sap.ui.model.FilterOperator.NE,  
-                     value1: 'M',
-                     and: false
-              });
-              var filter4 = new sap.ui.model.Filter({  
-                     path: "PicType",  
-                     operator: sap.ui.model.FilterOperator.NE,  
-                     value1: 'U'
-              });
-              var filter5 = new sap.ui.model.Filter({  
-                     path: "PickupStatus",  
-                     operator: sap.ui.model.FilterOperator.NE,  
-                     value1: 'A',
-                     and: false
-              });
+			var filter1 = new sap.ui.model.Filter({
+				path: "Today",
+				operator: sap.ui.model.FilterOperator.EQ,
+				value1: '1',
+				and: true
+			});
+			var filter2 = new sap.ui.model.Filter({
+				path: "PicType",
+				operator: sap.ui.model.FilterOperator.EQ,
+				value1: 'D',
+				and: true
+			});
+			var filter3 = new sap.ui.model.Filter({
+				path: "PickupStatus",
+				operator: sap.ui.model.FilterOperator.NE,
+				value1: 'M',
+				and: false
+			});
+			var filter4 = new sap.ui.model.Filter({
+				path: "PicType",
+				operator: sap.ui.model.FilterOperator.NE,
+				value1: 'U'
+			});
+			var filter5 = new sap.ui.model.Filter({
+				path: "PickupStatus",
+				operator: sap.ui.model.FilterOperator.NE,
+				value1: 'A',
+				and: false
+			});
 
-            filters.push(filter1); 
-            filters.push(filter2); 
-            filters.push(filter3); 
-            filters.push(filter4); 
-            filters.push(filter5); 
-            
+			filters.push(filter1);
+			filters.push(filter2);
+			filters.push(filter3);
+			filters.push(filter4);
+			filters.push(filter5);
+
 			this.getView().getModel().read("/Item/$count", {
 				urlParameters: 'expandAddress',
 				async: false,
@@ -545,10 +552,7 @@ sap.ui.define([
 		},
 
 		handleLezartFelvetelPress: function(evt) {
-			var context = evt.getSource().getBindingContext();
-			if (globalMaster.getView().byId("felvetLezartTile").getNumber() >= 1) {
-				this.nav.to("lezartFelvetelMaster", context);
-			}
+			this.getRouter().navTo("lezartFelvetelMaster");
 		},
 
 		handleLezartLeadasPress: function(evt) {

@@ -1,4 +1,3 @@
-
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/json/JSONModel",
@@ -13,6 +12,7 @@ sap.ui.define([
 	return Controller.extend("com.g4s.controller.felvetelDetail", {
 
 		onInit: function() {
+			$("#signature").jSignature();
 			var oViewModel = new JSONModel({
 				busy: false,
 				delay: 0

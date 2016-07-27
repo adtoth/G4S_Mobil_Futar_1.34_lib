@@ -14,6 +14,7 @@ sap.ui.define([
 		 * @memberOf com.g4s.view.lezartLeadasDetail
 		 */
 		onInit: function() {
+			$("#signature").jSignature();
 			var oViewModel = new JSONModel({
 				busy: false,
 				delay: 0

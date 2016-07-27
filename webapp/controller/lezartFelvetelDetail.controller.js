@@ -17,6 +17,7 @@ sap.ui.define([
 	return Controller.extend("com.g4s.controller.lezartFelvetelDetail", {
 
 		onInit: function() {
+			$("#signature").jSignature();
 			var oViewModel = new JSONModel({
 				busy: false,
 				delay: 0

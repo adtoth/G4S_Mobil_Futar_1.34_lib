@@ -19,9 +19,14 @@ sap.ui.define([
 		 * (NOT before the first rendering! onInit() is used for that one!).
 		 * @memberOf com.g4s.view.launchPage
 		 */
-		//	onBeforeRendering: function() {
-		//
-		//	},
+		onBeforeRendering: function(){ // binding model synchronisation
+		//this.onBeforeShow();
+		window.globalleadasDetail = this;
+		 this.getView().addDelegate({onBeforeShow: function(evt) {
+				window.globalleadasDetail.getView().getModel().updateBindings(true);
+			}});
+		 	
+		 },
 
 		/**
 		 * Called when the View has been rendered (so its HTML is part of the document). Post-rendering manipulations of the HTML could be done here.

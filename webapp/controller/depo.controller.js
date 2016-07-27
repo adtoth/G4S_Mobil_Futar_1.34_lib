@@ -8,7 +8,7 @@ sap.ui.define([
 	return Controller.extend("com.g4s.controller.depo", {
 		
 		handleNavButtonPress : function(evt) {
-			sap.ui.core.UIComponent.getRouterFor(this).navTo("worklist");
+			history.go(-1);
 		}
 
 		/**

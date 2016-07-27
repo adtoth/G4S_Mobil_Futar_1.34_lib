@@ -48,7 +48,7 @@ sap.ui.define([
 		},
 
 	handleNavButtonPress : function(evt) {
-		sap.ui.core.UIComponent.getRouterFor(this).navTo("worklist");
+		history.go(-1)
 	},
 
 	/*handleListSelect : function(evt) {

@@ -13,9 +13,9 @@ sap.ui.define([
 		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
 		 * @memberOf com.g4s.view.leadasMaster
 		 */
-			onInit: function() {
-				window.globalThis = this;
-			},
+		//	onInit: function() {
+		//
+		//	},
 
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
@@ -50,8 +50,8 @@ sap.ui.define([
 		},
 
 		handleNavButtonPress: function(evt) {
-				sap.ui.core.UIComponent.getRouterFor(window.globalThis).navTo("worklist");
-			},
+			history.go(-1);
+		},
 
 		handleListSelect: function(evt) {
 			var context = evt.getParameter("listItem").getBindingContext();

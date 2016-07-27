@@ -168,7 +168,7 @@ sap.ui.define([
 	},	
 	*/
 	handleNavButtonPress : function(evt) {
-		sap.ui.core.UIComponent.getRouterFor(this).navTo("worklist");
+			history.go(-1);
 	},
 	
 	
@@ -214,9 +214,9 @@ sap.ui.define([
 					
 					sap.m.MessageToast.show("Lezárva");
 					if(myView.getModel().getProperty(a.sPath + "/PicType") === "D"){
-						myRouter.navTo("worklist");
+						myRouter.navTo("leadasMaster");
 					}
-					else myRouter.navTo("worklist");
+					else myRouter.navTo("felvetelMaster");
 
 				}
 				else if (myView.byId("grpB01").getSelected() === true){
@@ -226,9 +226,9 @@ sap.ui.define([
 					
 					sap.m.MessageToast.show("Lezárva");
 					if(myView.getModel().getProperty(a.sPath + "/PicType") === "D"){
-						myRouter.navTo("worklost");
+						myRouter.navTo("leadasMaster");
 					}
-					else myRouter.navTo("worklist");
+					else myRouter.navTo("felvetelMaster");
 				}
 				else if (myView.byId("grpB02").getSelected() === true){
 					myView.getModel().setProperty(a.sPath + "/DelStatus", "2");
@@ -237,9 +237,9 @@ sap.ui.define([
 
 					sap.m.MessageToast.show("Lezárva");
 					if(myView.getModel().getProperty(a.sPath + "/PicType") === "D"){
-						myRouter.navTo("worklist");
+						myRouter.navTo("leadasMaster");
 					}
-					else myRouter.navTo("worklist");
+					else myRouter.navTo("felvetelMaster");
 				}
 				else if (myView.byId("grpB03").getSelected() === true){
 					myView.getModel().setProperty(a.sPath + "/DelStatus", "3");
@@ -248,9 +248,9 @@ sap.ui.define([
 
 					sap.m.MessageToast.show("Lezárva");
 					if(myView.getModel().getProperty(a.sPath + "/PicType") === "D"){
-						myRouter.navTo("worklist");
+						myRouter.navTo("leadasMaster");
 					}
-					else myRouter.navTo("worklist");
+					else myRouter.navTo("felvetelMaster");
 				}
 				else if (myView.byId("grpB04").getSelected() === true){
 					myView.getModel().setProperty(a.sPath + "/DelStatus", "4");
@@ -259,9 +259,9 @@ sap.ui.define([
 
 					sap.m.MessageToast.show("Lezárva");
 					if(myView.getModel().getProperty(a.sPath + "/PicType") === "D"){
-						myRouter.navTo("worklist");
+						myRouter.navTo("leadasMaster");
 					}
-					else myRouter.navTo("worklist");
+					else myRouter.navTo("felvetelMaster");
 				}
 				else if (myView.byId("grpB05").getSelected() === true){
 					myView.getModel().setProperty(a.sPath + "/DelStatus", "5");
@@ -270,9 +270,9 @@ sap.ui.define([
 
 					sap.m.MessageToast.show("Lezárva");
 					if(myView.getModel().getProperty(a.sPath + "/PicType") === "D"){
-						myRouter.navTo("worklist");
+						myRouter.navTo("leadasMaster");
 					}
-					else myRouter.navTo("worklist");
+					else myRouter.navTo("felvetelMaster");
 				}
 				else if (myView.byId("grpB06").getSelected() === true){
 					myView.getModel().setProperty(a.sPath + "/DelStatus", "6");
@@ -281,9 +281,9 @@ sap.ui.define([
 
 					sap.m.MessageToast.show("Lezárva");
 					if(myView.getModel().getProperty(a.sPath + "/PicType") === "D"){
-						myRouter.navTo("worklist");
+						myRouter.navTo("leadasMaster");
 					}
-					else myRouter.navTo("worklist");
+					else myRouter.navTo("felvetelMaster");
 				}
 				else if (myView.byId("grpB07").getSelected() === true){
 					myView.getModel().setProperty(a.sPath + "/DelStatus", "7");
@@ -292,9 +292,9 @@ sap.ui.define([
 
 					sap.m.MessageToast.show("Lezárva");
 					if(myView.getModel().getProperty(a.sPath + "/PicType") === "D"){
-						myRouter.navTo("worklist");
+						myRouter.navTo("leadasMaster");
 					}
-					else myRouter.navTo("worklist");
+					else myRouter.navTo("felvetelMaster");
 				}
 				else if (myView.byId("grpB08").getSelected() === true){
 					myView.getModel().setProperty(a.sPath + "/DelStatus", "8");					
@@ -314,9 +314,9 @@ sap.ui.define([
 
 					sap.m.MessageToast.show("Lezárva");
 					if(myView.getModel().getProperty(a.sPath + "/PicType") === "D"){
-						myRouter.navTo("worklost");
+						myRouter.navTo("leadasMaster");
 					}
-					else myRouter.navTo("worklist");
+					else myRouter.navTo("felvetelMaster");
 				}
 				else if (myView.byId("grpA01").getSelected() === true){
 					if(myView.byId("recipient").getValue().length > 4){
@@ -335,9 +335,9 @@ sap.ui.define([
 					sap.m.MessageToast.show("Lezárva");
 					
 					if(myView.getModel().getProperty(a.sPath + "/PicType") === "D"){
-						myRouter.navTo("worklist");
+						myRouter.navTo("leadasMaster");
 					}
-					else myRouter.navTo("worklist");
+					else myRouter.navTo("felvetelMaster");
 					
 					}
 					else sap.m.MessageToast.show("Túl rövid átvevő név!");
@@ -383,9 +383,9 @@ sap.ui.define([
 				myView.getModel().setProperty(a.sPath + "/DelStatus", "555");
 				myView.getModel().submitChanges();
 				if(myView.getModel().getProperty(a.sPath + "/PicType") === "D"){
-					myRouter.navTo("worklist");
+					myRouter.navTo("leadasMaster");
 				}
-				else myRouter.navTo("worklist");
+				else myRouter.navTo("felvetelMaster");
 				
 				
 			}

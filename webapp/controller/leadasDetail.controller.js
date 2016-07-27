@@ -348,7 +348,7 @@ sap.ui.define([
 		},
 
 		handleNavButtonPress: function(evt) {
-		sap.ui.core.UIComponent.getRouterFor(this).navTo("leadasMaster");
+			history.go(-1);
 		},
 
 		onSelect: function(evt) {

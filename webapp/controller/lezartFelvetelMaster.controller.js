@@ -7,17 +7,6 @@ sap.ui.define([
 
 	return Controller.extend("com.g4s.controller.lezartFelvetelMaster", {
 
-		// onBeforeRendering: function() {
-		// 	this.getView().addDelegate({
-		// 		onAfterRendering: function(evt) {
-		// 			sap.ui.getCore().getModel().refresh(true);
-		// 			sap.ui.getCore().getModel().updateBindings(true);
-		// 			sap.ui.getCore().getModel().forceNoCache(true);
-
-		// 		}
-		// 	});
-		// },
-
 		handleListItemPress: function(evt) {
 			var context = evt.getSource().getBindingContext();
 			var _oRouter = sap.ui.core.UIComponent.getRouterFor(this);  
@@ -27,11 +16,6 @@ sap.ui.define([
 		handleNavButtonPress: function(evt) {
 			sap.ui.core.UIComponent.getRouterFor(this).navTo("launchPage");
 		},
-
-		/*	handleListSelect : function(evt) {
-				var context = evt.getParameter("listItem").getBindingContext();
-				this.nav.to("lezartFelvetelDetail", context);
-			},*/
 
 		handleGroup: function(evt) {
 

@@ -14,7 +14,6 @@ sap.ui.define([
 		 * @memberOf com.g4s.view.leadasDetail
 		 */
 		onInit: function() {
-			$("#signature").jSignature();
 			var oViewModel = new JSONModel({
 				busy: false,
 				delay: 0
@@ -78,15 +77,15 @@ sap.ui.define([
 
 			this.getView().bindElement({
 				path: sObjectPath
-				/*events: {
-					change: this._onBindingChange.bind(this),
-					dataRequested: function() {
-						oViewModel.setProperty("/busy", true);
-					},
-					dataReceived: function() {
-						oViewModel.setProperty("/busy", false);
-					}
-				}*/
+					/*events: {
+						change: this._onBindingChange.bind(this),
+						dataRequested: function() {
+							oViewModel.setProperty("/busy", true);
+						},
+						dataReceived: function() {
+							oViewModel.setProperty("/busy", false);
+						}
+					}*/
 			});
 		},
 
@@ -343,9 +342,9 @@ sap.ui.define([
 				}
 			});
 		},
-		
+
 		handleNavButtonPress: function(evt) {
-			sap.ui.core.UIComponent.getRouterFor(this).navTo("leadasMaster"); 
+			sap.ui.core.UIComponent.getRouterFor(this).navTo("leadasMaster");
 		},
 
 		onSelect: function(evt) {
@@ -372,6 +371,7 @@ sap.ui.define([
 			var a = evt.getSource().getBindingContext();
 			var bundle = this.getView().getModel("i18n").getResourceBundle();
 			var context = evt.getSource().getBindingContext();
+			var _oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 			var myself = this;
 			var isActive = 0;
 			var amIActive = false;
@@ -394,7 +394,9 @@ sap.ui.define([
 						myself.getView().getModel().submitChanges();
 						//sap.ui.getCore().getModel().updateBindings(true);
 						//sap.ui.getCore().getModel().forceNoCache(true);
-						myself.nav.to("aktualis", context);
+						_oRouter.navTo("aktualis", {
+							aktualisPath: context.getPath().substr(9, (context.getPath().length - 10))
+						});
 					} else {
 						sap.m.MessageBox.confirm(bundle.getText("ActivateDialogMsg"), function( // ha nincs, akkor megkérdezzük, h aktiváljuk-e
 								oAction) {
@@ -403,7 +405,6 @@ sap.ui.define([
 									myself.getView().getModel().submitChanges();
 									/*sap.ui.getCore().getModel().updateBindings(true);
 									sap.ui.getCore().getModel().forceNoCache(true);*/
-									var _oRouter = sap.ui.core.UIComponent.getRouterFor(myself);
 									_oRouter.navTo("aktualis", {
 										aktualisPath: context.getPath().substr(9, (context.getPath().length - 10))
 									});
@@ -423,9 +424,9 @@ sap.ui.define([
 
 			if (amIActive == true) {
 				var _oRouter = sap.ui.core.UIComponent.getRouterFor(myself);
-									_oRouter.navTo("aktualis", {
-										aktualisPath: context.getPath().substr(9, (context.getPath().length - 10))
-									});
+				_oRouter.navTo("aktualis", {
+					aktualisPath: context.getPath().substr(9, (context.getPath().length - 10))
+				});
 			}
 
 		},
@@ -451,26 +452,31 @@ sap.ui.define([
 			//       }
 
 			// totál utánvét összeg számítás
-			function fSuccess(response){ 
-        	var oNumberFormat = sap.ui.core.format.NumberFormat.getIntegerInstance({maxFractionDigits: 1, minFractionDigits: 0, groupingEnabled: true, groupingSeparator: " ",
-			  decimalSeparator: "."});
-            for(var i = 0; i < response.results.length; i++){
-            	total += response.results[i].Price;
-				myView.byId("total_id").setNumber(oNumberFormat.format(total));
-            }
+			function fSuccess(response) {
+				var oNumberFormat = sap.ui.core.format.NumberFormat.getIntegerInstance({
+					maxFractionDigits: 1,
+					minFractionDigits: 0,
+					groupingEnabled: true,
+					groupingSeparator: " ",
+					decimalSeparator: "."
+				});
+				for (var i = 0; i < response.results.length; i++) {
+					total += response.results[i].Price;
+					myView.byId("total_id").setNumber(oNumberFormat.format(total));
+				}
 
-            }  
-            function fError(oEvent){  
-             console.log("oModel: An error occured while reading Employees!");  
-            } 
-        
-        // totál utánvét összeg számítás
-        
-			  
-			   this.getView().getModel().read(a.sPath + "/Items", {  
-					success: jQuery.proxy(fSuccess, this),  
-                	error: jQuery.proxy(fError, this)  
-				});  
+			}
+
+			function fError(oEvent) {
+				console.log("oModel: An error occured while reading Employees!");
+			}
+
+			// totál utánvét összeg számítás
+
+			this.getView().getModel().read(a.sPath + "/Items", {
+				success: jQuery.proxy(fSuccess, this),
+				error: jQuery.proxy(fError, this)
+			});
 
 			/*   	if(object.DelStatus) == "111"){
 			   		myView.byId("setActive").setText("Folytat");

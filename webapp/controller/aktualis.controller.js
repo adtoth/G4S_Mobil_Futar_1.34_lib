@@ -132,20 +132,20 @@ sap.ui.define([
 		//
 		//	}
 		
-	/*
+	
 	onBeforeRendering: function(){ // binding model synchronisation
 		window.globalAktualis = this;
         this.getView().addDelegate({ onAfterShow: function(evt) {
         	var a = globalAktualis.getView().getBindingContext();
-        	globalAktualis.getView().byId("idIconTabBarMulti").setSelectedKey("addr");
-        	globalAktualis.getView().byId("idIconTabBarMulti").setExpanded(true);
-		     var myView = globalAktualis.getView();   	
-		     var model = sap.ui.getCore().getModel();
+        	var myView = globalAktualis.getView();   	
+        	myView.byId("idIconTabBarMulti").setSelectedKey("addr");
+        	myView.byId("idIconTabBarMulti").setExpanded(true);
+		     var model = myView.getModel();
 		     window.signeeCounter = 0;
 		     myView.byId("clr").setVisible(false);
 		     myView.byId("cls").setVisible(true);
 		     myView.byId("susp").setVisible(true);
-		     myView.byId("recipient").setValue(this.getView().getModel().getProperty(a.sPath + "/To"));
+		     myView.byId("recipient").setValue(model.getProperty(a.sPath + "/To"));
 		     myView.byId("grpA01").setSelected(false);
 		     myView.byId("grpA02").setSelected(false);
 		     myView.byId("grpB01").setSelected(false);
@@ -166,7 +166,7 @@ sap.ui.define([
         }});
        
 	},	
-	*/
+	
 	handleNavButtonPress : function(evt) {
 			sap.ui.core.UIComponent.getRouterFor(this).navTo("launchPage");
 	},
@@ -396,10 +396,11 @@ sap.ui.define([
 	},
 	
 	signee: function(evt) {
-		 if(this.getView().byId("idIconTabBarMulti").getSelectedKey() == "sig"){
-			 $("#signature").jSignature();
-			 $("#signature").jSignature("reset");
-	        }
+		 if(window.signeeCounter === 0){ // ha most jöttünk ide, töröljük az előző aláírást, egyébként megtartjuk, counter az onBeforeRenderingben
+			$("#signature").jSignature();
+			$("#signature").jSignature("reset");
+			window.signeeCounter++;
+		}
 		
 		 var a = evt.getSource().getBindingContext();
 	     var total = 0;

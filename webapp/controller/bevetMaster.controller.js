@@ -50,7 +50,7 @@ sap.ui.define([
         window.globalVariable = this.getView();
         window.globalBevetMaster = this;
         window.globalFoundItems = 0;    
-		window.scanner = cordova.require("cordova/plugin/BarcodeScanner");
+		window.scanner = cordova.plugins.barcodeScanner;
         scanner.scan(this.loopScan, function(fail) {
             alert("encoding failed: " + fail);
         });
@@ -62,7 +62,50 @@ sap.ui.define([
 			var closedItems = 0;
 			var paramurl = "$filter=Today eq '1'";
 			
-			window.globalVariable.getModel().read("/Item", null, paramurl, true, function(response) {	
+			function fSuccess(response){ 
+				if(response.results[0] != undefined){ // ha találtunk ilyen csomagot
+					if(response.results[0].PickupStatus == 'M'){ // még nem volt felvéve, felvesszük
+							window.globalFoundItems++;
+							window.globalVariable.getModel().setProperty("/Item(" + response.results[0].Id + ")/PickupStatus", 'A');
+							window.globalVariable.getModel().submitChanges();
+							sap.m.MessageToast.show("Csomag felvéve");
+
+					}
+					else if(response.results[0].PickupStatus == 'A'){ // ha már fel lett léve
+								sap.m.MessageToast.show("Ez a csomag már fel van véve");
+					}
+				}
+				else{
+							sap.m.MessageToast.show("Nincs ilyen csomag");
+						}
+            }  
+            function fError(oEvent){  
+             console.log("oModel: An error occured while reading Employees!");  
+            } 
+			
+			var filters = [];
+			var filter1 = new sap.ui.model.Filter({  
+                     path: "Today",  
+                     operator: sap.ui.model.FilterOperator.EQ,  
+                     value1: '1',
+                     and: true
+              }); 
+            var filter2 = new sap.ui.model.Filter({  
+                     path: "ProductId",  
+                     operator: sap.ui.model.FilterOperator.EQ,  
+                     value1: result.text,
+                     and: true
+              });
+              
+            filters.push(filter1); 
+            filters.push(filter2); 
+			window.globalVariable.getModel().read("/Item", {
+				async: false,
+				success: jQuery.proxy(fSuccess, this),
+				error: jQuery.proxy(fError, this),
+				filters: filters
+			});
+			/*window.globalVariable.getModel().read("/Item", null, paramurl, true, function(response) {	
 				for(var i = 0; i < response.results.length; i++){
 					allItems = response.results.length;
 					if(response.results[i].PickupStatus == 'A'){
@@ -125,7 +168,7 @@ sap.ui.define([
 				}
 				
 					
-			});
+			});*/
 	}
 
 	});

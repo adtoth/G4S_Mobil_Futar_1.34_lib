@@ -55,7 +55,10 @@ sap.ui.define([
 						this.getRouter().navTo("launchPage");*/
 						this.getRouter().navTo("launchPage");
 
-		}
+		},
+		onBeforeShow: function() {
+			sap.ui.core.UIComponent.getRouterFor(this).navTo("launchPage");
+		},
 
 		/**
 		 * Event handler for navigating back.

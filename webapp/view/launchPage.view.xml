@@ -119,7 +119,7 @@
         	operator: 'EQ',
         	value1: '999'
         }
-        ]}" visible="false">
+        ]}" visible="true">
 			<ObjectListItem type="Active" press="handleListItemPress"
 			
 				title="{Company}" icon="sap-icon://toaster-{IconPic}">

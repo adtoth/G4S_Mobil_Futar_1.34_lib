@@ -52,23 +52,27 @@ sap.ui.define([
         window.globalFoundItems = 0;    
 		window.scanner = cordova.plugins.barcodeScanner;
         scanner.scan(this.loopScan, function(fail) {
-            alert("encoding failed: " + fail);
+            console.log("encoding failed: " + fail);
         });
         
 	},
 		loopScan: function(result){
+			if(result.cancelled == true){ // ha megszakítottuk a scannelést
+				return;
+			}
 			var foundItems = 0;
 			var allItems = 0;
 			var closedItems = 0;
 			var paramurl = "$filter=Today eq '1'";
 			
 			function fSuccess(response){ 
-				if(response.results[0] != undefined){ // ha találtunk ilyen csomagot
+				if(response.results.length != 0){ // ha találtunk ilyen csomagot
 					if(response.results[0].PickupStatus == 'M'){ // még nem volt felvéve, felvesszük
 							window.globalFoundItems++;
 							window.globalVariable.getModel().setProperty("/Item(" + response.results[0].Id + ")/PickupStatus", 'A');
 							window.globalVariable.getModel().submitChanges();
 							sap.m.MessageToast.show("Csomag felvéve");
+
 
 					}
 					else if(response.results[0].PickupStatus == 'A'){ // ha már fel lett léve
@@ -78,9 +82,11 @@ sap.ui.define([
 				else{
 							sap.m.MessageToast.show("Nincs ilyen csomag");
 						}
+				window.scanner.scan(window.globalBevetMaster.loopScan, function(fail){ console.log(fail);});
+
             }  
             function fError(oEvent){  
-             console.log("oModel: An error occured while reading Employees!");  
+             console.log("oModel: An error occured while reading Items!");  
             } 
 			
 			var filters = [];

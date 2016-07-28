@@ -307,7 +307,6 @@ sap.ui.define([
 			});
 		},
 
-
 		handleNavButtonPress: function(evt) {
 			sap.ui.core.UIComponent.getRouterFor(this).navTo("lezartFelvetelMaster");
 		},
@@ -332,115 +331,65 @@ sap.ui.define([
 			}
 		},
 
-		activate: function(evt) {
+		signee: function(evt) {
 			var a = evt.getSource().getBindingContext();
-			var bundle = this.getView().getModel("i18n").getResourceBundle();
-			var context = evt.getSource().getBindingContext();
-			var myself = this;
-			var isActive = 0;
-			var amIActive = false;
-			if (sap.ui.getCore().getModel().getProperty(a.sPath + "/DelStatus") == "999") {
-				amIActive = true;
-			}
-			for (i = 0; i < 1000; i++) {
-				if (sap.ui.getCore().getModel().getProperty("/Address(" + i + ")/DelStatus") == "999") {
-					isActive++;
-				}
-			}
-			if (isActive == 0 && amIActive == false) {
-				if (sap.ui.getCore().getModel().getProperty(a.sPath + "/DelStatus") == '111' || sap.ui.getCore().getModel().getProperty(a.sPath +
-						"/DelStatus") == '555') {
-					if (sap.ui.getCore().getModel().getProperty(a.sPath + "/DelStatus") == '555') { //ha fel van függesztve akkor továbbemgyünk
-						sap.ui.getCore().getModel().setProperty(a.sPath + "/DelStatus", '999');
-						sap.ui.getCore().getModel().submitChanges();
-						sap.ui.getCore().getModel().updateBindings(true);
-						sap.ui.getCore().getModel().forceNoCache(true);
-						myself.nav.to("aktualis", context);
-					} else {
-						sap.m.MessageBox.confirm(bundle.getText("ActivateDialogMsg"), function( // ha nincs, akkor megkérdezzük, h aktiváljuk-e
-								oAction) {
-								if (sap.m.MessageBox.Action.OK === oAction) {
-									sap.ui.getCore().getModel().setProperty(a.sPath + "/DelStatus", '999');
-									sap.ui.getCore().getModel().submitChanges();
-									sap.ui.getCore().getModel().updateBindings(true);
-									sap.ui.getCore().getModel().forceNoCache(true);
-									myself.nav.to("aktualis", context);
-								}
-							},
+			var total = 0;
+			var myView = this.getView();
 
-							bundle.getText("ActivateDialogTitle")
-						);
+			if (window.signeeCounter === 0) { // ha most jöttünk ide, töröljük az előző aláírást, egyébként megtartjuk, counter az onBeforeRenderingben
+				$("#signature_cls").jSignature();
+				$("#signature_cls").jSignature("reset");
+				$("#signature_cls").jSignature("disable");
+				var sigData = myView.getModel().getProperty(a.sPath + "/Signature");
+				$("#signature_cls").jSignature("setData", sigData);
+				window.signeeCounter++;
+			}
+
+			//$("#signature_cls").jSignature();
+			//$("#signature_cls").jSignature("reset");
+			//       if(this.getView().byId("idIconTabBarMulti").getSelectedKey() == "sig"){
+			//       	this.getView().byId("cls").setVisible(false);
+			//       	
+			//       }
+			//       else{
+			//       	this.getView().byId("cls").setVisible(true);
+			//       }
+
+			// totál utánvét összeg számítás
+			function fSuccess(response) {
+				var oNumberFormat = sap.ui.core.format.NumberFormat.getIntegerInstance({
+					maxFractionDigits: 1,
+					minFractionDigits: 0,
+					groupingEnabled: true,
+					groupingSeparator: " ",
+					decimalSeparator: "."
+				});
+				for (var i = 0; i < response.results.length; i++) {
+					total += response.results[i].Price;
+					myView.byId("total_id").setNumber(oNumberFormat.format(total));
+				}
+
+			}
+
+			function fError(oEvent) {
+				console.log("oModel: An error occured while reading Employees!");
+			}
+
+			// totál utánvét összeg számítás
+
+			this.getView().getModel().read(a.sPath + "/Items", {
+				success: jQuery.proxy(fSuccess, this),
+				error: jQuery.proxy(fError, this)
+			});
+
+			/*   	if(sap.ui.getCore().getModel().getProperty(a.sPath + "/DelStatus") == "111"){
+			   		myView.byId("setActive").setText("Folytat");
 					}
-				} else {
-					sap.m.MessageToast.show("Szállítás lezárva, nem aktiválható!");
-				}
-			} else if (amIActive == false) {
-				sap.m.MessageToast.show("Van már aktív szállítás!");
-			}
-
-			if (amIActive == true) {
-				myself.nav.to("aktualis", context);
-			}
+					else{
+						myView.byId("setActive").setText("Aktivál");
+					}*/
 
 		},
-
-	signee: function(evt) {
-		var a = evt.getSource().getBindingContext();
-		var total = 0;
-	    var myView = this.getView();
-	    
-		if(window.signeeCounter === 0){ // ha most jöttünk ide, töröljük az előző aláírást, egyébként megtartjuk, counter az onBeforeRenderingben
-			$("#signature_cls").jSignature();
-			$("#signature_cls").jSignature("reset");
-			$("#signature_cls").jSignature("disable");
-			var sigData = myView.getModel().getProperty(a.sPath + "/Signature");
-			$("#signature_cls").jSignature("setData", sigData);
-			window.signeeCounter++;
-		}
-		 
-	    
-	     
-       //$("#signature_cls").jSignature();
-       //$("#signature_cls").jSignature("reset");
-//       if(this.getView().byId("idIconTabBarMulti").getSelectedKey() == "sig"){
-//       	this.getView().byId("cls").setVisible(false);
-//       	
-//       }
-//       else{
-//       	this.getView().byId("cls").setVisible(true);
-//       }
-       
-       // totál utánvét összeg számítás
-		function fSuccess(response){ 
-        	var oNumberFormat = sap.ui.core.format.NumberFormat.getIntegerInstance({maxFractionDigits: 1, minFractionDigits: 0, groupingEnabled: true, groupingSeparator: " ",
-			  decimalSeparator: "."});
-            for(var i = 0; i < response.results.length; i++){
-            	total += response.results[i].Price;
-				myView.byId("total_id").setNumber(oNumberFormat.format(total));
-            }
-
-            }  
-            function fError(oEvent){  
-             console.log("oModel: An error occured while reading Employees!");  
-            } 
-        
-        // totál utánvét összeg számítás
-        
-			  
-			   this.getView().getModel().read(a.sPath + "/Items", {  
-					success: jQuery.proxy(fSuccess, this),  
-                	error: jQuery.proxy(fError, this)  
-				});  
-   	
-/*   	if(sap.ui.getCore().getModel().getProperty(a.sPath + "/DelStatus") == "111"){
-   		myView.byId("setActive").setText("Folytat");
-		}
-		else{
-			myView.byId("setActive").setText("Aktivál");
-		}*/
-   	
-   	
-   },
 
 		clear: function() {
 			$("#signature_cls").jSignature("reset");

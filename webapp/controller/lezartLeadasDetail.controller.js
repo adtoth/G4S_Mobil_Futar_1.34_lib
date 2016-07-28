@@ -27,32 +27,6 @@ sap.ui.define([
 			//oRouter.getRoute("leadasDetail").attachPatternMatched(this._onObjectMatched, this);
 		},
 
-		/**
-		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
-		 * (NOT before the first rendering! onInit() is used for that one!).
-		 * @memberOf com.g4s.view.lezartLeadasDetail
-		 */
-		//	onBeforeRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the View has been rendered (so its HTML is part of the document). Post-rendering manipulations of the HTML could be done here.
-		 * This hook is the same one that SAPUI5 controls get after being rendered.
-		 * @memberOf com.g4s.view.lezartLeadasDetail
-		 */
-		//	onAfterRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the Controller is destroyed. Use this one to free resources and finalize activities.
-		 * @memberOf com.g4s.view.lezartLeadasDetail
-		 */
-		//	onExit: function() {
-		//
-		//	}
-		
 		_onObjectMatched: function(oEvent) {
 			/*this.getView().bindElement({
 				path: "/" + oEvent.getParameter("arguments").invoicePath,
@@ -374,60 +348,6 @@ sap.ui.define([
 		else {
 			this.getView().byId("otherText").setVisible(false);
 		}
-	},
-	
-	activate: function(evt){
-		var a = evt.getSource().getBindingContext();
-		var bundle = this.getView().getModel("i18n").getResourceBundle();
-		var context = evt.getSource().getBindingContext();
-		var myself = this;
-		var isActive = 0;
-		var amIActive = false;
-		if(sap.ui.getCore().getModel().getProperty(a.sPath + "/DelStatus") == "999"){
-			amIActive = true;
-		}
-		for(i = 0; i < 1000; i++){
-			if(sap.ui.getCore().getModel().getProperty("/Address(" + i + ")/DelStatus") == "999"){
-				isActive++;
-			}
-		}
-		if(isActive == 0 && amIActive == false){
-		if(sap.ui.getCore().getModel().getProperty(a.sPath + "/DelStatus") == '111' || sap.ui.getCore().getModel().getProperty(a.sPath + "/DelStatus") == '555'){
-			if(sap.ui.getCore().getModel().getProperty(a.sPath + "/DelStatus") == '555'){ //ha fel van függesztve akkor továbbemgyünk
-				sap.ui.getCore().getModel().setProperty(a.sPath + "/DelStatus", '999');
-				sap.ui.getCore().getModel().submitChanges();
-				sap.ui.getCore().getModel().updateBindings(true);
-				sap.ui.getCore().getModel().forceNoCache(true);
-				myself.nav.to("aktualis", context);
-			}
-			else{
-		sap.m.MessageBox.confirm(bundle.getText("ActivateDialogMsg"), function( // ha nincs, akkor megkérdezzük, h aktiváljuk-e
-				oAction) {			
-			if (sap.m.MessageBox.Action.OK === oAction){
-				sap.ui.getCore().getModel().setProperty(a.sPath + "/DelStatus", '999');
-				sap.ui.getCore().getModel().submitChanges();
-				sap.ui.getCore().getModel().updateBindings(true);
-				sap.ui.getCore().getModel().forceNoCache(true);
-				myself.nav.to("aktualis", context);
-			}
-		},
-		   
-		   bundle.getText("ActivateDialogTitle")
-		);
-			}
-	}
-		else {
-			sap.m.MessageToast.show("Szállítás lezárva, nem aktiválható!");
-		}
-		}
-		else if (amIActive == false){
-			sap.m.MessageToast.show("Van már aktív szállítás!");
-		}
-		
-		if(amIActive == true){
-			myself.nav.to("aktualis", context);
-		}
-		
 	},
 	
 	signee: function(evt) {

@@ -436,13 +436,49 @@ sap.ui.define([
 		},
 
 		handleAktualisPress: function(evt) {
-			var item = this.getView().byId("aktualisList").getItems();
+			/*var item = this.getView().byId("aktualisList").getItems();
 			if (item.length !== 0) {
 				var context = item[0].getBindingContext();
 				sap.ui.core.UIComponent.getRouterFor(this).navTo("aktualis", {
 					aktualisPath: context.getPath().substr(9, (context.getPath().length - 10))
 				});
+			}*/
+			
+			var that = this;
+			function fSuccess(response) {
+				if(response.results.length !== 0){
+					sap.ui.core.UIComponent.getRouterFor(that).navTo("aktualis", {
+					aktualisPath: response.results[0].Id
+				});
+				}
 			}
+
+			function fError(oEvent) {
+				console.log("oModel: An error occured while reading Employees!");
+			}
+			var filters = [];
+			var filter1 = new sap.ui.model.Filter({  
+                     path: "Today",  
+                     operator: sap.ui.model.FilterOperator.EQ,  
+                     value1: '1',
+                     and: true
+              }); 
+            var filter2 = new sap.ui.model.Filter({  
+                     path: "DelStatus",  
+                     operator: sap.ui.model.FilterOperator.EQ,  
+                     value1: '999',
+                     and: true
+              });
+              
+            filters.push(filter1); 
+            filters.push(filter2); 
+            
+			this.getView().getModel().read("/Address", {
+				async: false,
+				success: jQuery.proxy(fSuccess, this),
+				error: jQuery.proxy(fError, this),
+				filters: filters
+			});
 		},
 
 		handleLeadasPress: function(evt) {

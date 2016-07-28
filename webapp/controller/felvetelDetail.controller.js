@@ -375,6 +375,7 @@ sap.ui.define([
 						sap.m.MessageBox.confirm(bundle.getText("ActivateDialogMsg"), function( // ha nincs, akkor megkérdezzük, h aktiváljuk-e
 								oAction) {
 								if (sap.m.MessageBox.Action.OK === oAction) {
+									window.hasActive = true;
 									myself.getView().getModel().setProperty(a.sPath + "/DelStatus", '999');
 									myself.getView().getModel().submitChanges();
 									/*sap.ui.getCore().getModel().updateBindings(true);

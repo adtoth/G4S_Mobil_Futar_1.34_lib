@@ -206,6 +206,7 @@ sap.ui.define([
 		sap.m.MessageBox.confirm(bundle.getText("CloseDialogMsg"), function(
 				oAction) {			
 			if (sap.m.MessageBox.Action.OK === oAction){
+				window.hasActive = false;
 				if(myView.byId("grpB10").getSelected() === true){
 					myView.getModel().setProperty(a.sPath + "/Comment", myView.byId("otherText").getValue());
 					myView.getModel().setProperty(a.sPath + "/DelStatus", "10");
@@ -379,7 +380,7 @@ sap.ui.define([
 		sap.m.MessageBox.confirm(bundle.getText("SuspendDialogMsg"), function(
 				oAction) {			
 			if (sap.m.MessageBox.Action.OK === oAction){
-	
+				window.hasActive = false;
 				myView.getModel().setProperty(a.sPath + "/DelStatus", "555");
 				myView.getModel().submitChanges();
 				if(myView.getModel().getProperty(a.sPath + "/PicType") === "D"){

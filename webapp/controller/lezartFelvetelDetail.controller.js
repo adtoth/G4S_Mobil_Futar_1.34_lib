@@ -11,7 +11,7 @@ sap.ui.define([
 	"sap/ui/core/format/NumberFormat",
 	"com/g4s/util/Formatter"
 
-], function(Controller, BaseController, JSONModel, jSignature) {
+], function(Controller, BaseController, JSONModel) {
 	"use strict";
 
 	return Controller.extend("com.g4s.controller.lezartFelvetelDetail", {
@@ -384,28 +384,34 @@ sap.ui.define([
 
 		},
 
-		signee: function(evt) {
-			//		if(signeeCounter === 0){ // ha most jöttünk ide, töröljük az előző aláírást, egyébként megtartjuk, counter az onBeforeRenderingben
-			//			$("#signature").jSignature();
-			//			$("#signature").jSignature("reset");
-			//			signeeCounter++;
-			//		}
-			var a = evt.getSource().getBindingContext();
-			var total = 0;
-			var myView = this.getView();
-
-			//$("#signature").jSignature();
-			//$("#signature").jSignature("reset");
-			//       if(this.getView().byId("idIconTabBarMulti").getSelectedKey() == "sig"){
-			//       	this.getView().byId("cls").setVisible(false);
-			//       	
-			//       }
-			//       else{
-			//       	this.getView().byId("cls").setVisible(true);
-			//       }
-
-			// totál utánvét összeg számítás
-			function fSuccess(response){ 
+	signee: function(evt) {
+		var a = evt.getSource().getBindingContext();
+		var total = 0;
+	    var myView = this.getView();
+	    
+		if(window.signeeCounter === 0){ // ha most jöttünk ide, töröljük az előző aláírást, egyébként megtartjuk, counter az onBeforeRenderingben
+			$("#signature_cls").jSignature();
+			$("#signature_cls").jSignature("reset");
+			$("#signature_cls").jSignature("disable");
+			var sigData = myView.getModel().getProperty(a.sPath + "/Signature");
+			$("#signature_cls").jSignature("setData", sigData);
+			window.signeeCounter++;
+		}
+		 
+	    
+	     
+       //$("#signature_cls").jSignature();
+       //$("#signature_cls").jSignature("reset");
+//       if(this.getView().byId("idIconTabBarMulti").getSelectedKey() == "sig"){
+//       	this.getView().byId("cls").setVisible(false);
+//       	
+//       }
+//       else{
+//       	this.getView().byId("cls").setVisible(true);
+//       }
+       
+       // totál utánvét összeg számítás
+		function fSuccess(response){ 
         	var oNumberFormat = sap.ui.core.format.NumberFormat.getIntegerInstance({maxFractionDigits: 1, minFractionDigits: 0, groupingEnabled: true, groupingSeparator: " ",
 			  decimalSeparator: "."});
             for(var i = 0; i < response.results.length; i++){
@@ -425,15 +431,16 @@ sap.ui.define([
 					success: jQuery.proxy(fSuccess, this),  
                 	error: jQuery.proxy(fError, this)  
 				});  
-
-			/*   	if(object.DelStatus) == "111"){
-			   		myView.byId("setActive").setText("Folytat");
-					}
-					else{
-						myView.byId("setActive").setText("Aktivál");
-					}*/
-
-		},
+   	
+/*   	if(sap.ui.getCore().getModel().getProperty(a.sPath + "/DelStatus") == "111"){
+   		myView.byId("setActive").setText("Folytat");
+		}
+		else{
+			myView.byId("setActive").setText("Aktivál");
+		}*/
+   	
+   	
+   },
 
 		clear: function() {
 			$("#signature_cls").jSignature("reset");

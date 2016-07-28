@@ -40,11 +40,13 @@ sap.ui.define([
 		var sorters = [];
 		var item = evt.getParameter("selectedItem");
 		var key = (item) ? item.getKey() : null;
-		if ("TPostalCode" === key || "To" === key || "TStreet" === key) {
-			// sap.ui.netlife.G4S.util.Grouper.bundle = this.getView().getModel("i18n").getResourceBundle();
-			var grouper = sap.ui.netlife.G4S.util.Grouper[key];
-			sorters.push(new sap.ui.model.Sorter(key, false, grouper));
-		}
+			if ("TPostalCode" === key || "To" === key || "TStreet" === key) {
+				var bundle = jQuery.sap.resources({
+					url: "i18n/messageBundle.properties"
+				});
+				var grouper = bundle[key];
+				sorters.push(new sap.ui.model.Sorter(key, false, grouper));
+			}
 
 		// update binding
 		var list = this.getView().byId("list");

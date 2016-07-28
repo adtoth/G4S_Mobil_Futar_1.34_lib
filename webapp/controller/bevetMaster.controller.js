@@ -50,7 +50,7 @@ sap.ui.define([
         window.globalVariable = this.getView();
         window.globalBevetMaster = this;
         window.globalFoundItems = 0;    
-		window.scanner = cordova.plugins.barcodeScanner;
+		window.scanner = cordova.require("cordova/plugin/BarcodeScanner");
         scanner.scan(this.loopScan, function(fail) {
             alert("encoding failed: " + fail);
         });

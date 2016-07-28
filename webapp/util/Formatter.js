@@ -34,7 +34,7 @@ util.Formatter = {
 
 	statusText :  function (value) {
 		//var sLocale = sap.ui.getCore().getConfiguration().getLanguage();
-		var bundle = jQuery.sap.resources({url : "i18n/messageBundle.properties"});
+		var bundle = this.getModel("i18n").getResourceBundle();
 		return bundle.getText("StatusText" + value, "?");
 	},
 	
@@ -63,7 +63,7 @@ util.Formatter = {
 	},
 	
 	CODText :  function (value) {
-		var bundle = jQuery.sap.resources({url : "i18n/messageBundle.properties"});
+		var bundle = this.getModel("i18n").getResourceBundle();
 		return bundle.getText("CODText" + value, "?");
 	},
 	

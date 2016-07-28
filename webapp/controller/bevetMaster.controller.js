@@ -42,7 +42,7 @@ sap.ui.define([
 		//	}
 	
 	handleNavButtonPress : function(evt) {
-		history.go(-1);
+		sap.ui.core.UIComponent.getRouterFor(this).navTo("launchPage");
 	},
 
 	scan : function(evt) {
@@ -50,7 +50,7 @@ sap.ui.define([
         window.globalVariable = this.getView();
         window.globalBevetMaster = this;
         window.globalFoundItems = 0;    
-		window.scanner = cordova.require("cordova/plugin/BarcodeScanner");
+		window.scanner = cordova.plugins.barcodeScanner;
         scanner.scan(this.loopScan, function(fail) {
             alert("encoding failed: " + fail);
         });
@@ -80,11 +80,11 @@ sap.ui.define([
 
 						//var startOfIndex = 0;
 						var lengthOfAddresses = 0;
-						sap.ui.getCore().getModel().read("/Address", null, paramurl, true, function(response) {
+						window.globalVariable.getModel().read("/Address", null, paramurl, true, function(response) {
 							lengthOfAddresses = response.results.length;
 							//startOfIndex = response.results[0].Id;
 							for(var i = 0; i <  lengthOfAddresses ; i++){
-								sap.ui.getCore().getModel().read("/Address(" + response.results[i].Id + ")" , null, {
+								window.globalVariable.getModel().read("/Address(" + response.results[i].Id + ")" , null, {
 									"$expand" : "Items"
 								}, true, function(response) {
 									var itemCount = 0;
@@ -94,12 +94,12 @@ sap.ui.define([
 										}
 										if(itemCount == response.Items.results.length){
 											var b = response.Id;
-											var m = sap.ui.getCore().getModel();
-											//sap.ui.getCore().getModel().update("/Address(" + response.Id + ")/SzallitasStatus", 'R'); 
-											var asd = sap.ui.getCore().getModel().getProperty("/Address(" + response.Id + ")/SzallitasStatus");
-											sap.ui.getCore().getModel().setProperty("/Address(" + response.Id + ")/SzallitasStatus", 'R');
-											sap.ui.getCore().getModel().submitChanges();
-											sap.ui.getCore().getModel().updateBindings(true);
+											var m = window.globalVariable.getModel();
+											//window.globalVariable.getModel().update("/Address(" + response.Id + ")/SzallitasStatus", 'R'); 
+											var asd = window.globalVariable.getModel().getProperty("/Address(" + response.Id + ")/SzallitasStatus");
+											window.globalVariable.getModel().setProperty("/Address(" + response.Id + ")/SzallitasStatus", 'R');
+											window.globalVariable.getModel().submitChanges();
+											window.globalVariable.getModel().updateBindings(true);
 										}
 									}
 								});
@@ -126,9 +126,6 @@ sap.ui.define([
 				
 					
 			});
-
-
-
 	}
 
 	});

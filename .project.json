@@ -1,7 +1,8 @@
 {
   "projectType": [
     "sap.watt.uitools.ide.fiori",
-    "com.watt.common.builder.sapui5clientbuild"
+    "com.watt.common.builder.sapui5clientbuild",
+    "com.sap.webide.hybrid.cordova"
   ],
   "build": {
     "targetFolder": "dist",
@@ -68,5 +69,20 @@
       "xml": "fioriXmlAnalysis",
       "js": "fioriJsValidator"
     }
+  },
+  "hybrid": {
+    "oDataConfigs": [
+      {
+        "hybridOdata": {
+          "name": "mainService",
+          "serviceUrl": ""
+        },
+        "originOdata": {
+          "name": "mainService",
+          "serviceUrl": "https://cors-anywhere.herokuapp.com/http://office.netlife.hu:8181/futarfioriodataprovider/courierdata.svc/"
+        }
+      }
+    ],
+    "hatVersion": "1.17.2"
   }
 }

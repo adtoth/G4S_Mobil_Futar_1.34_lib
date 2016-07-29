@@ -241,20 +241,68 @@ sap.ui.define([
               });
               var filter3 = new sap.ui.model.Filter({  
                      path: "DelStatus",  
-                     operator: sap.ui.model.FilterOperator.NE,  
-                     value1: '111',
+                     operator: sap.ui.model.FilterOperator.EQ,  
+                     value1: '222',
                      and: false
               });
               var filter4 = new sap.ui.model.Filter({  
                      path: "DelStatus",  
-                     operator: sap.ui.model.FilterOperator.NE,  
-                     value1: '555',
+                     operator: sap.ui.model.FilterOperator.EQ,  
+                     value1: '1',
                      and: false
               });
               var filter5 = new sap.ui.model.Filter({  
                      path: "DelStatus",  
-                     operator: sap.ui.model.FilterOperator.NE,  
-                     value1: '999',
+                     operator: sap.ui.model.FilterOperator.EQ,  
+                     value1: '2',
+                     and: false
+              });
+              var filter6 = new sap.ui.model.Filter({  
+                     path: "DelStatus",  
+                     operator: sap.ui.model.FilterOperator.EQ,  
+                     value1: '3',
+                     and: false
+              });
+              var filter7 = new sap.ui.model.Filter({  
+                     path: "DelStatus",  
+                     operator: sap.ui.model.FilterOperator.EQ,  
+                     value1: '4',
+                     and: false
+              });
+              var filter8 = new sap.ui.model.Filter({  
+                     path: "DelStatus",  
+                     operator: sap.ui.model.FilterOperator.EQ,  
+                     value1: '5',
+                     and: false
+              });
+              var filter9 = new sap.ui.model.Filter({  
+                     path: "DelStatus",  
+                     operator: sap.ui.model.FilterOperator.EQ,  
+                     value1: '6',
+                     and: false
+              });
+              var filter10 = new sap.ui.model.Filter({  
+                     path: "DelStatus",  
+                     operator: sap.ui.model.FilterOperator.EQ,  
+                     value1: '7',
+                     and: false
+              });
+              var filter11 = new sap.ui.model.Filter({  
+                     path: "DelStatus",  
+                     operator: sap.ui.model.FilterOperator.EQ,  
+                     value1: '8',
+                     and: false
+              });
+              var filter12 = new sap.ui.model.Filter({  
+                     path: "DelStatus",  
+                     operator: sap.ui.model.FilterOperator.EQ,  
+                     value1: '9',
+                     and: false
+              });
+              var filter13 = new sap.ui.model.Filter({  
+                     path: "DelStatus",  
+                     operator: sap.ui.model.FilterOperator.EQ,  
+                     value1: '10',
                      and: false
               });
 
@@ -263,6 +311,14 @@ sap.ui.define([
             filters.push(filter3); 
             filters.push(filter4); 
             filters.push(filter5); 
+            filters.push(filter6); 
+            filters.push(filter7); 
+            filters.push(filter8); 
+            filters.push(filter9); 
+            filters.push(filter10); 
+            filters.push(filter11); 
+            filters.push(filter12); 
+            filters.push(filter13); 
             
 			this.getView().getModel().read("/Address/$count", {
 				async: false,
@@ -281,7 +337,7 @@ sap.ui.define([
 			function fError(oEvent) {
 				console.log("oModel: An error occured while reading Employees!");
 			}
-			var filters = [];
+						var filters = [];
 			var filter1 = new sap.ui.model.Filter({  
                      path: "Today",  
                      operator: sap.ui.model.FilterOperator.EQ,  
@@ -296,20 +352,68 @@ sap.ui.define([
               });
               var filter3 = new sap.ui.model.Filter({  
                      path: "DelStatus",  
-                     operator: sap.ui.model.FilterOperator.NE,  
-                     value1: '111',
+                     operator: sap.ui.model.FilterOperator.EQ,  
+                     value1: '222',
                      and: false
               });
               var filter4 = new sap.ui.model.Filter({  
                      path: "DelStatus",  
-                     operator: sap.ui.model.FilterOperator.NE,  
-                     value1: '555',
+                     operator: sap.ui.model.FilterOperator.EQ,  
+                     value1: '1',
                      and: false
               });
               var filter5 = new sap.ui.model.Filter({  
                      path: "DelStatus",  
-                     operator: sap.ui.model.FilterOperator.NE,  
-                     value1: '999',
+                     operator: sap.ui.model.FilterOperator.EQ,  
+                     value1: '2',
+                     and: false
+              });
+              var filter6 = new sap.ui.model.Filter({  
+                     path: "DelStatus",  
+                     operator: sap.ui.model.FilterOperator.EQ,  
+                     value1: '3',
+                     and: false
+              });
+              var filter7 = new sap.ui.model.Filter({  
+                     path: "DelStatus",  
+                     operator: sap.ui.model.FilterOperator.EQ,  
+                     value1: '4',
+                     and: false
+              });
+              var filter8 = new sap.ui.model.Filter({  
+                     path: "DelStatus",  
+                     operator: sap.ui.model.FilterOperator.EQ,  
+                     value1: '5',
+                     and: false
+              });
+              var filter9 = new sap.ui.model.Filter({  
+                     path: "DelStatus",  
+                     operator: sap.ui.model.FilterOperator.EQ,  
+                     value1: '6',
+                     and: false
+              });
+              var filter10 = new sap.ui.model.Filter({  
+                     path: "DelStatus",  
+                     operator: sap.ui.model.FilterOperator.EQ,  
+                     value1: '7',
+                     and: false
+              });
+              var filter11 = new sap.ui.model.Filter({  
+                     path: "DelStatus",  
+                     operator: sap.ui.model.FilterOperator.EQ,  
+                     value1: '8',
+                     and: false
+              });
+              var filter12 = new sap.ui.model.Filter({  
+                     path: "DelStatus",  
+                     operator: sap.ui.model.FilterOperator.EQ,  
+                     value1: '9',
+                     and: false
+              });
+              var filter13 = new sap.ui.model.Filter({  
+                     path: "DelStatus",  
+                     operator: sap.ui.model.FilterOperator.EQ,  
+                     value1: '10',
                      and: false
               });
 
@@ -318,6 +422,14 @@ sap.ui.define([
             filters.push(filter3); 
             filters.push(filter4); 
             filters.push(filter5); 
+            filters.push(filter6); 
+            filters.push(filter7); 
+            filters.push(filter8); 
+            filters.push(filter9); 
+            filters.push(filter10); 
+            filters.push(filter11); 
+            filters.push(filter12); 
+            filters.push(filter13); 
             
 			this.getView().getModel().read("/Address/$count", {
 				async: false,
@@ -372,17 +484,17 @@ sap.ui.define([
             filters.push(filter3); 
             filters.push(filter4); 
             filters.push(filter5); 
-            
+    ///Item?$filter=Address/DelStatus eq 222 and Address/PicType eq 'U' or (Address/DelStatus ne 222 and PicType eq 'D') and Today eq '1'"
 			this.getView().getModel().read("/Item/$count", {
-				urlParameters: 'expandAddress',
+				urlParameters: "$expand=Address&$filter=Address/DelStatus eq 222 and Address/PicType eq 'U' or (Address/DelStatus ne 222 and PicType eq 'D') and Today eq '1'",
 				async: false,
 				success: jQuery.proxy(fSuccess, this),
-				error: jQuery.proxy(fError, this),
-				filters: filters
+				error: jQuery.proxy(fError, this)
+				//filters: filters
 			});
 		},
 
-		getAddress: function(response) {
+/*		getAddress: function(response) {
 
 			var leadas = globalMaster.getView().byId("leadTile").getNumber();
 			var lezartLeadas = globalMaster.getView().byId("leadLezartTile").getNumber();
@@ -420,7 +532,7 @@ sap.ui.define([
 			globalMaster.getView().byId("aktualisTile").setNumber(aktualis);
 
 		},
-
+*/
 		handleBevetelezesPress: function(evt) {
 			//	if(globalMaster.getView().byId("bevetTile").getNumber() >= 1){
 			//this.nav.to("bevetMaster", context);
@@ -454,7 +566,7 @@ sap.ui.define([
 			}
 
 			function fError(oEvent) {
-				console.log("oModel: An error occured while reading Employees!");
+				console.log("oModel: An error occured while reading Actual address!");
 			}
 			var filters = [];
 			var filter1 = new sap.ui.model.Filter({  
@@ -508,7 +620,7 @@ sap.ui.define([
 
 		},
 
-		handlePosPress: function() {
+		/*handlePosPress: function() {
 			navigator.geolocation.getCurrentPosition(function onSuccess(position) {
 				var lat = position.coords.latitude;
 				var long = position.coords.longitude;
@@ -521,13 +633,13 @@ sap.ui.define([
 					'Speed: ' + position.coords.speed + '\n' +
 					'Timestamp: ' + position.timestamp + '\n');
 			});
-		},
+		},*/
 
-		logoff: function() {
+		/*logoff: function() {
 			window.UI5Storage.remove("Auth");
 			sap.ui.getCore().setModel(undefined);
 			this.nav.to("login");
-		}
+		}*/
 
 
 	});

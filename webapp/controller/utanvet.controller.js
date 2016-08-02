@@ -63,6 +63,10 @@ sap.ui.define([
 					if (mm < 10) {
 						mm = '0' + mm;
 					}
+					
+					if (dd < 10) {
+						dd = '0' + dd;
+					}
 
 					var yyyy = yesterday.getFullYear();
 					//var todayFilter = "$filter=Today eq '1' and DelStatus eq '222'"; // a mai sikeres csomagokat összegezzük

@@ -58,7 +58,7 @@ sap.ui.define([
 		},
 		onBeforeShow: function() {
 			sap.ui.core.UIComponent.getRouterFor(this).navTo("launchPage");
-		},
+		}
 
 		/**
 		 * Event handler for navigating back.

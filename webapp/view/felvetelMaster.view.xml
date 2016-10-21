@@ -9,13 +9,6 @@
         	value1: 'U',
         	and: 'true'
         },
-        {
-        	path: 'Today',
-        	operator: 'EQ',
-        	value1: '1',
-        	and: 'true'
-        }
-        ,
         	{
         	path: 'DelStatus',
         	operator: 'EQ',

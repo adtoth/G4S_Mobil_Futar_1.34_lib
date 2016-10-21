@@ -14,8 +14,32 @@ sap.ui.define([
 		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
 		 * @memberOf com.g4s.view.leadasMaster
 		 */
-			onInit: function() {
-			},
+		onBeforeRendering: function() { // binding model synchronisation
+			window.globalAktualis = this;
+			this.getView().addDelegate({
+				onAfterShow: function(evt) {
+					document.addEventListener("backbutton", window.globalAktualis.handleNavButtonPress, false);
+					var d = new Date();
+					var day = d.getDate();
+					var month = d.getMonth() + 1;
+					var year = d.getFullYear();
+
+					if (month < 10) {
+						month = "0" + month;
+					}
+					if (day < 10) {
+						day = "0" + day;
+					}
+
+					var today = year + '-' + month + '-' + day + 'T00:00';
+					var oFilters = [new sap.ui.model.Filter("DeliveryDate", "EQ", today, true)
+					];
+					window.globalAktualis.getView().byId("list").getBinding("items").filter(oFilters);
+					window.globalAktualis.getView().getModel().refresh();
+				}
+			});
+
+		},
 
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered

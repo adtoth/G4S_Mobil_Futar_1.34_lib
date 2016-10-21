@@ -35,6 +35,14 @@
         "entryPath": "/test-resources"
       },
       "description": "SAPUI5 Test Resources"
+    },
+    {
+      "path": "/futarfioriodataprovider/",
+      "target": {
+        "type": "destination",
+        "name": "G4S_close"
+      },
+      "description": "G4S"
     }
   ]
 }

@@ -42,6 +42,11 @@
       "templateId": "ui5template.basicSAPUI5ApplicationComponent",
       "templateVersion": "1.4.0",
       "dateTimeStamp": "Wed, 27 Jul 2016 14:59:37 GMT"
+    },
+    {
+      "templateId": "servicecatalog.connectivityComponent",
+      "templateVersion": "0.0.0",
+      "dateTimeStamp": "Fri, 21 Oct 2016 12:24:45 GMT"
     }
   ],
   "codeCheckingTriggers": {
@@ -57,7 +62,7 @@
     "resourceModelName": "i18n"
   },
   "mockpreview": {
-    "mockUri": "https://cors-anywhere.herokuapp.com/http://office.netlife.hu:8181/futarfioriodataprovider/courierdata.svc/",
+    "mockUri": "/futarfioriodataprovider/courierdata.svc",
     "metadataFilePath": "localService/metadata.xml",
     "loadJSONFiles": false,
     "loadCustomRequests": false,

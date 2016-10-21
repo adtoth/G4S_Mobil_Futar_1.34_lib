@@ -1,0 +1,96 @@
+<edmx:Edmx
+    xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" Version="1.0">
+    <edmx:DataServices
+        xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" m:DataServiceVersion="2.0">
+        <Schema
+            xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="CourierManagerContainer">
+            <EntityContainer Name="CourierManagerEntities" m:IsDefaultEntityContainer="true">
+                <EntitySet Name="Courier" EntityType="CourierManagerModel.Courier"/>
+                <EntitySet Name="Item" EntityType="CourierManagerModel.Item"/>
+                <EntitySet Name="Address" EntityType="CourierManagerModel.Address"/>
+                <AssociationSet Name="FK_Item_Address" Association="CourierManagerModel.FK_Item_Address">
+                    <End EntitySet="Item" Role="Item"/>
+                    <End EntitySet="Address" Role="Address"/>
+                </AssociationSet>
+                <AssociationSet Name="FK_Address_Courier" Association="CourierManagerModel.FK_Address_Courier">
+                    <End EntitySet="Address" Role="Address"/>
+                    <End EntitySet="Courier" Role="Courier"/>
+                </AssociationSet>
+            </EntityContainer>
+        </Schema>
+        <Schema
+            xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="CourierManagerModel">
+            <EntityType Name="Courier">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="External_ID" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="notPickedUpCount" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="notPickedUpCountFelvet" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Username" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="Validate" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Lastname" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Firstname" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="hasCOD" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="notPickedUpCountLeadas" Type="Edm.Int32" Nullable="true"/>
+                <NavigationProperty Name="Addresses" Relationship="CourierManagerModel.FK_Address_Courier" FromRole="Courier" ToRole="Address"/>
+            </EntityType>
+            <EntityType Name="Item">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="ProductName" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="Price" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="COD" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Quantity" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="ProductId" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="PickupStatus" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Today" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="PicType" Type="Edm.String" Nullable="true" MaxLength="2"/>
+                <NavigationProperty Name="Address" Relationship="CourierManagerModel.FK_Item_Address" FromRole="Item" ToRole="Address"/>
+            </EntityType>
+            <EntityType Name="Address">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="TPostalCode" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="IconPic" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="TCity" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="FPostalCode" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="TStreet" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="DelStatus" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Today" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Email" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="To" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="Comment" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="Signature" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="Active" Type="Edm.String" Nullable="true" MaxLength="2"/>
+                <Property Name="PicType" Type="Edm.String" Nullable="true" MaxLength="2"/>
+                <Property Name="HasCOD" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="FStreet" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="From" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="SzallitasStatus" Type="Edm.String" Nullable="true" MaxLength="2"/>
+                <Property Name="FCity" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="Company" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="LastChange" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="DeliveryDate" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="Recipient" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="Icon" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="Phone" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <NavigationProperty Name="courier" Relationship="CourierManagerModel.FK_Address_Courier" FromRole="Address" ToRole="Courier"/>
+                <NavigationProperty Name="Items" Relationship="CourierManagerModel.FK_Item_Address" FromRole="Address" ToRole="Item"/>
+            </EntityType>
+            <Association Name="FK_Item_Address">
+                <End Type="CourierManagerModel.Item" Multiplicity="*" Role="Item"/>
+                <End Type="CourierManagerModel.Address" Multiplicity="0..1" Role="Address"/>
+            </Association>
+            <Association Name="FK_Address_Courier">
+                <End Type="CourierManagerModel.Address" Multiplicity="*" Role="Address"/>
+                <End Type="CourierManagerModel.Courier" Multiplicity="0..1" Role="Courier"/>
+            </Association>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

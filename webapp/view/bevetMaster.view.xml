@@ -4,7 +4,7 @@
 		title="Bevételezés">
 		<!--<List id="list" select="handleListSelect" items="{/Item?$filter=PickupStatus eq 'M' and Today eq '1'}" growing="true" growingThreshold="10">-->
 		<List id="list" select="handleListSelect" items="{path: '/Item', parameters:{expand: 'Address'}
-		}" growing="true" growingThreshold="10" updateFinished="onUpdateFinished">
+		}" growing="true" growingThreshold="10">
 			<ObjectListItem type="Active" press="handleListItemPress"
 				title="{From}"
 				icon="sap-icon://shipping-status">

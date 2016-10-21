@@ -1,5 +1,4 @@
 jQuery.sap.require("com.g4s.util.Formatter");
-jQuery.sap.require("jquery.sap.storage");
 sap.ui.define([
 	"sap/ui/core/mvc/Controller"
 ], function(Controller) {
@@ -138,12 +137,70 @@ sap.ui.define([
 				error: jQuery.proxy(fError, this),
 				filters: filters
 			});
-		},
+			/*window.globalVariable.getModel().read("/Item", null, paramurl, true, function(response) {	
+				for(var i = 0; i < response.results.length; i++){
+					allItems = response.results.length;
+					if(response.results[i].PickupStatus == 'A'){
+						closedItems++;
+					}
+					if(response.results[i].ProductId === result.text){
+						window.globalFoundItems++;
+						if(response.results[i].PickupStatus != 'A'){
+							window.globalVariable.getModel().setProperty("/Item(" + response.results[i].Id + ")/PickupStatus", 'A');
+							window.globalVariable.getModel().submitChanges();
+							window.globalVariable.getModel().updateBindings(true);
+							window.globalVariable.getModel().forceNoCache(true);
+						sap.m.MessageToast.show("Csomag felvéve");
+						
 
-		onUpdateFinished: function(){
-			var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
-			var oModel = this.getView().getModel();
-			oStorage.put("oModel", oModel);
+						//var startOfIndex = 0;
+						var lengthOfAddresses = 0;
+						window.globalVariable.getModel().read("/Address", null, paramurl, true, function(response) {
+							lengthOfAddresses = response.results.length;
+							//startOfIndex = response.results[0].Id;
+							for(var i = 0; i <  lengthOfAddresses ; i++){
+								window.globalVariable.getModel().read("/Address(" + response.results[i].Id + ")" , null, {
+									"$expand" : "Items"
+								}, true, function(response) {
+									var itemCount = 0;
+									for(var z = 0; z < response.Items.results.length; z++){
+										if(response.Items.results[z].PickupStatus === 'A'){
+											itemCount++;
+										}
+										if(itemCount == response.Items.results.length){
+											var b = response.Id;
+											var m = window.globalVariable.getModel();
+											//window.globalVariable.getModel().update("/Address(" + response.Id + ")/SzallitasStatus", 'R'); 
+											var asd = window.globalVariable.getModel().getProperty("/Address(" + response.Id + ")/SzallitasStatus");
+											window.globalVariable.getModel().setProperty("/Address(" + response.Id + ")/SzallitasStatus", 'R');
+											window.globalVariable.getModel().submitChanges();
+											window.globalVariable.getModel().updateBindings(true);
+										}
+									}
+								});
+									}
+							
+						});
+						
+						}
+						else if(response.results[i].PickupStatus == 'A'){
+							sap.m.MessageToast.show("Ez a csomag már fel van véve!");
+						}
+						else{
+							sap.m.MessageToast.show("Nincs ilyen csomag");
+						}
+					}
+					
+				}
+				
+				
+				if(window.globalFoundItems != allItems && result.text != ""){
+					//var scanner = cordova.require("cordova/plugin/BarcodeScanner");
+					window.scanner.scan(window.globalBevetMaster.loopScan, function(fail){ alert(fail);});
+				}
+				
+					
+			});*/
 		}
 
 	});

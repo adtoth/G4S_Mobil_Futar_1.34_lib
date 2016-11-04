@@ -5,7 +5,7 @@ sap.ui.define([
 	"sap/ui/core/format/NumberFormat",
 	"com/g4s/util/jSignature",
 	"com/g4s/util/Formatter"
-	
+
 ], function(Controller, BaseController, JSONModel, jSignature) {
 	"use strict";
 
@@ -29,7 +29,7 @@ sap.ui.define([
 			//var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 			//oRouter.getRoute("leadasDetail").attachPatternMatched(this._onObjectMatched, this);
 		},
-		
+
 		_onObjectMatched: function(oEvent) {
 			/*this.getView().bindElement({
 				path: "/" + oEvent.getParameter("arguments").invoicePath,
@@ -104,8 +104,6 @@ sap.ui.define([
 			//oViewModel.setProperty("/delay", iOriginalViewBusyDelay);
 		},
 
-
-
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
 		 * (NOT before the first rendering! onInit() is used for that one!).
@@ -131,315 +129,385 @@ sap.ui.define([
 		//	onExit: function() {
 		//
 		//	}
-		
-	
-	onBeforeRendering: function(){ // binding model synchronisation
-		window.globalAktualis = this;
-        this.getView().addDelegate({ onAfterShow: function(evt) {
-        	var a = globalAktualis.getView().getBindingContext();
-        	var myView = globalAktualis.getView();   	
-        	myView.byId("idIconTabBarMulti").setSelectedKey("addr");
-        	myView.byId("idIconTabBarMulti").setExpanded(true);
-		     var model = myView.getModel();
-		     window.signeeCounter = 0;
-		     myView.byId("clr").setVisible(false);
-		     myView.byId("cls").setVisible(true);
-		     myView.byId("susp").setVisible(true);
-		     myView.byId("recipient").setValue(model.getProperty(a.sPath + "/To"));
-		     myView.byId("grpA01").setSelected(false);
-		     myView.byId("grpA02").setSelected(false);
-		     myView.byId("grpB01").setSelected(false);
-		     myView.byId("grpB02").setSelected(false);
-		     myView.byId("grpB03").setSelected(false);
-		     myView.byId("grpB04").setSelected(false);
-		     myView.byId("grpB05").setSelected(false);
-		     myView.byId("grpB06").setSelected(false);
-		     myView.byId("grpB07").setSelected(false);
-		     myView.byId("grpB08").setSelected(false);
-		     myView.byId("grpB09").setSelected(false);
-		     myView.byId("grpB10").setSelected(false);
-		     myView.byId("otherText").setValue("");
-		     myView.byId("newZIP").setValue("");
-		     myView.byId("newCity").setValue("");
-		     myView.byId("newStreet").setValue("");		     
-		     
-        }});
-       
-	},	
-	
-	handleNavButtonPress : function(evt) {
+
+		onBeforeRendering: function() { // binding model synchronisation
+			window.globalAktualis = this;
+			this.getView().addDelegate({
+				onAfterShow: function(evt) {
+					var a = globalAktualis.getView().getBindingContext();
+					var myView = globalAktualis.getView();
+					myView.byId("idIconTabBarMulti").setSelectedKey("addr");
+					myView.byId("idIconTabBarMulti").setExpanded(true);
+					var model = myView.getModel();
+					window.signeeCounter = 0;
+					myView.byId("clr").setVisible(false);
+					myView.byId("cls").setVisible(true);
+					myView.byId("susp").setVisible(true);
+					myView.byId("recipient").setValue(model.getProperty(a.sPath + "/To"));
+					myView.byId("grpA01").setSelected(false);
+					myView.byId("grpA02").setSelected(false);
+					myView.byId("grpB01").setSelected(false);
+					myView.byId("grpB02").setSelected(false);
+					myView.byId("grpB03").setSelected(false);
+					myView.byId("grpB04").setSelected(false);
+					myView.byId("grpB05").setSelected(false);
+					myView.byId("grpB06").setSelected(false);
+					myView.byId("grpB07").setSelected(false);
+					myView.byId("grpB08").setSelected(false);
+					myView.byId("grpB09").setSelected(false);
+					myView.byId("grpB10").setSelected(false);
+					myView.byId("otherText").setValue("");
+					myView.byId("newZIP").setValue("");
+					myView.byId("newCity").setValue("");
+					myView.byId("newStreet").setValue("");
+
+				}
+			});
+
+		},
+
+		handleNavButtonPress: function(evt) {
 			sap.ui.core.UIComponent.getRouterFor(this).navTo("launchPage");
-	},
-	
-	
-	onSelect: function(evt){
-		if(this.getView().byId("grpA02").getSelected() === true){
-			this.getView().byId("grpB").setVisible(true);
-			this.getView().byId("otherText").setVisible(false);
-		}
-		
-		if(this.getView().byId("grpA01").getSelected() === true){
-			this.getView().byId("grpB").setVisible(false);
-			this.getView().byId("otherText").setVisible(true);
-		}
-		
-	},
-	
-	onSelectOther: function(evt){
-		if(this.getView().byId("grpB10").getSelected() === true){
-			this.getView().byId("otherText").setVisible(true);
-		}
-		else {
-			this.getView().byId("otherText").setVisible(false);
-		}
-	},
-	
-	close : function(evt) {
-		var a = evt.getSource().getBindingContext();
-		var myRouter = sap.ui.core.UIComponent.getRouterFor(this);
-		var myView = this.getView();
-		var bundle = this.getView().getModel("i18n").getResourceBundle();
-		var data = this.getView().getModel().getProperty(a.sPath + "/DelStatus");
-		if (data != '111' && data != '999') { //999-as státusz: aktív, 111-es Még nincs kiszállítva
-			sap.m.MessageToast.show("Már le van zárva!");
-		} else {
-		sap.m.MessageBox.confirm(bundle.getText("CloseDialogMsg"), function(
-				oAction) {			
-			if (sap.m.MessageBox.Action.OK === oAction){
-				window.hasActive = false;
-				if(myView.byId("grpB10").getSelected() === true){
-					myView.getModel().setProperty(a.sPath + "/Comment", myView.byId("otherText").getValue());
-					myView.getModel().setProperty(a.sPath + "/DelStatus", "10");
-					myView.getModel().setProperty(a.sPath + "/Signature", $("#signature").jSignature("getData"));
-					myView.getModel().submitChanges();
-					
-					sap.m.MessageToast.show("Lezárva");
-					if(myView.getModel().getProperty(a.sPath + "/PicType") === "D"){
-						myRouter.navTo("leadasMaster");
-					}
-					else myRouter.navTo("felvetelMaster");
+		},
 
-				}
-				else if (myView.byId("grpB01").getSelected() === true){
-					myView.getModel().setProperty(a.sPath + "/DelStatus", "1");
-					myView.getModel().setProperty(a.sPath + "/Signature", $("#signature").jSignature("getData"));
-					myView.getModel().submitChanges();
-					
-					sap.m.MessageToast.show("Lezárva");
-					if(myView.getModel().getProperty(a.sPath + "/PicType") === "D"){
-						myRouter.navTo("leadasMaster");
-					}
-					else myRouter.navTo("felvetelMaster");
-				}
-				else if (myView.byId("grpB02").getSelected() === true){
-					myView.getModel().setProperty(a.sPath + "/DelStatus", "2");
-					myView.getModel().setProperty(a.sPath + "/Signature", $("#signature").jSignature("getData"));
-					myView.getModel().submitChanges();
+		onSelect: function(evt) {
+			if (this.getView().byId("grpA02").getSelected() === true) {
+				this.getView().byId("grpB").setVisible(true);
+				this.getView().byId("otherText").setVisible(false);
+			}
 
-					sap.m.MessageToast.show("Lezárva");
-					if(myView.getModel().getProperty(a.sPath + "/PicType") === "D"){
-						myRouter.navTo("leadasMaster");
-					}
-					else myRouter.navTo("felvetelMaster");
-				}
-				else if (myView.byId("grpB03").getSelected() === true){
-					myView.getModel().setProperty(a.sPath + "/DelStatus", "3");
-					myView.getModel().setProperty(a.sPath + "/Signature", $("#signature").jSignature("getData"));
-					myView.getModel().submitChanges();
+			if (this.getView().byId("grpA01").getSelected() === true) {
+				this.getView().byId("grpB").setVisible(false);
+				this.getView().byId("otherText").setVisible(true);
+			}
 
-					sap.m.MessageToast.show("Lezárva");
-					if(myView.getModel().getProperty(a.sPath + "/PicType") === "D"){
-						myRouter.navTo("leadasMaster");
-					}
-					else myRouter.navTo("felvetelMaster");
-				}
-				else if (myView.byId("grpB04").getSelected() === true){
-					myView.getModel().setProperty(a.sPath + "/DelStatus", "4");
-					myView.getModel().setProperty(a.sPath + "/Signature", $("#signature").jSignature("getData"));
-					myView.getModel().submitChanges();
+		},
 
-					sap.m.MessageToast.show("Lezárva");
-					if(myView.getModel().getProperty(a.sPath + "/PicType") === "D"){
-						myRouter.navTo("leadasMaster");
-					}
-					else myRouter.navTo("felvetelMaster");
-				}
-				else if (myView.byId("grpB05").getSelected() === true){
-					myView.getModel().setProperty(a.sPath + "/DelStatus", "5");
-					myView.getModel().setProperty(a.sPath + "/Signature", $("#signature").jSignature("getData"));
-					myView.getModel().submitChanges();
+		onSelectOther: function(evt) {
+			if (this.getView().byId("grpB10").getSelected() === true) {
+				this.getView().byId("otherText").setVisible(true);
+			} else {
+				this.getView().byId("otherText").setVisible(false);
+			}
+		},
 
-					sap.m.MessageToast.show("Lezárva");
-					if(myView.getModel().getProperty(a.sPath + "/PicType") === "D"){
-						myRouter.navTo("leadasMaster");
-					}
-					else myRouter.navTo("felvetelMaster");
-				}
-				else if (myView.byId("grpB06").getSelected() === true){
-					myView.getModel().setProperty(a.sPath + "/DelStatus", "6");
-					myView.getModel().setProperty(a.sPath + "/Signature", $("#signature").jSignature("getData"));
-					myView.getModel().submitChanges();
+		close: function(evt) {
+			var a = evt.getSource().getBindingContext();
+			var myRouter = sap.ui.core.UIComponent.getRouterFor(this);
+			var myView = this.getView();
+			var bundle = this.getView().getModel("i18n").getResourceBundle();
+			var data = this.getView().getModel().getProperty(a.sPath + "/DelStatus");
+			if (data != '111' && data != '999') { //999-as státusz: aktív, 111-es Még nincs kiszállítva
+				sap.m.MessageToast.show("Már le van zárva!");
+			} else {
+				sap.m.MessageBox.confirm(bundle.getText("CloseDialogMsg"), function(
+						oAction) {
+						if (sap.m.MessageBox.Action.OK === oAction) {
+							window.hasActive = false;
+							if (myView.byId("grpB10").getSelected() === true) {
+								myView.getModel().setProperty(a.sPath + "/Comment", myView.byId("otherText").getValue());
+								myView.getModel().setProperty(a.sPath + "/DelStatus", "10");
+								myView.getModel().setProperty(a.sPath + "/Signature", $("#signature").jSignature("getData"));
+								if (window.isOnline) {
+									myView.getModel().submitChanges();
+								} else {
+									var modifiedAddresses = [];
+									modifiedAddresses.push(myView.getModel().getProperty(a.sPath));
+									window.oStorage.put("modifiedAddresses", modifiedAddresses);
+									window.oStorage.put("oData", myView.getModel().oData);
+								}
 
-					sap.m.MessageToast.show("Lezárva");
-					if(myView.getModel().getProperty(a.sPath + "/PicType") === "D"){
-						myRouter.navTo("leadasMaster");
-					}
-					else myRouter.navTo("felvetelMaster");
-				}
-				else if (myView.byId("grpB07").getSelected() === true){
-					myView.getModel().setProperty(a.sPath + "/DelStatus", "7");
-					myView.getModel().setProperty(a.sPath + "/Signature", $("#signature").jSignature("getData"));
-					myView.getModel().submitChanges();
+								sap.m.MessageToast.show("Lezárva");
+								if (myView.getModel().getProperty(a.sPath + "/PicType") === "D") {
+									myRouter.navTo("leadasMaster");
+								} else myRouter.navTo("felvetelMaster");
 
-					sap.m.MessageToast.show("Lezárva");
-					if(myView.getModel().getProperty(a.sPath + "/PicType") === "D"){
-						myRouter.navTo("leadasMaster");
-					}
-					else myRouter.navTo("felvetelMaster");
-				}
-				else if (myView.byId("grpB08").getSelected() === true){
-					myView.getModel().setProperty(a.sPath + "/DelStatus", "8");					
-					myView.getModel().setProperty(a.sPath + "/Signature", $("#signature").jSignature("getData"));
-					myView.getModel().submitChanges();
+							} else if (myView.byId("grpB01").getSelected() === true) {
+								myView.getModel().setProperty(a.sPath + "/DelStatus", "1");
+								myView.getModel().setProperty(a.sPath + "/Signature", $("#signature").jSignature("getData"));
+								if (window.isOnline) {
+									myView.getModel().submitChanges();
+								} else {
+									var modifiedAddresses = [];
+									modifiedAddresses.push(myView.getModel().getProperty(a.sPath));
+									window.oStorage.put("modifiedAddresses", modifiedAddresses);
+									window.oStorage.put("oData", myView.getModel().oData);
+								}
 
-					sap.m.MessageToast.show("Lezárva");
-					if(myView.getModel().getProperty(a.sPath + "/PicType") === "D"){
-						myRouter.navTo("leadasMaster");
-					}
-					else myRouter.navTo("felvetelMaster");
-				}
-				else if (myView.byId("grpB09").getSelected() === true){
-					myView.getModel().setProperty(a.sPath + "/DelStatus", "9");
-					myView.getModel().setProperty(a.sPath + "/Signature", $("#signature").jSignature("getData"));
-					myView.getModel().submitChanges();
+								sap.m.MessageToast.show("Lezárva");
+								if (myView.getModel().getProperty(a.sPath + "/PicType") === "D") {
+									myRouter.navTo("leadasMaster");
+								} else myRouter.navTo("felvetelMaster");
+							} else if (myView.byId("grpB02").getSelected() === true) {
+								myView.getModel().setProperty(a.sPath + "/DelStatus", "2");
+								myView.getModel().setProperty(a.sPath + "/Signature", $("#signature").jSignature("getData"));
+								if (window.isOnline) {
+									myView.getModel().submitChanges();
+								} else {
+									var modifiedAddresses = [];
+									modifiedAddresses.push(myView.getModel().getProperty(a.sPath));
+									window.oStorage.put("modifiedAddresses", modifiedAddresses);
+									window.oStorage.put("oData", myView.getModel().oData);
+								}
 
-					sap.m.MessageToast.show("Lezárva");
-					if(myView.getModel().getProperty(a.sPath + "/PicType") === "D"){
-						myRouter.navTo("leadasMaster");
-					}
-					else myRouter.navTo("felvetelMaster");
-				}
-				else if (myView.byId("grpA01").getSelected() === true){
-					if(myView.byId("recipient").getValue().length > 4){
-					myView.getModel().setProperty(a.sPath + "/DelStatus", "222");
-					myView.getModel().setProperty(a.sPath + "/Signature", $("#signature").jSignature("getData"));
-					myView.getModel().setProperty(a.sPath + "/Recipient", myView.byId("recipient").getValue());
-					myView.getModel().setProperty(a.sPath + "/Comment", myView.byId("otherText").getValue());
-					/*if(myView.byId("uv01").getSelected() == true ){
-						myView.getModel().setProperty(a.sPath + "/COD_Collected", 1);
-					}
-					else this.getView().getModel().setProperty(a.sPath + "/COD_Collected", 0);*/
-					
-					myView.getModel().submitChanges();
+								sap.m.MessageToast.show("Lezárva");
+								if (myView.getModel().getProperty(a.sPath + "/PicType") === "D") {
+									myRouter.navTo("leadasMaster");
+								} else myRouter.navTo("felvetelMaster");
+							} else if (myView.byId("grpB03").getSelected() === true) {
+								myView.getModel().setProperty(a.sPath + "/DelStatus", "3");
+								myView.getModel().setProperty(a.sPath + "/Signature", $("#signature").jSignature("getData"));
+								if (window.isOnline) {
+									myView.getModel().submitChanges();
+								} else {
+									var modifiedAddresses = [];
+									modifiedAddresses.push(myView.getModel().getProperty(a.sPath));
+									window.oStorage.put("modifiedAddresses", modifiedAddresses);
+									window.oStorage.put("oData", myView.getModel().oData);
+								}
 
-					
-					sap.m.MessageToast.show("Lezárva");
-					
-					if(myView.getModel().getProperty(a.sPath + "/PicType") === "D"){
-						myRouter.navTo("leadasMaster");
+								sap.m.MessageToast.show("Lezárva");
+								if (myView.getModel().getProperty(a.sPath + "/PicType") === "D") {
+									myRouter.navTo("leadasMaster");
+								} else myRouter.navTo("felvetelMaster");
+							} else if (myView.byId("grpB04").getSelected() === true) {
+								myView.getModel().setProperty(a.sPath + "/DelStatus", "4");
+								myView.getModel().setProperty(a.sPath + "/Signature", $("#signature").jSignature("getData"));
+								if (window.isOnline) {
+									myView.getModel().submitChanges();
+								} else {
+									var modifiedAddresses = [];
+									modifiedAddresses.push(myView.getModel().getProperty(a.sPath));
+									window.oStorage.put("modifiedAddresses", modifiedAddresses);
+									window.oStorage.put("oData", myView.getModel().oData);
+								}
+
+								sap.m.MessageToast.show("Lezárva");
+								if (myView.getModel().getProperty(a.sPath + "/PicType") === "D") {
+									myRouter.navTo("leadasMaster");
+								} else myRouter.navTo("felvetelMaster");
+							} else if (myView.byId("grpB05").getSelected() === true) {
+								myView.getModel().setProperty(a.sPath + "/DelStatus", "5");
+								myView.getModel().setProperty(a.sPath + "/Signature", $("#signature").jSignature("getData"));
+								if (window.isOnline) {
+									myView.getModel().submitChanges();
+								} else {
+									var modifiedAddresses = [];
+									modifiedAddresses.push(myView.getModel().getProperty(a.sPath));
+									window.oStorage.put("modifiedAddresses", modifiedAddresses);
+									window.oStorage.put("oData", myView.getModel().oData);
+								}
+
+								sap.m.MessageToast.show("Lezárva");
+								if (myView.getModel().getProperty(a.sPath + "/PicType") === "D") {
+									myRouter.navTo("leadasMaster");
+								} else myRouter.navTo("felvetelMaster");
+							} else if (myView.byId("grpB06").getSelected() === true) {
+								myView.getModel().setProperty(a.sPath + "/DelStatus", "6");
+								myView.getModel().setProperty(a.sPath + "/Signature", $("#signature").jSignature("getData"));
+								if (window.isOnline) {
+									myView.getModel().submitChanges();
+								} else {
+									var modifiedAddresses = [];
+									modifiedAddresses.push(myView.getModel().getProperty(a.sPath));
+									window.oStorage.put("modifiedAddresses", modifiedAddresses);
+									window.oStorage.put("oData", myView.getModel().oData);
+								}
+
+								sap.m.MessageToast.show("Lezárva");
+								if (myView.getModel().getProperty(a.sPath + "/PicType") === "D") {
+									myRouter.navTo("leadasMaster");
+								} else myRouter.navTo("felvetelMaster");
+							} else if (myView.byId("grpB07").getSelected() === true) {
+								myView.getModel().setProperty(a.sPath + "/DelStatus", "7");
+								myView.getModel().setProperty(a.sPath + "/Signature", $("#signature").jSignature("getData"));
+								if (window.isOnline) {
+									myView.getModel().submitChanges();
+								} else {
+									var modifiedAddresses = [];
+									modifiedAddresses.push(myView.getModel().getProperty(a.sPath));
+									window.oStorage.put("modifiedAddresses", modifiedAddresses);
+									window.oStorage.put("oData", myView.getModel().oData);
+								}
+
+								sap.m.MessageToast.show("Lezárva");
+								if (myView.getModel().getProperty(a.sPath + "/PicType") === "D") {
+									myRouter.navTo("leadasMaster");
+								} else myRouter.navTo("felvetelMaster");
+							} else if (myView.byId("grpB08").getSelected() === true) {
+								myView.getModel().setProperty(a.sPath + "/DelStatus", "8");
+								myView.getModel().setProperty(a.sPath + "/Signature", $("#signature").jSignature("getData"));
+								if (window.isOnline) {
+									myView.getModel().submitChanges();
+								} else {
+									var modifiedAddresses = [];
+									modifiedAddresses.push(myView.getModel().getProperty(a.sPath));
+									window.oStorage.put("modifiedAddresses", modifiedAddresses);
+									window.oStorage.put("oData", myView.getModel().oData);
+								}
+
+								sap.m.MessageToast.show("Lezárva");
+								if (myView.getModel().getProperty(a.sPath + "/PicType") === "D") {
+									myRouter.navTo("leadasMaster");
+								} else myRouter.navTo("felvetelMaster");
+							} else if (myView.byId("grpB09").getSelected() === true) {
+								myView.getModel().setProperty(a.sPath + "/DelStatus", "9");
+								myView.getModel().setProperty(a.sPath + "/Signature", $("#signature").jSignature("getData"));
+								if (window.isOnline) {
+									myView.getModel().submitChanges();
+								} else {
+									var modifiedAddresses = [];
+									modifiedAddresses.push(myView.getModel().getProperty(a.sPath));
+									window.oStorage.put("modifiedAddresses", modifiedAddresses);
+									window.oStorage.put("oData", myView.getModel().oData);
+								}
+
+								sap.m.MessageToast.show("Lezárva");
+								if (myView.getModel().getProperty(a.sPath + "/PicType") === "D") {
+									myRouter.navTo("leadasMaster");
+								} else myRouter.navTo("felvetelMaster");
+							} else if (myView.byId("grpA01").getSelected() === true) {
+								if (myView.byId("recipient").getValue().length > 4) {
+									myView.getModel().setProperty(a.sPath + "/DelStatus", "222");
+									myView.getModel().setProperty(a.sPath + "/Signature", $("#signature").jSignature("getData"));
+									myView.getModel().setProperty(a.sPath + "/Recipient", myView.byId("recipient").getValue());
+									myView.getModel().setProperty(a.sPath + "/Comment", myView.byId("otherText").getValue());
+									/*if(myView.byId("uv01").getSelected() == true ){
+										myView.getModel().setProperty(a.sPath + "/COD_Collected", 1);
+									}
+									else this.getView().getModel().setProperty(a.sPath + "/COD_Collected", 0);*/
+
+									if (window.isOnline) {
+										myView.getModel().submitChanges();
+									} else {
+										var modifiedAddresses = [];
+										modifiedAddresses.push(myView.getModel().getProperty(a.sPath));
+										window.oStorage.put("modifiedAddresses", modifiedAddresses);
+										window.oStorage.put("oData", myView.getModel().oData);
+									}
+
+									sap.m.MessageToast.show("Lezárva");
+
+									if (myView.getModel().getProperty(a.sPath + "/PicType") === "D") {
+										myRouter.navTo("leadasMaster");
+									} else myRouter.navTo("felvetelMaster");
+
+								} else sap.m.MessageToast.show("Túl rövid átvevő név!");
+							} else {
+								sap.m.MessageToast.show("Válassz státuszt!");
+							}
+							if (myView.byId("newZIP").getValue() != '' && myView.byId("newCity").getValue() != '' && myView.byId("newStreet").getValue() !=
+								'') {
+
+								myView.getModel().setProperty(a.sPath + "/TPostalCode", myView.byId("newZIP").getValue());
+								myView.getModel().setProperty(a.sPath + "/TCity", myView.byId("newCity").getValue());
+								myView.getModel().setProperty(a.sPath + "/TStreet", myView.byId("newStreet").getValue());
+								if (window.isOnline) {
+									myView.getModel().submitChanges();
+								} else {
+									var modifiedAddresses = [];
+									modifiedAddresses.push(myView.getModel().getProperty(a.sPath));
+									window.oStorage.put("modifiedAddresses", modifiedAddresses);
+									window.oStorage.put("oData", myView.getModel().oData);
+								}
+							} else if ((myView.byId("newZIP").getValue() != '') && (myView.byId("newCity").getValue() == '' || myView.byId("newStreet").getValue() ==
+									'')) {
+								sap.m.MessageToast.show("Hiányzó címadat!");
+							} else if ((myView.byId("newCity").getValue() != '') && (myView.byId("newZIP").getValue() == '' || myView.byId("newStreet").getValue() ==
+									'')) {
+								sap.m.MessageToast.show("Hiányzó címadat!");
+							} else if ((myView.byId("newStreet").getValue() != '') && (myView.byId("newCity").getValue() == '' || myView.byId("newStreet")
+									.getValue() == '')) {
+								sap.m.MessageToast.show("Hiányzó címadat!");
+							}
+
+						}
+					},
+
+					bundle.getText("CloseDialogTitle")
+				);
+			}
+		},
+
+		suspend: function(evt) {
+			var a = evt.getSource().getBindingContext();
+			var myView = this.getView();
+			var myRouter = sap.ui.core.UIComponent.getRouterFor(this);
+			var bundle = this.getView().getModel("i18n").getResourceBundle();
+			sap.m.MessageBox.confirm(bundle.getText("SuspendDialogMsg"), function(
+					oAction) {
+					if (sap.m.MessageBox.Action.OK === oAction) {
+						window.hasActive = false;
+						myView.getModel().setProperty(a.sPath + "/DelStatus", "555");
+						if (window.isOnline) {
+							myView.getModel().submitChanges();
+						} else {
+							var modifiedAddresses = [];
+							modifiedAddresses.push(myView.getModel().getProperty(a.sPath));
+							window.oStorage.put("modifiedAddresses", modifiedAddresses);
+							window.oStorage.put("oData", myView.getModel().oData);
+						}
+						if (myView.getModel().getProperty(a.sPath + "/PicType") === "D") {
+							myRouter.navTo("leadasMaster");
+						} else myRouter.navTo("felvetelMaster");
+
 					}
-					else myRouter.navTo("felvetelMaster");
-					
-					}
-					else sap.m.MessageToast.show("Túl rövid átvevő név!");
-				}
-				
-				else {
-					sap.m.MessageToast.show("Válassz státuszt!");
-				}
-				if(myView.byId("newZIP").getValue() != '' && myView.byId("newCity").getValue() != '' && myView.byId("newStreet").getValue() != ''){
-					
-					myView.getModel().setProperty(a.sPath + "/TPostalCode", myView.byId("newZIP").getValue());
-					myView.getModel().setProperty(a.sPath + "/TCity", myView.byId("newCity").getValue());
-					myView.getModel().setProperty(a.sPath + "/TStreet", myView.byId("newStreet").getValue());
-					myView.getModel().submitChanges();
-				}
-				else if((myView.byId("newZIP").getValue() != '') && (myView.byId("newCity").getValue() == '' || myView.byId("newStreet").getValue() == '')){
-					sap.m.MessageToast.show("Hiányzó címadat!");
-				}
-				else if((myView.byId("newCity").getValue() != '') && (myView.byId("newZIP").getValue() == '' || myView.byId("newStreet").getValue() == '')){
-					sap.m.MessageToast.show("Hiányzó címadat!");
-				}
-				else if((myView.byId("newStreet").getValue() != '') && (myView.byId("newCity").getValue() == '' || myView.byId("newStreet").getValue() == '')){
-					sap.m.MessageToast.show("Hiányzó címadat!");
+				},
+
+				bundle.getText("CloseDialogTitle")
+			);
+		},
+
+		signee: function(evt) {
+			if (window.signeeCounter === 0) { // ha most jöttünk ide, töröljük az előző aláírást, egyébként megtartjuk, counter az onBeforeRenderingben
+				$("#signature").jSignature();
+				$("#signature").jSignature("reset");
+				window.signeeCounter++;
+			}
+
+			var a = evt.getSource().getBindingContext();
+			var total = 0;
+			var myView = this.getView();
+
+			if (this.getView().byId("idIconTabBarMulti").getSelectedKey() == "sig") {
+				this.getView().byId("cls").setVisible(true);
+				this.getView().byId("clr").setVisible(true);
+				this.getView().byId("susp").setVisible(false);
+			} else {
+				this.getView().byId("cls").setVisible(true);
+				this.getView().byId("clr").setVisible(false);
+				this.getView().byId("susp").setVisible(true);
+			}
+
+			function fSuccess(response) {
+				var oNumberFormat = sap.ui.core.format.NumberFormat.getIntegerInstance({
+					maxFractionDigits: 1,
+					minFractionDigits: 0,
+					groupingEnabled: true,
+					groupingSeparator: " ",
+					decimalSeparator: "."
+				});
+				for (var i = 0; i < response.results.length; i++) {
+					total += response.results[i].Price;
+					myView.byId("total_id").setNumber(oNumberFormat.format(total));
 				}
 
 			}
-		},
-		   
-		   bundle.getText("CloseDialogTitle")
-			);
-		}
-	},
-	
-	suspend: function(evt){
-		var a = evt.getSource().getBindingContext();
-		var myView = this.getView();
-		var myRouter = sap.ui.core.UIComponent.getRouterFor(this);
-		var bundle = this.getView().getModel("i18n").getResourceBundle();
-		sap.m.MessageBox.confirm(bundle.getText("SuspendDialogMsg"), function(
-				oAction) {			
-			if (sap.m.MessageBox.Action.OK === oAction){
-				window.hasActive = false;
-				myView.getModel().setProperty(a.sPath + "/DelStatus", "555");
-				myView.getModel().submitChanges();
-				if(myView.getModel().getProperty(a.sPath + "/PicType") === "D"){
-					myRouter.navTo("leadasMaster");
-				}
-				else myRouter.navTo("felvetelMaster");
-				
-				
-			}
-		},
-		   
-		   bundle.getText("CloseDialogTitle")
-			);
-	},
-	
-	signee: function(evt) {
-		 if(window.signeeCounter === 0){ // ha most jöttünk ide, töröljük az előző aláírást, egyébként megtartjuk, counter az onBeforeRenderingben
-			$("#signature").jSignature();
-			$("#signature").jSignature("reset");
-			window.signeeCounter++;
-		}
-		
-		 var a = evt.getSource().getBindingContext();
-	     var total = 0;
-	     var myView = this.getView();
-	    	     
-        if(this.getView().byId("idIconTabBarMulti").getSelectedKey() == "sig"){
-        	this.getView().byId("cls").setVisible(true);
-        	this.getView().byId("clr").setVisible(true);
-        	this.getView().byId("susp").setVisible(false);
-        }
-        else{
-        	this.getView().byId("cls").setVisible(true);
-        	this.getView().byId("clr").setVisible(false);
-        	this.getView().byId("susp").setVisible(true);
-        }
-        
-        function fSuccess(response){ 
-        	var oNumberFormat = sap.ui.core.format.NumberFormat.getIntegerInstance({maxFractionDigits: 1, minFractionDigits: 0, groupingEnabled: true, groupingSeparator: " ",
-			  decimalSeparator: "."});
-            for(var i = 0; i < response.results.length; i++){
-            	total += response.results[i].Price;
-				myView.byId("total_id").setNumber(oNumberFormat.format(total));
-            }
 
-            }  
-            function fError(oEvent){  
-             console.log("oModel: An error occured while reading Employees!");  
-            } 
-        
-        // totál utánvét összeg számítás
-        
-			  
-			   this.getView().getModel().read(a.sPath + "/Items", {  
-					success: jQuery.proxy(fSuccess, this),  
-                	error: jQuery.proxy(fError, this)  
-				});  
-            
-        /*this.getView().getModel().read(a.sPath, null, {
+			function fError(oEvent) {
+				console.log("oModel: An error occured while reading Employees!");
+			}
+
+			// totál utánvét összeg számítás
+			if (window.isOnline) {
+				this.getView().getModel().read(a.sPath + "/Items", {
+					success: jQuery.proxy(fSuccess, this),
+					error: jQuery.proxy(fError, this)
+				});
+			} else{
+					myView.byId("total_id").setNumber(0);
+			}
+			/*this.getView().getModel().read(a.sPath, null, {
 			"$expand" : "Items"
 		}, true, function(response) {
 			for(var i = 0; i < response.Items.results.length; i++){
@@ -447,17 +515,17 @@ sap.ui.define([
 				myView.byId("total_id").setNumber(oNumberFormat.format(total));
 			}		
 		});*/
-    
-    },
-    
-    clear: function(){
-    	 $("#signature").jSignature("reset");
-    },
-		
-    handlePhonePress: function(){
-    	var b = this.getView().byId("phoneLink").getHref();
-		window.open(this.getView().byId("phoneLink").getHref(), "_blank");
-	}
+
+		},
+
+		clear: function() {
+			$("#signature").jSignature("reset");
+		},
+
+		handlePhonePress: function() {
+			var b = this.getView().byId("phoneLink").getHref();
+			window.open(this.getView().byId("phoneLink").getHref(), "_blank");
+		}
 
 	});
 

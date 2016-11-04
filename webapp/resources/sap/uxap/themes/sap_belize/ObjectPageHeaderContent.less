@@ -1,0 +1,53 @@
+/* ================================================= */
+/* CSS for control sap.uxap/ObjectPageHeaderContent  */
+/* Belize theme                                      */
+/* ================================================= */
+
+.sapUxAPObjectPageHeaderContent .sapMObjStatus, .sapUxAPObjectPageContainer .sapMObjStatus {
+	font-size: @sapMFontMediumSize;
+}
+
+.sapUxAPObjectPageHeaderIdentifierTitleInContent,
+.sapUxAPObjectPageHeaderIdentifierSubTitleInContent {
+	color: @sapUiGroupTitleTextColor;
+}
+
+.sapUxAPObjectPageHeaderContent .sapUxAPObjectPageHeaderObjectImage-Circle .sapUxAPObjectPageHeaderObjectImage {
+	border: 3px solid darken(@sapUiObjectHeaderBackground, 8%);
+}
+.sapUxAPObjectPageHeaderIdentifier .sapUxAPObjectPageHeaderObjectImageForce .sapUxAPObjectPageHeaderObjectImage,
+.sapUxAPObjectPageHeaderStickied .sapUxAPObjectPageHeaderIdentifier .sapUxAPObjectPageHeaderObjectImage {
+	border: 1px solid darken(@sapUiObjectHeaderBackground, 8%);
+	padding: 0;
+}
+
+html.sapUiMedia-Std-Desktop, html.sapUiMedia-Std-Tablet {
+	.sapUxAPObjectPageHeaderContent .sapUxAPObjectPageHeaderObjectImage-Circle .sapUxAPObjectPageHeaderObjectImage {
+		border-width: 3px;
+		margin-right: 2rem;
+		margin-bottom: 1rem;
+		width: 5rem;
+		height: auto;
+	}
+	.sapUxAPObjectPageHeaderIdentifier .sapUxAPObjectPageHeaderObjectImageForce .sapUxAPObjectPageHeaderObjectImage,
+	.sapUxAPObjectPageHeaderStickied .sapUxAPObjectPageHeaderIdentifier .sapUxAPObjectPageHeaderObjectImage {
+		margin: 0.25rem 1rem 0.25rem 0;
+	}
+}
+
+.sapUxAPObjectPageHeaderIdentifierSubTitleInContent {
+	font-size: @sapMFontMediumSize;
+}
+
+.sapUxAPObjectPageHeaderContent {
+	> .sapUiSimpleForm {
+		.sapMText, .sapMLabel, .sapMLnk {
+			font-size: @sapMFontMediumSize;
+		}
+	}
+}
+
+.sapUxAPObjectPageHeaderContentDesign-Light,
+.sapUxAPObjectPageHeaderContentDesign-Dark {
+	background-color: @sapUiObjectHeaderBackground;
+}

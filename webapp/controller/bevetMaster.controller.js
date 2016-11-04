@@ -1,7 +1,8 @@
 jQuery.sap.require("com.g4s.util.Formatter");
+jQuery.sap.require("jquery.sap.storage");
 sap.ui.define([
 	"sap/ui/core/mvc/Controller"
-	], function(Controller) {
+], function(Controller) {
 	"use strict";
 
 	return Controller.extend("com.g4s.controller.bevetMaster", {
@@ -11,9 +12,25 @@ sap.ui.define([
 		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
 		 * @memberOf com.g4s.view.bevetMaster
 		 */
-		//	onInit: function() {
-		//
-		//	},
+		onInit: function() {
+			var that = this;
+			this.getView().addEventDelegate({
+				onBeforeShow: function(evt) {
+					if (typeof(window.oStorage) === "undefined") {
+						window.oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+					}
+					var networkState;
+					if (typeof(navigator.connection) != "undefined") {
+						networkState = navigator.connection.type;
+						if (networkState == Connection.UNKNOWN || networkState == Connection.NONE) {
+							var data = window.oStorage.get("data");
+							that.getView().getModel().oData = data;
+						}
+					}
+
+				}
+			});
+		},
 
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
@@ -40,77 +57,107 @@ sap.ui.define([
 		//	onExit: function() {
 		//
 		//	}
-	
-	handleNavButtonPress : function(evt) {
-		sap.ui.core.UIComponent.getRouterFor(this).navTo("launchPage");
-	},
 
-	scan : function(evt) {
-		var a = evt.getSource().getBindingContext();
-        window.globalVariable = this.getView();
-        window.globalBevetMaster = this;
-        window.globalFoundItems = 0;    
-		window.scanner = cordova.plugins.barcodeScanner;
-        scanner.scan(this.loopScan, function(fail) {
-            console.log("encoding failed: " + fail);
-        });
-        
-	},
-		loopScan: function(result){
-			if(result.cancelled == true){ // ha megszakítottuk a scannelést
+		handleNavButtonPress: function(evt) {
+			sap.ui.core.UIComponent.getRouterFor(this).navTo("launchPage");
+		},
+
+		scan: function(evt) {
+			var a = evt.getSource().getBindingContext();
+			window.globalVariable = this.getView();
+			window.globalBevetMaster = this;
+			window.globalFoundItems = 0;
+			window.scanner = cordova.plugins.barcodeScanner;
+			scanner.scan(this.loopScan, function(fail) {
+				console.log("encoding failed: " + fail);
+			});
+
+		},
+		loopScan: function(result) {
+			if (result.cancelled == true) { // ha megszakítottuk a scannelést
 				return;
 			}
 			var foundItems = 0;
 			var allItems = 0;
 			var closedItems = 0;
-			var paramurl = "$filter=Today eq '1'";
-			
-			function fSuccess(response){ 
-				if(response.results.length != 0){ // ha találtunk ilyen csomagot
-					if(response.results[0].PickupStatus == 'M'){ // még nem volt felvéve, felvesszük
-							window.globalFoundItems++;
-							window.globalVariable.getModel().setProperty("/Item(" + response.results[0].Id + ")/PickupStatus", 'A');
-							window.globalVariable.getModel().submitChanges();
-							sap.m.MessageToast.show("Csomag felvéve");
-
-
-					}
-					else if(response.results[0].PickupStatus == 'A'){ // ha már fel lett léve
-								sap.m.MessageToast.show("Ez a csomag már fel van véve");
-					}
+			//var paramurl = "$filter=Today eq '1'";
+			var isOnline = true;
+			if (typeof(navigator.connection) != "undefined") {
+				var networkState = navigator.connection.type;
+				if (networkState == Connection.UNKNOWN || networkState == Connection.NONE) {
+					isOnline = false;
 				}
-				else{
-							sap.m.MessageToast.show("Nincs ilyen csomag");
-						}
-				window.scanner.scan(window.globalBevetMaster.loopScan, function(fail){ console.log(fail);});
+			}
 
-            }  
-            function fError(oEvent){  
-             console.log("oModel: An error occured while reading Items!");  
-            } 
-			
-			var filters = [];
-			var filter1 = new sap.ui.model.Filter({  
-                     path: "Today",  
-                     operator: sap.ui.model.FilterOperator.EQ,  
-                     value1: '1',
-                     and: true
-              }); 
-            var filter2 = new sap.ui.model.Filter({  
-                     path: "ProductId",  
-                     operator: sap.ui.model.FilterOperator.EQ,  
-                     value1: result.text,
-                     and: true
-              });
-              
-            filters.push(filter1); 
-            filters.push(filter2); 
-			window.globalVariable.getModel().read("/Item", {
-				async: false,
-				success: jQuery.proxy(fSuccess, this),
-				error: jQuery.proxy(fError, this),
-				filters: filters
-			});
+			function fSuccess(response) {
+				if (response.results.length != 0) { // ha találtunk ilyen csomagot
+					if (response.results[0].PickupStatus == 'M') { // még nem volt felvéve, felvesszük
+						window.globalFoundItems++;
+						window.globalVariable.getModel().setProperty("/Item(" + response.results[0].Id + ")/PickupStatus", 'A');
+						
+						window.globalVariable.getModel().submitChanges();
+						
+
+						sap.m.MessageToast.show("Csomag felvéve");
+
+					} else if (response.results[0].PickupStatus == 'A') { // ha már fel lett léve
+						sap.m.MessageToast.show("Ez a csomag már fel van véve");
+					}
+				} else {
+					sap.m.MessageToast.show("Nincs ilyen csomag");
+				}
+				window.scanner.scan(window.globalBevetMaster.loopScan, function(fail) {
+					console.log(fail);
+				});
+
+			}
+
+			function fError(oEvent) {
+				console.log("oModel: An error occured while reading Items!");
+			}
+
+			if (isOnline) { // if the app is online, we read use the normal read operation
+				var filters = [];
+				var filter1 = new sap.ui.model.Filter({
+					path: "Today",
+					operator: sap.ui.model.FilterOperator.EQ,
+					value1: '1',
+					and: true
+				});
+				var filter2 = new sap.ui.model.Filter({
+					path: "ProductId",
+					operator: sap.ui.model.FilterOperator.EQ,
+					value1: result.text,
+					and: true
+				});
+
+				filters.push(filter1);
+				filters.push(filter2);
+				window.globalVariable.getModel().read("/Item", {
+					async: false,
+					success: jQuery.proxy(fSuccess, this),
+					error: jQuery.proxy(fError, this),
+					filters: filters
+				});
+			}
+			else {
+				var itemFound = false;
+				var i = 0;
+				while(!itemFound){
+					if(window.globalBevetMaster.getView().getModel().getProperty("/Item(" + i + ")/ProductId") === result.text){
+						window.globalBevetMaster.getView().getModel().setProperty("/Item(" + i + ")/PickupStatus", "A");
+						itemFound = true;
+						sap.m.MessageToast.show("Csomag felvéve");
+						var modifiedItems = [];
+						modifiedItems.push(window.globalBevetMaster.getView().getModel().getProperty("/Item(" + i + ")"));
+						//var data =  //this.getView().getModel().oData;
+						window.oStorage.put("modifiedItems", modifiedItems);
+						window.oStorage.put("oData", window.globalBevetMaster.getView().getModel().oData);
+					}
+					i++;
+				}
+			}
+
 			/*window.globalVariable.getModel().read("/Item", null, paramurl, true, function(response) {	
 				for(var i = 0; i < response.results.length; i++){
 					allItems = response.results.length;
@@ -175,7 +222,17 @@ sap.ui.define([
 				
 					
 			});*/
-	}
+		},
+
+		onUpdateFinished: function() {
+			if (typeof(window.oStorage) == "undefined") {
+				window.oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+			}
+			var data = this.getView().getModel();
+			window.oStorage.put("data", data);
+			var fetched = window.oStorage.get("data");
+
+		}
 
 	});
 

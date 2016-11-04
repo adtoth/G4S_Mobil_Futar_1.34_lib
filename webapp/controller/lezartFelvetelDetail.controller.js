@@ -376,11 +376,14 @@ sap.ui.define([
 			}
 
 			// totál utánvét összeg számítás
-
-			this.getView().getModel().read(a.sPath + "/Items", {
-				success: jQuery.proxy(fSuccess, this),
-				error: jQuery.proxy(fError, this)
-			});
+			if (window.isOnline) {
+				this.getView().getModel().read(a.sPath + "/Items", {
+					success: jQuery.proxy(fSuccess, this),
+					error: jQuery.proxy(fError, this)
+				});
+			} else{
+					myView.byId("total_id").setNumber(0);
+			}
 
 			/*   	if(sap.ui.getCore().getModel().getProperty(a.sPath + "/DelStatus") == "111"){
 			   		myView.byId("setActive").setText("Folytat");

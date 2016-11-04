@@ -12,7 +12,7 @@
 		},
 		"dataSources": {
 			"courierdata.svc": {
-				"uri": "/futarfioriodataprovider/courierdata.svc/",
+				"uri": "http://office.netlife.hu:8181/futarfioriodataprovider/courierdata.svc/",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0",

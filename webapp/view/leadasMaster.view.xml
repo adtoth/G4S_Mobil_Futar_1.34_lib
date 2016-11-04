@@ -33,7 +33,7 @@
         	value1: '999'
         	}
         
-        ]}" growing="true" growingTriggerText="Több" noDataText="Nincs kapcsolat a szerverrel">
+        ]}"  noDataText="Nincs kapcsolat a szerverrel">
 			<ObjectListItem type="Active" press="handleListItemPress"
 			
 				title="{Company}" icon="sap-icon://toaster-{IconPic}" number="{path: 'PicType',

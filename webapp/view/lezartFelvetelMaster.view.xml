@@ -2,7 +2,7 @@
 	<Page showNavButton="true" navButtonPress="handleNavButtonPress" title="Lezárt Felvétek">
 		<List id="list"
 			items="{path: '/Address', parameters:{expand: 'Items'}, filters: [{ path: 'PicType', operator: 'EQ', value1: 'U', and: 'true' }, { path: 'Today', operator: 'EQ', value1: '1', and: 'true' } , { path: 'DelStatus', operator: 'EQ', value1: '222' }, { path: 'DelStatus', operator: 'EQ', value1: '1' }, { path: 'DelStatus', operator: 'EQ', value1: '2' }, { path: 'DelStatus', operator: 'EQ', value1: '3' }, { path: 'DelStatus', operator: 'EQ', value1: '4' }, { path: 'DelStatus', operator: 'EQ', value1: '5' }, { path: 'DelStatus', operator: 'EQ', value1: '6' }, { path: 'DelStatus', operator: 'EQ', value1: '7' }, { path: 'DelStatus', operator: 'EQ', value1: '8' }, { path: 'DelStatus', operator: 'EQ', value1: '9' }, { path: 'DelStatus', operator: 'EQ', value1: '10' } ]}"
-			growing="true" growingTriggerText="Több" noDataText="Nincs kapcsolat a szerverrel">
+			 noDataText="Nincs kapcsolat a szerverrel">
 			<ObjectListItem type="Active" press="handleListItemPress" title="{Company}" icon="sap-icon://toaster-{IconPic}"
 				number="{path: 'PicType', formatter: 'util.Formatter.statusText'}">
 				<attributes>

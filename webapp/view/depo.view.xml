@@ -37,7 +37,7 @@
         
         	
         
-        ]}" growing="true" growingTriggerText="Több" noDataText="Nincs kapcsolat a szerverrel, vagy üres a lista">
+        ]}"  noDataText="Nincs kapcsolat a szerverrel, vagy üres a lista">
 			<ObjectListItem type="Active" 
 				title="{Id}"
 				icon="sap-icon://shipping-status">

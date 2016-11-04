@@ -10,6 +10,7 @@
     <content src="index.html" />
 	<plugin name="com.phonegap.plugins.barcodescanner" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
+    <plugin name="cordova-plugin-network-information" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

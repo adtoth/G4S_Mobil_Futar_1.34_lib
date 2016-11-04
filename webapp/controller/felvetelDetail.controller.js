@@ -355,7 +355,8 @@ sap.ui.define([
 			if (object.DelStatus === 999) {
 				amIActive = true;
 			}
-			// ezt meg kell szerelni
+			// 
+			// TODO: ezt meg kell szerelni
 			for (var i = 0; i < 1000; i++) {
 				if (this.getView().getModel().getProperty("/Address(" + i + ")/DelStatus") === 999) {
 					isActive++;
@@ -365,7 +366,14 @@ sap.ui.define([
 				if (object.DelStatus === 111 || object.DelStatus === 555) {
 					if (object.DelStatus === 555) { //ha fel van függesztve akkor továbbemgyünk
 						myself.getView().getModel().setProperty(a.sPath + "/DelStatus", '999');
-						myself.getView().getModel().submitChanges();
+						if (window.isOnline) {
+							myself.getView().getModel().submitChanges();
+						} else {
+							var modifiedAddresses = [];
+							modifiedAddresses.push(myself.getView().getModel().getProperty(a.sPath));
+							window.oStorage.put("modifiedAddresses", modifiedAddresses);
+							window.oStorage.put("oData", myself.getView().getModel().oData);
+						}
 						//sap.ui.getCore().getModel().updateBindings(true);
 						//sap.ui.getCore().getModel().forceNoCache(true);
 						_oRouter.navTo("aktualis", {
@@ -377,7 +385,14 @@ sap.ui.define([
 								if (sap.m.MessageBox.Action.OK === oAction) {
 									window.hasActive = true;
 									myself.getView().getModel().setProperty(a.sPath + "/DelStatus", '999');
-									myself.getView().getModel().submitChanges();
+									if (window.isOnline) {
+										myself.getView().getModel().submitChanges();
+									} else {
+										var modifiedAddresses = [];
+										modifiedAddresses.push(myself.getView().getModel().getProperty(a.sPath));
+										window.oStorage.put("modifiedAddresses", modifiedAddresses);
+										window.oStorage.put("oData", myself.getView().getModel().oData);
+									}
 									/*sap.ui.getCore().getModel().updateBindings(true);
 									sap.ui.getCore().getModel().forceNoCache(true);*/
 									_oRouter.navTo("aktualis", {
@@ -447,11 +462,14 @@ sap.ui.define([
 			}
 
 			// totál utánvét összeg számítás
-
-			this.getView().getModel().read(a.sPath + "/Items", {
-				success: jQuery.proxy(fSuccess, this),
-				error: jQuery.proxy(fError, this)
-			});
+			if (window.isOnline) {
+				this.getView().getModel().read(a.sPath + "/Items", {
+					success: jQuery.proxy(fSuccess, this),
+					error: jQuery.proxy(fError, this)
+				});
+			} else{
+					myView.byId("total_id").setNumber(0);
+			}
 
 			/*   	if(object.DelStatus) == "111"){
 			   		myView.byId("setActive").setText("Folytat");
